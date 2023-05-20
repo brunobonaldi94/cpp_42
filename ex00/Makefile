@@ -1,0 +1,60 @@
+# ==============================================================================
+# VARIABLES
+# ==============================================================================
+NAME			:=	megaphone
+CPP				:=	c++
+FLAGS			:=	-g3 -Wall -Werror -Wextra -std=c++98
+MAKE			:=	make
+
+SRCS		:=	megaphone.cpp
+OBJS		:=	$(SRCS:.cpp=.o)
+
+# ==============================================================================
+# COLORS
+# ==============================================================================
+
+GREEN		:=	\033[1;32m
+RED			:=	\033[1;31m
+WHT			:=	\033[1;37m
+EOC			:=	\033[1;0m
+
+# ==============================================================================
+# RECIPES
+# ==============================================================================
+
+all:		$(NAME)
+
+%.o:		%.cpp
+	@$(CPP) $(FLAGS) -c $< -o $@
+
+$(NAME):			$(OBJS)
+					@echo "$(WHT)Compiling megaphone...$(EOC)"
+					@$(CPP) $(FLAGS) $(OBJS) -o $(NAME)
+					@echo "$(GREEN)megaphone build completed.$(EOC)"
+					@tput setaf 5
+
+clean:
+					@echo "$(WHT)Removing .o files...$(EOC)"
+					@rm -f $(OBJS)
+					@echo "$(GREEN)Clean done.$(EOC)"
+
+fclean:		clean
+					@echo "$(WHT)Removing object- and binary -files...$(EOC)"
+					@rm -f $(NAME)
+					@echo "$(GREEN)Fclean done.$(EOC)"
+
+re:			fclean all
+
+test:
+	./$(NAME) "shhhhh... I think the students are asleep..."
+	./$(NAME) Damnit " ! " "Sorry students, I thought this thing was off."
+	./$(NAME)
+
+OBJS:
+	echo $(OBJS)
+
+valgrind:
+			@valgrind -s --leak-check=full --show-leak-kinds=all \
+			--track-origins=yes --log-fd=9 ./$(NAME) 9>memcheck.log
+
+.PHONY:		all clean fclean re
