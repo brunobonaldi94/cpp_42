@@ -6,8 +6,7 @@ CPP			:=	c++
 FLAGS		:=	-g3 -Wall -Werror -Wextra -std=c++98
 MAKE		:=	make
 
-INCLUDES	:= ./
-SRCS		:=	Contact.cpp PhoneBook.cpp
+SRCS		:=	Contact.cpp PhoneBook.cpp main.cpp
 OBJS		:=	$(SRCS:.cpp=.o)
 
 # ==============================================================================
@@ -26,12 +25,12 @@ EOC			:=	\033[1;0m
 all:		$(NAME)
 
 %.o:		%.cpp
-	@$(CPP) $(FLAGS) $(INCLUDES) -c $< -o $@
+	@$(CPP) $(FLAGS) -c $< -o $@
 
 $(NAME):			$(OBJS)
-					@echo "$(WHT)Compiling megaphone...$(EOC)"
+					@echo "$(WHT)Compiling PhoneBook...$(EOC)"
 					@$(CPP) $(FLAGS) $(OBJS) -o $(NAME)
-					@echo "$(GREEN)megaphone build completed.$(EOC)"
+					@echo "$(GREEN)PhoneBook build completed.$(EOC)"
 					@tput setaf 5
 
 clean:
