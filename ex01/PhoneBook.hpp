@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 21:38:59 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/05/20 14:54:58 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/05/21 18:41:51 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,50 @@
 # define PHONEBOOK_H_
 
 #include "Contact.hpp"
+#include <iomanip>
+#include <string>
+#include <sstream>
+
+# define RED "\033[0;31m"
+# define BLUE "\033[0;34m"
+# define RESET "\033[0m"
+# define BLACK "\033[0;30m"
+# define GREEN "\033[0;32m"
+# define YELLOW "\033[0;33m"
 
 class PhoneBook
 {
 	public:
+
 		PhoneBook();
 		~PhoneBook();
 
-		void	addContact(Contact &contact);
-		void	displayContact(int index) const;
-		void	displayContacts(void) const;
-		void	searchContactByIndex(void) const;
-		// void	exitPhoneBook(void) const;
-		// void	runPhoneBook(void);
+		bool		getIsRunning(void) const;
+		void		setIsRunning(bool is_running);
+
+		void		setString(std::string name, std::string &str);
+		void		addContact(Contact &contact);
+		void		handleAddContact(void);
+
+		bool 		isValidIndex(std::string str) const;
+		std::string	limitFieldUpToLength(std::string name, size_t length = 10) const;
+		void		printEachField(std::string field, bool shouldEndLine) const;
+		void		printEachField(int field, bool shouldEndLine) const;
+		void	 	printHeaders(void) const;
+		void		printSeparator(void) const;
+		void		displayFullContactFields(int index) const;
+		void		displayContactOnSearchMenu(int index) const;
+		void		handleSearchContact(void) const;
+		bool		displayContacts(void) const;
+		void		searchContactByIndex(void) const;
+
+		void		handleExit(void);
 
 	private:
 	 	static const int MAX_SIZE = 8;
 		Contact	_contacts[MAX_SIZE];
 		int		_nbr_contacts;
+		int		_is_running;
 };
 
 #endif

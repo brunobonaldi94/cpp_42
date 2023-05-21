@@ -1,3 +1,5 @@
 .vscode
 .editorconfig
 *megaphone
+*.o
+*PhoneBook

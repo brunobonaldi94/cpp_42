@@ -6,15 +6,52 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 22:03:50 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/05/20 15:07:30 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/05/21 19:06:44 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
 #include "Contact.hpp"
 
-PhoneBook::PhoneBook() :  _nbr_contacts( 0 ) { }
+PhoneBook::PhoneBook() :  _nbr_contacts( 0 ), _is_running( true ) { }
 PhoneBook::~PhoneBook() { }
+
+bool	PhoneBook::getIsRunning(void) const
+{
+	return (this->_is_running);
+}
+
+void	PhoneBook::setIsRunning(bool is_running)
+{
+	this->_is_running = is_running;
+}
+
+void	PhoneBook::handleExit(void)
+{
+	std::cout << GREEN << "Exiting..." << RESET << std::endl;
+	setIsRunning(false);
+}
+
+
+void	PhoneBook::handleAddContact()
+{
+	std::string first_name, last_name, nick_name, phone_number, darkest_secret;
+
+	this->setString("Please add a First Name", first_name);
+	this->setString("Please add a Last Name", last_name);
+	this->setString("Please add a Nick Name", nick_name);
+	this->setString("Please add a Phone Number", phone_number);
+	this->setString("Please add a Darkest Secret", darkest_secret);
+	
+	Contact current_contact(
+		first_name,
+		last_name,
+		nick_name,
+		phone_number,
+		darkest_secret
+	);
+	this->addContact(current_contact);
+}
 
 void PhoneBook::addContact(Contact &contact)
 {
@@ -34,24 +71,129 @@ void PhoneBook::addContact(Contact &contact)
 		this->_nbr_contacts++;
 }
 
-void PhoneBook::displayContact(int index) const
+void PhoneBook::setString(std::string label, std::string &str)
 {
+	while (true)
+	{
+		std::cout << GREEN << label <<  RESET << std::endl;
+		std::getline(std::cin, str);
+		if (!str.empty())
+			break;
+		else
+			std::cout << RED << "It cannot be empty" << RESET << std::endl;
+	}
+}
+
+void PhoneBook::handleSearchContact(void) const
+{
+	int 		index;
+	std::string	index_str;
+
+	if (!this->displayContacts())
+		return ;
+	std::cout << GREEN << "Please select a contact by `Index` field to display" << RESET << std::endl;
+	std::getline(std::cin, index_str);
+	if (isValidIndex(index_str))
+	{
+		std::stringstream ss(index_str);
+		ss >> index;
+		this->displayFullContactFields(index - 1);
+	}
+}
+
+bool PhoneBook::displayContacts() const
+{
+	if (this->_nbr_contacts == 0)
+	{
+		std::cout << RED << "No contacts to display" << RESET << std::endl;
+		return (false);
+	}
+	this->printHeaders();
+	for (int i = 0; i < this->_nbr_contacts; i++)
+		displayContactOnSearchMenu(i);
+	std::cout << std::endl;
+	return (true);
+}
+
+void	PhoneBook::displayContactOnSearchMenu(int index) const
+{
+	std::string first_name, last_name, nick_name;
 	if (index < 0 || index > this->_nbr_contacts)
 		return ;
-	std::cout << "Contact Number: " << index + 1 << std::endl;
+	this->printEachField((index + 1), false);
+	first_name = this->limitFieldUpToLength(this->_contacts[index].getFirstName());
+	this->printEachField(first_name, false);
+	
+	last_name = this->limitFieldUpToLength(this->_contacts[index].getLastName());
+	this->printEachField(last_name, false);
+	
+	nick_name = this->limitFieldUpToLength(this->_contacts[index].getNickName());
+	this->printEachField(nick_name, true);
+}
+
+void PhoneBook::displayFullContactFields(int index) const
+{
+	if (index < 0 || index > this->_nbr_contacts - 1)
+	{
+		std::cout << "Invalid Contact Index" << std::endl;
+		return ;
+	}
+	std::cout << BLUE << "Index: " << index + 1 << std::endl;
 	std::cout << "First Name: " << this->_contacts[index].getFirstName() << std::endl;
 	std::cout << "Last Name: " << this->_contacts[index].getLastName() << std::endl;
 	std::cout << "Nick Name: " << this->_contacts[index].getNickName() << std::endl;
 	std::cout << "Phone Number: " << this->_contacts[index].getPhoneNumber() << std::endl;
-	std::cout << "Darkest Secret: " << this->_contacts[index].getDarkestSecret() << std::endl;
+	std::cout << "Darkest Secret: " << this->_contacts[index].getDarkestSecret() << RESET <<std::endl;
 }
-void PhoneBook::displayContacts() const
+
+std::string	PhoneBook::limitFieldUpToLength(std::string str, size_t length) const
 {
-	if (this->_nbr_contacts == 0)
+	if (str.length() > length)
+		return str.substr(0, length - 1) + ".";
+	return str;
+}
+
+void	 PhoneBook::printHeaders(void) const 
+{
+	this->printEachField("Index", false);
+	this->printEachField("First Name", false);
+	this->printEachField("Last Name", false);
+	this->printEachField("Nick Name", true);
+}
+
+void	PhoneBook::printEachField(std::string field, bool shouldEndLine) const
+{
+	if (shouldEndLine)
+		std::cout << YELLOW << std::right << std::setw(10) << field << RESET << std::endl;
+	else
+		std::cout << YELLOW << std::right << std::setw(10) << field << RESET << " | ";
+}
+
+void	PhoneBook::printEachField(int field, bool shouldEndLine) const
+{
+	if (shouldEndLine)
+		std::cout << YELLOW << std::right << std::setw(10) << field << RESET << std::endl;
+	else
+		std::cout << YELLOW << std::right << std::setw(10) << field << RESET << " | ";
+}
+
+bool PhoneBook::isValidIndex(std::string str) const
+{
+	if (str.empty())
+		std::cout << RED << "It cannot be empty" << RESET << std::endl;
+	
+	for (std::size_t i = 0; i < str.length(); i++)
 	{
-		std::cout << "No contacts to display" << std::endl;
-		return ;
+		if (!std::isdigit(str[i]))
+		{
+			std::cout << RED << "Invalid Index, it must be a numeric" << RESET << std::endl;
+			return (false);
+		}
 	}
-	for (int i = 0; i < this->_nbr_contacts; i++)
-		displayContact(i);
+	return (true);
+}
+
+void	PhoneBook::printSeparator(void) const
+{
+	 std::cout << std::string(100, '-') << std::endl;
 }
