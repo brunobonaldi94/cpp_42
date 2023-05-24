@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 19:21:38 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/05/22 21:35:23 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/05/22 23:12:35 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ void	Account::_displayTimestamp( void )
 {
 	std::time_t t = std::time(NULL);
 	std::tm* now = std::localtime(&t);
+
 	int	year = (now->tm_year + 1900);
 	int	month = (now->tm_mon + 1);
 	int day = (now->tm_mday);

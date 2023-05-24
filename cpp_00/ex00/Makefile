@@ -50,9 +50,6 @@ test:
 	./$(NAME) Damnit " ! " "Sorry students, I thought this thing was off."
 	./$(NAME)
 
-OBJS:
-	echo $(OBJS)
-
 valgrind:
 			@valgrind -s --leak-check=full --show-leak-kinds=all \
 			--track-origins=yes --log-fd=9 ./$(NAME) 9>memcheck.log

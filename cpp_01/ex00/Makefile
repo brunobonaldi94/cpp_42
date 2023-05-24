@@ -1,12 +1,12 @@
 # ==============================================================================
 # VARIABLES
 # ==============================================================================
-NAME		:=	PhoneBook
+NAME		:=	Zombie
 CPP			:=	c++
 FLAGS		:=	-g3 -Wall -Werror -Wextra -std=c++98
 MAKE		:=	make
 
-SRCS		:=	Contact.cpp PhoneBook.cpp main.cpp
+SRCS		:=	main.cpp Zombie.cpp newZombie.cpp randomChump.cpp
 OBJS		:=	$(SRCS:.cpp=.o)
 
 # ==============================================================================
@@ -28,9 +28,9 @@ all:		$(NAME)
 	@$(CPP) $(FLAGS) -c $< -o $@
 
 $(NAME):			$(OBJS)
-					@echo "$(WHT)Compiling PhoneBook...$(EOC)"
+					@echo "$(WHT)Compiling Zombie...$(EOC)"
 					@$(CPP) $(FLAGS) $(OBJS) -o $(NAME)
-					@echo "$(GREEN)PhoneBook build completed.$(EOC)"
+					@echo "$(GREEN)Zombie build completed.$(EOC)"
 					@tput setaf 5
 
 clean:
@@ -45,16 +45,11 @@ fclean:		clean
 
 re:			fclean all
 
-test:
-	./$(NAME) "shhhhh... I think the students are asleep..."
-	./$(NAME) Damnit " ! " "Sorry students, I thought this thing was off."
+run:		all
 	./$(NAME)
-
-OBJS:
-	echo $(OBJS)
 
 valgrind:
 			@valgrind -s --leak-check=full --show-leak-kinds=all \
 			--track-origins=yes --log-fd=9 ./$(NAME) 9>memcheck.log
 
-.PHONY:		all clean fclean re
+.PHONY:		all clean fclean re run
