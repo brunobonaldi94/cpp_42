@@ -1,22 +1,24 @@
 # ==============================================================================
 # VARIABLES
 # ==============================================================================
-NAME		:=	ZombieHord
-CPP			:=	c++
-FLAGS		:=	-g3 -Wall -Werror -Wextra -std=c++98
-MAKE		:=	make
+NAME			:=	Brain
+RESULT_LOG_FILE	:=	result.log
+INPUT_LOG_FILE  :=	input.log
+CPP				:=	c++
+FLAGS			:=	-g3 -Wall -Werror -Wextra -std=c++98
+MAKE			:=	make
 
-SRCS		:=	main.cpp Zombie.cpp zombieHorde.cpp
-OBJS		:=	$(SRCS:.cpp=.o)
+SRCS			:=	main.cpp
+OBJS			:=	$(SRCS:.cpp=.o)
 
 # ==============================================================================
 # COLORS
 # ==============================================================================
 
-GREEN		:=	\033[1;32m
-RED			:=	\033[1;31m
-WHT			:=	\033[1;37m
-EOC			:=	\033[1;0m
+GREEN			:=	\033[1;32m
+RED				:=	\033[1;31m
+WHT				:=	\033[1;37m
+EOC				:=	\033[1;0m
 
 # ==============================================================================
 # RECIPES
@@ -28,14 +30,14 @@ all:		$(NAME)
 	@$(CPP) $(FLAGS) -c $< -o $@
 
 $(NAME):			$(OBJS)
-					@echo "$(WHT)Compiling Zombie...$(EOC)"
+					@echo "$(WHT)Compiling Brain...$(EOC)"
 					@$(CPP) $(FLAGS) $(OBJS) -o $(NAME)
-					@echo "$(GREEN)Zombie build completed.$(EOC)"
+					@echo "$(GREEN)Brain build completed.$(EOC)"
 					@tput setaf 5
 
 clean:
 					@echo "$(WHT)Removing .o files...$(EOC)"
-					@rm -f $(OBJS)
+					@rm -f $(OBJS) $(RESULT_LOG_FILE) $(INPUT_LOG_FILE)
 					@echo "$(GREEN)Clean done.$(EOC)"
 
 fclean:		clean
@@ -45,8 +47,8 @@ fclean:		clean
 
 re:			fclean all
 
-run:		all
-	./$(NAME)
+run:	all
+	@./$(NAME) 
 
 valgrind:
 			@valgrind -s --leak-check=full --show-leak-kinds=all \
