@@ -1,35 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   InputFile.hpp                                      :+:      :+:    :+:   */
+/*   Harl.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/24 22:45:48 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/05/25 18:30:48 by bbonaldi         ###   ########.fr       */
+/*   Created: 2023/05/25 18:37:44 by bbonaldi          #+#    #+#             */
+/*   Updated: 2023/05/25 19:19:56 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INPUTFILE_H
-# define INPUTFILE_H
-
 #include <iostream>
-#include <fstream>
 
-class InputFile
+# define RED "\033[0;31m"
+# define BLUE "\033[0;34m"
+# define RESET "\033[0m"
+# define BLACK "\033[0;30m"
+# define GREEN "\033[0;32m"
+# define YELLOW "\033[0;33m"
+
+class Harl
 {
 	public:
-		InputFile(std::string file_name);
-		
-		~InputFile();
-		std::string	readFile( void );
-		bool		fileExists( std::string file_name);
-		bool		getFileExists( void );
+		Harl();
+		~Harl();
 
+		void	complain( std::string level );
 	private:
-		std::string		_file_name;
-		std::ifstream	_input_file_stream;
-		bool			_file_exists;
-};
+		void debug( void );
+		void info( void );
+		void warning( void );
+		void error( void );
 
-#endif
+};

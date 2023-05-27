@@ -1,35 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   InputFile.hpp                                      :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/24 22:45:48 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/05/25 18:30:48 by bbonaldi         ###   ########.fr       */
+/*   Created: 2023/05/25 19:14:57 by bbonaldi          #+#    #+#             */
+/*   Updated: 2023/05/25 19:16:21 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INPUTFILE_H
-# define INPUTFILE_H
+#include "Harl.hpp"
 
-#include <iostream>
-#include <fstream>
-
-class InputFile
+int	main()
 {
-	public:
-		InputFile(std::string file_name);
-		
-		~InputFile();
-		std::string	readFile( void );
-		bool		fileExists( std::string file_name);
-		bool		getFileExists( void );
-
-	private:
-		std::string		_file_name;
-		std::ifstream	_input_file_stream;
-		bool			_file_exists;
-};
-
-#endif
+	Harl reclamao;
+	reclamao.complain("debug");
+	reclamao.complain("info");
+	reclamao.complain("warning");
+	reclamao.complain("error");
+	reclamao.complain("error2");
+	return (0);
+}

@@ -1,35 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   InputFile.hpp                                      :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/24 22:45:48 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/05/25 18:30:48 by bbonaldi         ###   ########.fr       */
+/*   Created: 2023/05/25 19:14:57 by bbonaldi          #+#    #+#             */
+/*   Updated: 2023/05/26 23:17:26 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INPUTFILE_H
-# define INPUTFILE_H
+#include "Harl.hpp"
 
-#include <iostream>
-#include <fstream>
-
-class InputFile
+int	main(int argc, char *argv[])
 {
-	public:
-		InputFile(std::string file_name);
-		
-		~InputFile();
-		std::string	readFile( void );
-		bool		fileExists( std::string file_name);
-		bool		getFileExists( void );
+	Harl reclamao;
 
-	private:
-		std::string		_file_name;
-		std::ifstream	_input_file_stream;
-		bool			_file_exists;
-};
-
-#endif
+	if (argc != 2)
+	{
+		std::cout << "Harl only accepts one arg" << std::endl;
+		return (1);
+	}
+	reclamao.complain(argv[1]);
+	return (0);
+}

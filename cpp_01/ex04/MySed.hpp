@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:37:18 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/05/24 23:49:05 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/05/25 19:19:58 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 class	MySed
 {
 	public:
-		MySed(std::string file_name, std::string s1, std::string s2);
+		MySed(const char* file_name, const char* s1, const char* s2);
 		~MySed();
 
 		void	replaceS1byS2();
