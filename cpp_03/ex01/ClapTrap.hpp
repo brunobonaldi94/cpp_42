@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:44:46 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/09 21:59:12 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/06/09 22:08:29 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ class ClapTrap
 		void attack(const std::string& target);
 		void takeDamage(unsigned int amount);
 		void beRepaired(unsigned int amount);
+		bool NoMorePoints( void ) const;
 
-		
+	protected:
 		std::string getName( void ) const;
 		void setName(std::string const name);
 		void setHitPoints(int const hitPoints);
@@ -47,7 +48,6 @@ class ClapTrap
 		void setAttackDamage(int const attackDamage);
 		int getAttackDamage( void ) const;
 
-		bool NoMorePoints( void ) const;
 
 	private:
 		std::string _name;
