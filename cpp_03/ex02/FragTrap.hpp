@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   FragTrap.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/05 21:44:23 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/10 15:30:02 by bbonaldi         ###   ########.fr       */
+/*   Created: 2023/06/05 21:44:46 by bbonaldi          #+#    #+#             */
+/*   Updated: 2023/06/10 12:09:58 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ScavTrap.hpp"
+#ifndef FRAG_TRAP_H
+#define FRAG_TRAP_H
 
-int main( void )
+#include "ClapTrap.hpp"
+
+class FragTrap : public ClapTrap
 {
-	ScavTrap a;
-	ScavTrap b("Bruno");
-	b.attack("julio");
-	b.guardGate();
-	return 0;
-}
+	public:
+		FragTrap();
+		FragTrap(std::string name);
+		FragTrap(FragTrap const &src);
+		~FragTrap();
+
+		FragTrap & operator=(FragTrap const &rhs);
+
+		void highFivesGuys(void);
+};
+
+#endif

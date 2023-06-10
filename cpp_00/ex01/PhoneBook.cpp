@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 22:03:50 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/05/21 19:06:44 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/06/10 12:27:20 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,10 @@ void	PhoneBook::printEachField(int field, bool shouldEndLine) const
 bool PhoneBook::isValidIndex(std::string str) const
 {
 	if (str.empty())
+	{
 		std::cout << RED << "It cannot be empty" << RESET << std::endl;
+		return (false);
+	}
 	
 	for (std::size_t i = 0; i < str.length(); i++)
 	{

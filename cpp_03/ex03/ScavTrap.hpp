@@ -1,22 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   ScavTrap.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/05 21:44:23 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/10 15:30:02 by bbonaldi         ###   ########.fr       */
+/*   Created: 2023/06/05 21:44:46 by bbonaldi          #+#    #+#             */
+/*   Updated: 2023/06/10 13:58:21 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ScavTrap.hpp"
+#ifndef SCAV_TRAP_H
+#define SCAV_TRAP_H
 
-int main( void )
+#include "ClapTrap.hpp"
+
+class ScavTrap : virtual public ClapTrap
 {
-	ScavTrap a;
-	ScavTrap b("Bruno");
-	b.attack("julio");
-	b.guardGate();
-	return 0;
-}
+	public:
+		ScavTrap();
+		ScavTrap(std::string name);
+		ScavTrap(ScavTrap const &src);
+		~ScavTrap();
+
+		ScavTrap & operator=(ScavTrap const &rhs);
+
+		void attack(std::string const & target);
+		void guardGate(void);
+};
+
+#endif
