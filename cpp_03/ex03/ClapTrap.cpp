@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:48:05 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/10 16:11:51 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/06/10 19:51:39 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 ClapTrap::ClapTrap(): _name("ClapTrap"), _className("ClapTrap"), _hitPoints(10), _energyPoints(10), _attackDamage(0)
 {
-	std::cout << "Default Constructor " << this->getClassName() << " called" << std::endl;
+	std::cout << "Default Constructor ClapTrap called" << std::endl;
 }
 ClapTrap::ClapTrap(std::string name): _name(name), _className("ClapTrap"), _hitPoints(10), _energyPoints(10), _attackDamage(0)
 {
-	std::cout << this->getClassName() << " has been created" << std::endl;
+	std::cout << "ClapTrap has been created" << std::endl;
 }
 ClapTrap::ClapTrap(ClapTrap const &src)
 {
-	std::cout << "Copy Constructor for " << this->getClassName() << " called" << std::endl;
+	std::cout << "Copy Constructor for ClapTrap called" << std::endl;
 	*this = src;
 }
 ClapTrap::~ClapTrap()
 {
-	std::cout << this->getClassName() << " has been destroyed" << std::endl;
+	std::cout << "ClapTrap has been destroyed" << std::endl;
 }
 
 std::string ClapTrap::getNameAndClassName( void ) const
@@ -139,4 +139,13 @@ ClapTrap & ClapTrap::operator=(ClapTrap const &rhs)
 		this->setAttackDamage(rhs.getAttackDamage());
 	}
 	return *this;
+}
+
+std::ostream & operator<<(std::ostream & o, ClapTrap const & src)
+{
+	o 	<< BLUE << src.getNameAndClassName() << std::endl 
+		<< "Hit Points: " << src.getHitPoints() <<  std::endl 
+		<< "Energy Points " << src.getEnergyPoints() << std::endl
+		<< "Attack Damage " << src.getAttackDamage() << RESET<< std:: endl;
+	return o;
 }

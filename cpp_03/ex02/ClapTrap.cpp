@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:48:05 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/10 16:12:12 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/06/10 19:51:49 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,4 +139,13 @@ ClapTrap & ClapTrap::operator=(ClapTrap const &rhs)
 		this->setAttackDamage(rhs.getAttackDamage());
 	}
 	return *this;
+}
+
+std::ostream & operator<<(std::ostream & o, ClapTrap const & src)
+{
+	o 	<< BLUE << src.getNameAndClassName() << std::endl 
+		<< "Hit Points: " << src.getHitPoints() <<  std::endl 
+		<< "Energy Points " << src.getEnergyPoints() << std::endl
+		<< "Attack Damage " << src.getAttackDamage() << RESET<< std:: endl;
+	return o;
 }

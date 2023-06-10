@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:44:23 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/10 16:28:41 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/06/10 20:08:12 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,6 @@ int main( void )
 	b.attack("eu");
 	DiamondTrap c = b;
 	c.attack("eu");
+	std::cout << c;
 	return 0;
 }

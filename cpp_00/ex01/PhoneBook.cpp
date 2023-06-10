@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 22:03:50 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/10 12:27:20 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/06/10 19:28:30 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ bool PhoneBook::isValidIndex(std::string str) const
 	{
 		if (!std::isdigit(str[i]))
 		{
-			std::cout << RED << "Invalid Index, it must be a numeric" << RESET << std::endl;
+			std::cout << RED << "Invalid Index, it must be numeric" << RESET << std::endl;
 			return (false);
 		}
 	}
