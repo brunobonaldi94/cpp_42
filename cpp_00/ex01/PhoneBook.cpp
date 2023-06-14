@@ -6,14 +6,14 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 22:03:50 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/10 19:28:30 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/06/13 21:15:13 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
 #include "Contact.hpp"
 
-PhoneBook::PhoneBook() :  _nbr_contacts( 0 ), _is_running( true ) { }
+PhoneBook::PhoneBook() :  _nbr_contacts( 0 ), _next_contact_index( 0 ) , _is_running( true ) { }
 PhoneBook::~PhoneBook() { }
 
 bool	PhoneBook::getIsRunning(void) const
@@ -24,6 +24,19 @@ bool	PhoneBook::getIsRunning(void) const
 void	PhoneBook::setIsRunning(bool is_running)
 {
 	this->_is_running = is_running;
+}
+
+int		PhoneBook::getNextContactIndex(void) const
+{
+	return this->_next_contact_index;
+}
+void	PhoneBook::setNextContactIndex(int lastContactIndexAdded)
+{
+	if (lastContactIndexAdded == this->MAX_SIZE - 1)
+		this->_next_contact_index = 0;
+	else
+		this->_next_contact_index = lastContactIndexAdded + 1;
+
 }
 
 void	PhoneBook::handleExit(void)
@@ -65,32 +78,46 @@ void PhoneBook::addContact(Contact &contact)
 			std::cout << "All fields must be filled" << std::endl;
 			return ;
 		}
-	int	index = _nbr_contacts % this->MAX_SIZE;
-	this->_contacts[index] = contact;
 	if (this->_nbr_contacts < this->MAX_SIZE)
 		this->_nbr_contacts++;
+	int	index = this->getNextContactIndex();
+	this->_contacts[index] = contact;
+	setNextContactIndex(index);
 }
-
+bool		PhoneBook::isAllWhiteSpace(std::string str) const
+{
+	for (size_t i = 0; i < str.size(); i++)
+	{
+		if (!std::isspace(static_cast<unsigned char>(str[i])))
+			return (false);
+	}
+	return (true);
+}
 void PhoneBook::setString(std::string label, std::string &str)
 {
 	while (true)
 	{
 		std::cout << GREEN << label <<  RESET << std::endl;
 		std::getline(std::cin, str);
-		if (!str.empty())
+		if (!str.empty() && !this->isAllWhiteSpace(str))
 			break;
 		else
-			std::cout << RED << "It cannot be empty" << RESET << std::endl;
+			std::cout << RED << "It cannot be empty or only have white space" << RESET << std::endl;
 	}
 }
 
-void PhoneBook::handleSearchContact(void) const
+void	PhoneBook::handleSearchContact(void) const
 {
-	int 		index;
-	std::string	index_str;
-
 	if (!this->displayContacts())
 		return ;
+	this->searchContactByIndex();
+}
+
+void	PhoneBook::searchContactByIndex(void) const
+{
+	std::string	index_str;
+	int 		index;
+
 	std::cout << GREEN << "Please select a contact by `Index` field to display" << RESET << std::endl;
 	std::getline(std::cin, index_str);
 	if (isValidIndex(index_str))

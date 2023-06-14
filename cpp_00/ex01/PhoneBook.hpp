@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 21:38:59 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/05/21 18:41:51 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/06/13 21:08:11 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <iomanip>
 #include <string>
 #include <sstream>
+#include <cctype>
 
 # define RED "\033[0;31m"
 # define BLUE "\033[0;34m"
@@ -34,12 +35,15 @@ class PhoneBook
 
 		bool		getIsRunning(void) const;
 		void		setIsRunning(bool is_running);
+		int			getNextContactIndex(void) const;
+		void		setNextContactIndex(int lastIndexAdded);
 
 		void		setString(std::string name, std::string &str);
 		void		addContact(Contact &contact);
 		void		handleAddContact(void);
 
 		bool 		isValidIndex(std::string str) const;
+		bool		isAllWhiteSpace(std::string str) const;
 		std::string	limitFieldUpToLength(std::string name, size_t length = 10) const;
 		void		printEachField(std::string field, bool shouldEndLine) const;
 		void		printEachField(int field, bool shouldEndLine) const;
@@ -57,6 +61,7 @@ class PhoneBook
 	 	static const int MAX_SIZE = 8;
 		Contact	_contacts[MAX_SIZE];
 		int		_nbr_contacts;
+		int		_next_contact_index;
 		int		_is_running;
 };
 
