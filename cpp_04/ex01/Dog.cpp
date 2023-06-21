@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 22:28:21 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/19 23:01:37 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/06/20 21:48:17 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ Dog & Dog::operator=(Dog const &rhs)
 {
 	std::cout << "Dog Copy assignment Operator called" << std::endl;
 	if (this != &rhs)
+	{
 		this->setType(rhs.getType());
+		this->brain->setIdeas(rhs.getBrain()->getIdeas());
+	}
 	return *this;
 }
 

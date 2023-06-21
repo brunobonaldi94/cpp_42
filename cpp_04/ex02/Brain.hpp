@@ -1,36 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Dog.hpp                                            :+:      :+:    :+:   */
+/*   Brain.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 22:26:56 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/20 21:33:57 by bbonaldi         ###   ########.fr       */
+/*   Created: 2023/06/19 22:33:03 by bbonaldi          #+#    #+#             */
+/*   Updated: 2023/06/19 23:15:29 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DOG_H
-#define DOG_H
+#ifndef BRAIN_HPP
+# define BRAIN_HPP
 
-#include "Animal.hpp"
-#include "Brain.hpp"
+#include <iostream>
+#include <sstream>
 
-class Dog: public Animal
+class Brain
 {
 	public:
-		Dog();
-		~Dog();
-		Dog(Dog const &src);
-		Dog & operator=(Dog const &rhs);
-		
-				
-		Brain *getBrain( void ) const;
-		void setBrain(Brain *brain);
-		void makeSound() const;
+		Brain();
+		~Brain();
+		Brain(Brain const & src);
+		Brain & operator=(Brain const & rhs);
+
+		std::string *getIdeas(void) const;
+		void setIdeas(std::string const *ideas);
+		std::string getIdeaByIndex(int index) const;
+		void setIdeaByIndex(int index, std::string idea);
 
 	private:
-		Brain *brain;
+		static const int MAX_IDEAS = 100;
+		std::string ideas[MAX_IDEAS];
 };
 
 #endif

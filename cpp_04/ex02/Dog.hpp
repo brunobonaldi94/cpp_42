@@ -6,17 +6,17 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 22:26:56 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/20 21:33:57 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/06/20 21:41:01 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOG_H
 #define DOG_H
 
-#include "Animal.hpp"
+#include "AAnimal.hpp"
 #include "Brain.hpp"
 
-class Dog: public Animal
+class Dog: public AAnimal
 {
 	public:
 		Dog();

@@ -6,13 +6,13 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 22:28:21 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/20 21:49:03 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/06/20 21:48:43 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Cat.hpp"
 
-Cat::Cat() : Animal()
+Cat::Cat() : AAnimal()
 {
 	this->setType("Cat");
 	this->brain = new Brain();
@@ -26,7 +26,7 @@ Cat::~Cat()
 	delete this->brain;
 }
 
-Cat::Cat(Cat const &src) : Animal()
+Cat::Cat(Cat const &src) : AAnimal()
 {
 	std::cout << "Cat Copy constructor called" << std::endl;
 	*this = src;
