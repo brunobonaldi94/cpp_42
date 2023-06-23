@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Ice.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: bbonaldi <bbonaldi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 22:35:20 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/20 22:59:59 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/06/22 23:13:01 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,12 @@
 
 class Ice : public AMateria
 {
-	
+	public:
+		Ice(std::string const & type);
+		Ice(Ice const &src);
+		virtual ~Ice();
+		Ice &operator=(Ice const &rhs);
+		Ice* clone() const;
 };
 
 

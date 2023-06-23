@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   AMateria.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: bbonaldi <bbonaldi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 22:39:16 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/20 22:52:13 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/06/22 21:26:45 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ void AMateria::use(ICharacter & target)
 
 AMateria & AMateria::operator=(AMateria const & rhs)
 {
+	std::cout << "AMateria assignment operator called" << std::endl;
 	if (this != &rhs)
-	{
-		this->clone();
-	}
+		this->type = rhs.getType();
+	return *this;
 }
 
 AMateria::~AMateria()
