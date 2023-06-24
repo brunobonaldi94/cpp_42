@@ -8,7 +8,7 @@ CPP				:=	c++
 FLAGS			:=	-g3 -Wall -Werror -Wextra -std=c++98
 MAKE			:=	make
 
-SRCS			:=	AAnimal.cpp Dog.cpp Cat.cpp Brain.cpp main.cpp
+SRCS			:= 	Ice.cpp AMateria.cpp Cure.cpp main.cpp MateriaSource.cpp LinkedList.cpp Character.cpp 
 OBJS			:=	$(SRCS:.cpp=.o)
 
 # ==============================================================================

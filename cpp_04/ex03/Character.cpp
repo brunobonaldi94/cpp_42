@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Character.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbonaldi <bbonaldi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 22:53:21 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/22 23:10:54 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/06/24 13:55:45 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,11 @@ Character::Character(Character const &src)
 {
 	*this = src;
 }
-Character::~Character(void)
+Character::~Character()
 {
 	delete this->unused_materia;
+	for (int i = 0; i < this->inventory_count; i++)
+		delete this->inventory[i];
 }
 Character &Character::operator=(Character const &src)
 {
@@ -39,7 +41,7 @@ Character &Character::operator=(Character const &src)
 		this->setName(src.getName());
 		this->inventory_count = inventory_count;
 		for (int i = 0; i < this->INV_SIZE; i++)
-			this->inventory[i] = src.inventory[i];
+			this->inventory[i] = src.inventory[i]->clone();
 
 	}
 	return (*this);
@@ -70,6 +72,7 @@ void Character::unequip(int index)
 		return ;
 	this->unused_materia->add(this->inventory[index]);
 	this->inventory[index] = NULL;
+	this->inventory_count--;
 }
 
 void Character::use(int idx, ICharacter &target)

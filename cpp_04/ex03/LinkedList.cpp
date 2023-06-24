@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LinkedList.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbonaldi <bbonaldi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:39:25 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/22 23:03:07 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/06/24 13:58:17 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ LinkedList::~LinkedList()
 	while (this->head)
 	{
 		temp = this->head->next;
+		delete this->head->materia;
 		delete this->head;
 		this->head = temp;
 	}
@@ -62,4 +63,10 @@ void LinkedList::add(AMateria *materia)
 	Node *node = createNode(materia);
 	node->next = this->head;
 	this->head = node;
+	this->size++;
+}
+
+int LinkedList::getSize() const
+{
+	return (this->size);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ICharacter.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbonaldi <bbonaldi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 21:51:04 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/22 21:28:01 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/06/24 13:48:20 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <iostream>
 #include "AMateria.hpp"
 
+class AMateria;
 class ICharacter
 {
 	public:

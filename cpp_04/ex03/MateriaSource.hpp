@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   MateriaSource.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbonaldi <bbonaldi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 22:36:36 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/22 23:13:28 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/06/24 13:09:10 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,17 @@
 
 class MateriaSource : public IMateriaSource
 {
-
+	public:
+		MateriaSource();
+		MateriaSource(MateriaSource const & src);
+		~MateriaSource();
+		MateriaSource &operator=(MateriaSource const & rhs);
+		void learnMateria(AMateria * materia);
+		AMateria* createMateria(std::string const & type);
+	private:
+		static const int MAX_SIZE = 4; 
+		int materia_count;
+		AMateria* materia[MAX_SIZE];
 };
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LinkedList.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbonaldi <bbonaldi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:38:56 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/22 23:00:11 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/06/24 13:33:30 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@ class LinkedList
 		LinkedList(Node *node);
 		LinkedList(LinkedList const &src);
 		LinkedList &operator=(LinkedList const &src);
-
+		int	getSize() const;
 		Node *createNode(AMateria *materia);
 		void add(AMateria *materia);
 	private:
 		Node *head;
+		int size;
 };
 
 #endif

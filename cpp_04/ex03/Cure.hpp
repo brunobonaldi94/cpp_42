@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Cure.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbonaldi <bbonaldi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 22:34:35 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/22 23:13:23 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/06/24 13:43:31 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 class Cure : public AMateria
 {
 	public:
-		Cure(std::string const & type);
+		Cure();
 		Cure(Cure const &src);
 		virtual ~Cure();
 		Cure &operator=(Cure const &rhs);
-		Cure* clone() const;
+		AMateria* clone() const;
 };
 
 #endif

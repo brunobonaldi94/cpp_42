@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Character.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbonaldi <bbonaldi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 22:13:19 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/22 23:05:38 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/06/24 13:49:52 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ class Character : public ICharacter
 {
 	public:
 		Character();
+		~Character();
 		Character(std::string name);
 		Character(Character const &src);
 		Character &operator=(Character const &src);
