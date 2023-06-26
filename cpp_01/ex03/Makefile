@@ -1,9 +1,7 @@
 # ==============================================================================
 # VARIABLES
 # ==============================================================================
-NAME			:=	HumanAB
-RESULT_LOG_FILE	:=	result.log
-INPUT_LOG_FILE  :=	input.log
+NAME			:=	main
 CPP				:=	c++
 FLAGS			:=	-g3 -Wall -Werror -Wextra -std=c++98
 MAKE			:=	make
@@ -30,14 +28,14 @@ all:		$(NAME)
 	@$(CPP) $(FLAGS) -c $< -o $@
 
 $(NAME):			$(OBJS)
-					@echo "$(WHT)Compiling HumanAB...$(EOC)"
+					@echo "$(WHT)Compiling $(NAME)...$(EOC)"
 					@$(CPP) $(FLAGS) $(OBJS) -o $(NAME)
-					@echo "$(GREEN)HumanAB build completed.$(EOC)"
+					@echo "$(GREEN)$(NAME) build completed.$(EOC)"
 					@tput setaf 5
 
 clean:
 					@echo "$(WHT)Removing .o files...$(EOC)"
-					@rm -f $(OBJS) $(RESULT_LOG_FILE) $(INPUT_LOG_FILE)
+					@rm -f $(OBJS)
 					@echo "$(GREEN)Clean done.$(EOC)"
 
 fclean:		clean

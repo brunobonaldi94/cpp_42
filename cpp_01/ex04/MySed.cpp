@@ -6,13 +6,13 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 23:41:28 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/05/25 18:31:48 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/06/25 18:44:30 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MySed.hpp"
 
-MySed::MySed(const char* file_name, const char* s1, const char* s2)
+MySed::MySed(const char* file_name, const char* s1, const char* s2): _occurrences(0)
 {
 	if (s1 == NULL || s2 == NULL || file_name == NULL)
 		throw std::invalid_argument("it cannot be NULL");
@@ -46,8 +46,11 @@ void	MySed::replaceS1byS2()
 		int len = found - initial_pos;
 		result += (fileContent.substr(initial_pos, len) + this->_s2);
 		initial_pos = found + len_s1;
+		this->_occurrences++;
 	}
 	if (initial_pos < fileContent.length())
 		result += fileContent.substr(initial_pos, fileContent.length() - initial_pos);
+	std::cout << "Number of occurrences of `" << this->_s1 << "` in file `" << this->_input_file->getFileName() << "`: " << this->_occurrences 
+	<< std::endl;
 	this->_output_file->WriteFile(result);
 }

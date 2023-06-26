@@ -1,9 +1,7 @@
 # ==============================================================================
 # VARIABLES
 # ==============================================================================
-NAME			:=	MYSED
-RESULT_LOG_FILE	:=	result.log
-INPUT_LOG_FILE  :=	input.log
+NAME			:=	main
 CPP				:=	c++
 FLAGS			:=	-g3 -Wall -Werror -Wextra -std=c++98
 MAKE			:=	make
@@ -37,7 +35,7 @@ $(NAME):			$(OBJS)
 
 clean:
 					@echo "$(WHT)Removing .o files...$(EOC)"
-					@rm -f $(OBJS) $(RESULT_LOG_FILE) $(INPUT_LOG_FILE)
+					@rm -f $(OBJS)
 					@echo "$(GREEN)Clean done.$(EOC)"
 
 fclean:		clean

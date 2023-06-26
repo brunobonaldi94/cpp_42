@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:45:48 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/05/25 18:31:13 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/06/25 18:43:28 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ bool InputFile::getFileExists()
 bool InputFile::fileExists( std::string file_name)
 {
 	std::ifstream file(file_name.c_str());
+	if (!file.good())
+		std::cout << "File " << file_name << " does not exist" << std::endl;
 	return file.good();
 }
 
@@ -49,4 +51,9 @@ std::string InputFile::readFile()
 
 	this->_input_file_stream.close();
 	return all_lines;
+}
+
+std::string & InputFile::getFileName( void )
+{
+	return this->_file_name;
 }

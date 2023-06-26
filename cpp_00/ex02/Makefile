@@ -4,6 +4,7 @@
 NAME			:=	Account
 RESULT_LOG_FILE	:=	result.log
 INPUT_LOG_FILE  :=	input.log
+LOG_FILE		:=	19920104_091532.log
 CPP				:=	c++
 FLAGS			:=	-g3 -Wall -Werror -Wextra -std=c++98
 MAKE			:=	make
@@ -47,13 +48,16 @@ fclean:		clean
 
 re:			fclean all
 
-test:	all run
+test:	all $(LOG_FILE) run
 	LOG=$$(cat $(RESULT_LOG_FILE) | awk 'NR=1{print $1}' | sed -n 's/.*\[\([^]]*\)\].*/\1/p' | head -n 1 ); \
 	cat 19920104_091532.log | sed "s/19920104_091532/$${LOG}/g" > $(INPUT_LOG_FILE) 
 	diff $(INPUT_LOG_FILE) $(RESULT_LOG_FILE)
 
 run:	
 	./$(NAME) > $(RESULT_LOG_FILE)
+
+$(LOG_FILE):
+	wget https://cdn.intra.42.fr/document/document/14808/19920104_091532.log
 
 valgrind:
 			@valgrind -s --leak-check=full --show-leak-kinds=all \

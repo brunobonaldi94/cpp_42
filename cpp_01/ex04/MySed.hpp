@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:37:18 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/05/25 19:19:58 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/06/25 18:40:14 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ class	MySed
 	private:
 		InputFile*	_input_file;
 		OutputFile*	_output_file;
+		int			_occurrences;
 		std::string	_s1;
 		std::string	_s2;
 };

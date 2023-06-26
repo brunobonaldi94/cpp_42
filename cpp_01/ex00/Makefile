@@ -1,7 +1,7 @@
 # ==============================================================================
 # VARIABLES
 # ==============================================================================
-NAME		:=	Zombie
+NAME		:=	main
 CPP			:=	c++
 FLAGS		:=	-g3 -Wall -Werror -Wextra -std=c++98
 MAKE		:=	make
@@ -28,9 +28,9 @@ all:		$(NAME)
 	@$(CPP) $(FLAGS) -c $< -o $@
 
 $(NAME):			$(OBJS)
-					@echo "$(WHT)Compiling Zombie...$(EOC)"
+					@echo "$(WHT)Compiling $(NAME)...$(EOC)"
 					@$(CPP) $(FLAGS) $(OBJS) -o $(NAME)
-					@echo "$(GREEN)Zombie build completed.$(EOC)"
+					@echo "$(GREEN)$(NAME) build completed.$(EOC)"
 					@tput setaf 5
 
 clean:
