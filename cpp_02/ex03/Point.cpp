@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 22:38:40 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/03 23:59:27 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/06/29 23:17:55 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	Point::setX(float const x)
 }
 Fixed	Point::getX( void ) const
 {
-	return this->y;
+	return this->x;
 }
 void	Point::setY(float const y)
 {
