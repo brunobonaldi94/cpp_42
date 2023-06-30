@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 18:38:59 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/03 20:42:24 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/06/29 21:38:18 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,14 @@ Fixed::Fixed()
 }
 Fixed::Fixed(const int n)
 {
-	this->_fixedPoint = n << this->_fractionalBits;
 	std::cout << "Int constructor called" << std::endl;
+	this->_fixedPoint = n << this->_fractionalBits;
 }
 
 Fixed::Fixed(float const f )
 {
 	std::cout << "Float constructor called" << std::endl;
 	this->_fixedPoint = roundf(f * (1 << this->_fractionalBits));
-	
 }
 
 Fixed::Fixed(Fixed const & src)

@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:48:05 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/10 20:03:46 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/06/28 21:18:36 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ ClapTrap::ClapTrap(): _name("ClapTrap"), _className("ClapTrap"), _hitPoints(10),
 }
 ClapTrap::ClapTrap(std::string name): _name(name), _className("ClapTrap"), _hitPoints(10), _energyPoints(10), _attackDamage(0)
 {
-	std::cout << "ClapTrap has been created" << std::endl;
+	std::cout << "Named Constructor Claptrap called" << std::endl;
 }
 ClapTrap::ClapTrap(ClapTrap const &src)
 {
@@ -39,12 +39,12 @@ bool ClapTrap::NoMorePoints(void) const
 {
 	if (this->getHitPoints() == 0)
 	{
-		std::cout << this->getNameAndClassName() << "has no more hit points" << std::endl;
+		std::cout << this->getNameAndClassName() << " has no more hit points" << std::endl;
 		return (true);
 	}
 	if (this->getEnergyPoints() == 0)
 	{
-		std::cout << this->getNameAndClassName() << "has no more energy points" << std::endl;
+		std::cout << this->getNameAndClassName() << " has no more energy points" << std::endl;
 		return (true);
 	}
 	return (false);
@@ -143,7 +143,7 @@ ClapTrap & ClapTrap::operator=(ClapTrap const &rhs)
 
 std::ostream & operator<<(std::ostream & o, ClapTrap const & src)
 {
-	o 	<< BLUE << src.getNameAndClassName() << std::endl 
+	o 	<< GREEN << src.getNameAndClassName() << std::endl 
 		<< "Hit Points: " << src.getHitPoints() <<  std::endl 
 		<< "Energy Points " << src.getEnergyPoints() << std::endl
 		<< "Attack Damage " << src.getAttackDamage() << RESET<< std:: endl;
