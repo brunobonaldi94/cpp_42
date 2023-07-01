@@ -6,40 +6,27 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 18:28:57 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/29 23:15:55 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/01 14:10:05 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Point.hpp"
 
-bool	checkPointInsideTriangle( Point const a, Point const b, Point const c, Point const point )
-{
-	bool isInside = bsp(a, b, c, point);
-	if (isInside)
-		std::cout << "is";
-	else
-		std::cout << "is not";
-	std::cout << " inside triangle" << std::endl;
-	return isInside;
-}
-
 int main( void )
 {
-	static const int size = 4;
-	Point p1(0,0);
-	Point p2(20, 0);
-	Point p3(10, 30);
+	static const int size = 5;
+	Point v1(0,0);
+	Point v2(20, 0);
+	Point v3(10, 30);
 
+	Point point1(10, 15); //inside
+	Point point2(5, 5); // inside
+	Point point3(100, 150); // outside
+	Point point4(20, 0); // vertex, thus outise
+	Point point5(10, 0); // edge, thus outise
+	Point points[size] = { point1, point2, point3, point4, point5 };
 
-	Point point1(10, 15);
-	Point point2(5, 5);
-	Point point3(100, 150);
-	Point point4(20, 0);
-	Point points[size] = {point1, point2, point3, point4};
-
-	for (int i = 0; i < size; i++) {
-		std::cout << "point" << i + 1 << "(x=" << points[i].getXFloat() << ",y=" << points[i].getYFloat() << ") ";
-		checkPointInsideTriangle(p1, p2, p3, points[i]);
-	}
-	return 0;
+	for (int i = 0; i < size; i++)
+		std::cout << (bsp(v1, v2, v3, points[i]) ? "True" : "False") << std::endl;
+	return 0; 
 }
