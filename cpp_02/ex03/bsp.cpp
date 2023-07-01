@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 21:43:50 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/01 14:08:19 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/01 17:54:35 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ bool isOnEdge(const Point& p, const Point& v1, const Point& v2)
     float b = v2.getXFloat() - v1.getXFloat();
     float c = v1.getXFloat() * v2.getYFloat()- v2.getXFloat() * v1.getYFloat();
     float result = a * p.getXFloat() + b * p.getYFloat() + c;
-    float tolerance = 1e-6; 
+    float tolerance = 1e-6;
     return (result < tolerance && result > -tolerance);
 }
 
