@@ -5,7 +5,7 @@ NAME			:=	main
 RESULT_LOG_FILE	:=	result.log
 INPUT_LOG_FILE  :=	input.log
 CPP				:=	c++
-FLAGS			:=	-g3 -Wall -Werror -Wextra -std=c++98 -fsanitize=address
+FLAGS			:=	-g3 -Wall -Werror -Wextra -Wshadow -std=c++98 -fsanitize=address
 MAKE			:=	make
 
 SRCS			:=	ClapTrap.cpp FragTrap.cpp ScavTrap.cpp DiamondTrap.cpp main.cpp
