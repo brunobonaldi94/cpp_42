@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:44:46 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/10 12:09:58 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/01 20:49:18 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ class FragTrap : public ClapTrap
 		FragTrap & operator=(FragTrap const &rhs);
 
 		void highFivesGuys(void);
+	private:
+		void setInitialValues( void );
 };
 
 #endif

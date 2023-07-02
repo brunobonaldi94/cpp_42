@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:48:05 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/10 15:40:15 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/01 20:14:33 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,31 @@
 
 ScavTrap::ScavTrap(): ClapTrap()
 {
-	std::cout << "Default Constructor ScavTrap called" << std::endl;
+	std::cout << "ScavTrap Default Constructor called" << std::endl;
 	this->setName("ScavTrap");
-	this->setClassName("ScavTrap");
+	this->setInitialValues();
 }
 ScavTrap::ScavTrap(std::string name): ClapTrap(name)
 {
-	this->setClassName("ScavTrap");
-	std::cout << "ScavTrap has been created" << std::endl;
-	this->setHitPoints(100);
-	this->setEnergyPoints(50);
-	this->setAttackDamage(20);
+	std::cout << "ScavTrap Named Constructor called" << std::endl;
+	this->setInitialValues();
 }
 ScavTrap::ScavTrap(ScavTrap const &src) : ClapTrap()
 {
-	std::cout << "Copy Constructor for ScavTrap called" << std::endl;
+	std::cout << "ScavTrap Copy Constructor called" << std::endl;
 	*this = src; 
 }
 ScavTrap::~ScavTrap()
 {
-	std::cout << "ScavTrap has been destroyed" << std::endl;
+	std::cout << "ScavTrap Destructor called" << std::endl;
+}
+
+void ScavTrap::setInitialValues(void)
+{
+	this->setClassName("ScavTrap");
+	this->setHitPoints(100);
+	this->setEnergyPoints(50);
+	this->setAttackDamage(20);
 }
 
 void ScavTrap::attack(std::string const & target)
@@ -51,7 +56,7 @@ void ScavTrap::guardGate( void )
 
 ScavTrap & ScavTrap::operator=(ScavTrap const &rhs)
 {
-	std::cout << "Copy Assignment operator for ScavTrap called" << std::endl;
+	std::cout << "ScavTrap Copy Assignment operator called" << std::endl;
 	if (this != &rhs)
 	{
 		this->setName(rhs.getName());

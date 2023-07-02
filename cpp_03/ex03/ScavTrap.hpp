@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:44:46 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/10 13:58:21 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/01 22:40:44 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ class ScavTrap : virtual public ClapTrap
 
 		void attack(std::string const & target);
 		void guardGate(void);
+	private:
+		void setInitialValues( void );
 };
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:44:46 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/10 20:05:56 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/01 20:44:05 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,19 @@
 # define GREEN "\033[0;32m"
 # define YELLOW "\033[0;33m"
 
-
 class ClapTrap
 {
 	public:
 		ClapTrap();
 		ClapTrap(std::string name);
 		ClapTrap(ClapTrap const &src);
-		~ClapTrap();
+		virtual ~ClapTrap();
 
 		ClapTrap & operator=(ClapTrap const &rhs);
-		
 		void attack(const std::string& target);
 		void takeDamage(unsigned int amount);
 		void beRepaired(unsigned int amount);
+		std::string getAllAttributes( void ) const;
 
 		std::string getName( void ) const;
 		void setName(std::string const name);
@@ -58,7 +57,6 @@ class ClapTrap
 		int _hitPoints;
 		int _energyPoints;
 		int _attackDamage;
-
 };
 
 std::ostream & operator<<(std::ostream & o, ClapTrap const & src);

@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:48:05 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/10 16:02:14 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/01 22:21:47 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,31 @@
 
 FragTrap::FragTrap(): ClapTrap()
 {
-	std::cout << "Default Constructor FragTrap called" << std::endl;
+	std::cout << "FragTrap Default Constructor called" << std::endl;
 	this->setName("FragTrap");
-	this->setClassName("FragTrap");
+	this->setInitialValues();
 }
 FragTrap::FragTrap(std::string name): ClapTrap(name)
 {
-	this->setClassName("FragTrap");
 	std::cout << "FragTrap has been created" << std::endl;
-	ClapTrap::setHitPoints(100);
-	ClapTrap::setEnergyPoints(100);
-	ClapTrap::setAttackDamage(30);
+	this->setInitialValues();
 }
 FragTrap::FragTrap(FragTrap const &src) : ClapTrap(src)
 {
-	std::cout << "Copy Constructor for FragTrap called" << std::endl;
+	std::cout << "FragTrap Copy Constructor called" << std::endl;
 	*this = src;
 }
 FragTrap::~FragTrap()
 {
-	std::cout << "FragTrap has been destroyed" << std::endl;
+	std::cout << "FragTrap Destructor called" << std::endl;
 }
-
+void FragTrap::setInitialValues( void )
+{
+	this->setClassName("FragTrap");
+	this->setHitPoints(100);
+	this->setEnergyPoints(100);
+	this->setAttackDamage(30);
+}
 void FragTrap::highFivesGuys( void )
 {
 	if (ClapTrap::NoMorePoints())

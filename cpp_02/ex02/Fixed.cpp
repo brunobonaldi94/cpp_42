@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 18:38:59 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/29 21:38:18 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/01 18:47:20 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,14 +125,14 @@ Fixed &	Fixed::operator--( void )
 	return *this;
 }
 
-Fixed  Fixed::operator++( int )
+Fixed Fixed::operator++( int )
 {
 	Fixed temp(*this);
 	this->_fixedPoint++;
 	return (temp);
 }
 
-Fixed  Fixed::operator--( int )
+Fixed Fixed::operator--( int )
 {
 	Fixed temp(*this);
 	this->_fixedPoint--;
