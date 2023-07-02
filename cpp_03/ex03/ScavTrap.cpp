@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:48:05 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/01 20:14:33 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/02 12:04:11 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ ScavTrap::ScavTrap(): ClapTrap()
 {
 	std::cout << "ScavTrap Default Constructor called" << std::endl;
 	this->setName("ScavTrap");
-	this->setInitialValues();
+	this->setInitialValues("ScavTrap", 100, 50, 20);
 }
 ScavTrap::ScavTrap(std::string name): ClapTrap(name)
 {
 	std::cout << "ScavTrap Named Constructor called" << std::endl;
-	this->setInitialValues();
+	this->setInitialValues("ScavTrap", 100, 50, 20);
 }
 ScavTrap::ScavTrap(ScavTrap const &src) : ClapTrap()
 {
@@ -33,12 +33,9 @@ ScavTrap::~ScavTrap()
 	std::cout << "ScavTrap Destructor called" << std::endl;
 }
 
-void ScavTrap::setInitialValues(void)
+void ScavTrap::setDefaultScavTrapEnergyPoints(void)
 {
-	this->setClassName("ScavTrap");
-	this->setHitPoints(100);
 	this->setEnergyPoints(50);
-	this->setAttackDamage(20);
 }
 
 void ScavTrap::attack(std::string const & target)

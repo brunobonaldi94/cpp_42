@@ -6,19 +6,21 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:48:05 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/01 20:23:20 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/02 12:04:20 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ClapTrap.hpp"
 
-ClapTrap::ClapTrap(): _name("ClapTrap"), _className("ClapTrap"), _hitPoints(10), _energyPoints(10), _attackDamage(0)
+ClapTrap::ClapTrap(): _name("ClapTrap")
 {
 	std::cout << "ClapTrap Default Constructor called" << std::endl;
+	this->setInitialValues("ClapTrap", 10, 10, 0);
 }
-ClapTrap::ClapTrap(std::string name): _name(name), _className("ClapTrap"), _hitPoints(10), _energyPoints(10), _attackDamage(0)
+ClapTrap::ClapTrap(std::string name): _name(name)
 {
 	std::cout << "ClapTrap Named Constructor called" << std::endl;
+	this->setInitialValues("ClapTrap", 10, 10, 0);
 }
 ClapTrap::ClapTrap(ClapTrap const &src)
 {
@@ -28,6 +30,14 @@ ClapTrap::ClapTrap(ClapTrap const &src)
 ClapTrap::~ClapTrap()
 {
 	std::cout << "ClapTrap Destructor Called" << std::endl;
+}
+
+void ClapTrap::setInitialValues(std::string className, int hitPoints, int energyPoints, int attackDamage)
+{
+	this->setClassName(className);
+	this->setHitPoints(hitPoints);
+	this->setEnergyPoints(energyPoints);
+	this->setAttackDamage(attackDamage);
 }
 
 std::string ClapTrap::getNameAndClassName( void ) const

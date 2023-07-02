@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:44:23 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/01 22:56:03 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/02 10:55:49 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void testConstructor()
 		std::cout << frag;
 		DiamondTrap diam("DiamondTrapper");
 		std::cout << diam;
+		DiamondTrap diam2("DiamondTrapper2");
+		std::cout << diam2;
 	}
 	printSeparator();
 }

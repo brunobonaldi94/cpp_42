@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:44:46 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/01 22:39:18 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/02 11:56:00 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ class ClapTrap
 		int _hitPoints;
 		int _energyPoints;
 		int _attackDamage;
+		void setInitialValues(std::string className, int hitPoints, int energyPoints, int attackDamage);
 };
 
 std::ostream & operator<<(std::ostream & o, ClapTrap const & src);
