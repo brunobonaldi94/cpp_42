@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 22:53:21 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/24 13:55:45 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/02 12:33:01 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ Character::Character(void)
 Character::Character(std::string name): name(name),inventory_count(0)
 {
 	std::cout << "Character named Constructor called" << std::endl;
-	this->unused_materia = new LinkedList();
+	this->unused_materia = new LinkedList;
 }
 
 Character::Character(Character const &src)
