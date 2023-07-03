@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:44:46 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/02 12:03:33 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/03 20:35:55 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ class FragTrap : virtual public ClapTrap
 		FragTrap();
 		FragTrap(std::string name);
 		FragTrap(FragTrap const &src);
-		~FragTrap();
+		virtual ~FragTrap();
 
 		FragTrap & operator=(FragTrap const &rhs);
 

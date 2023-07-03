@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:44:46 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/02 12:03:45 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/03 20:36:01 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ class ScavTrap : virtual public ClapTrap
 		ScavTrap();
 		ScavTrap(std::string name);
 		ScavTrap(ScavTrap const &src);
-		~ScavTrap();
+		virtual ~ScavTrap();
 
 		ScavTrap & operator=(ScavTrap const &rhs);
 

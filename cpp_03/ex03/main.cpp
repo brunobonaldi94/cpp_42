@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:44:23 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/03 20:28:49 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/03 20:50:28 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,13 @@ void testChildPublicFunction()
 	std::cout << diam;
 }
 
+void testVirtualDestructor()
+{
+	DiamondTrap *diam = new DiamondTrap("DiamondTrapper");
+	ClapTrap *clap = diam;
+	delete clap;
+}
+
 void runTestFunction(void (*test)(void), int index, std::string testName)
 {
 	std::cout << YELLOW << "TEST-" << index << ": " << testName <<  RESET << std::endl;
@@ -96,9 +103,11 @@ void runTestFunction(void (*test)(void), int index, std::string testName)
 
 int main( void )
 {
-	int const testNumbers = 4;
-	void (*testFunctions[testNumbers])(void) = {testConstructors, testCopyConstructorAndAssignmentOperator, testParentPublicFunctions, testChildPublicFunction};
-	std::string testNames[testNumbers] = {"Constructors", "Copy Constructor and Assignment Operator", "Parent Public Functions" , "Child Public Functions"};
+	int const testNumbers = 5;
+	void (*testFunctions[testNumbers])(void) = {testConstructors, testCopyConstructorAndAssignmentOperator, testParentPublicFunctions, 
+	testChildPublicFunction, testVirtualDestructor};
+	std::string testNames[testNumbers] = {"Constructors", "Copy Constructor and Assignment Operator", "Parent Public Functions",
+	 "Child Public Functions", "Virtual Destructor"};
 	for (int i = 0; i < testNumbers; i++)
 		runTestFunction(testFunctions[i], i + 1, testNames[i]);
 	return 0;
