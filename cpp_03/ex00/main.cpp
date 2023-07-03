@@ -6,16 +6,16 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:44:23 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/01 22:28:44 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/03 20:23:34 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ClapTrap.hpp"
 
-void attackAnother(ClapTrap &atacante, ClapTrap &defensor)
+void attackAnother(ClapTrap &attacker, ClapTrap &defender)
 {
-	atacante.attack(defensor.getName());
-	defensor.takeDamage(atacante.getAttackDamage());
+	attacker.attack(defender.getName());
+	defender.takeDamage(attacker.getAttackDamage());
 }
 
 void printSeparator()
@@ -25,56 +25,54 @@ void printSeparator()
 
 void testDefaultConstructor()
 {
-	{
-		std::cout << YELLOW << "DefaultConstructor" << RESET << std::endl;
-		ClapTrap clap;
-	}
-	printSeparator();
+	ClapTrap clap;
+	std::cout << clap;
+
 }
 
 void testNamedConstructor()
 {
-	{
-		std::cout << YELLOW << "Testing Named Constructor" <<  RESET << std::endl;
-		std::string name = "Clapper";
-		ClapTrap clap(name);
-	}
-	printSeparator();
+	std::string name = "Clapper";
+	ClapTrap clap(name);
+	std::cout << clap;
 }
 
 void testCopyConstructorAndAssignmentOperator()
 {
-	{
-		std::cout << YELLOW << "Testing Copy Constructor And Assignment Operator" <<  RESET << std::endl;
-		ClapTrap clap("Clapper");
-		ClapTrap clap1(clap);
-		ClapTrap clap3;
-		clap3 = clap1;
-	}
-	printSeparator();
+	ClapTrap clap("Clapper");
+	ClapTrap clap1(clap);
+	ClapTrap clap3;
+	clap3 = clap1;
+	std::cout << clap;
+	std::cout << clap1;
+	std::cout << clap3;
 }
 
 void testPublicFunction()
 {
-	{
-		std::cout << YELLOW << "Testing Attack/Repair/TakeDamage function" <<  RESET << std::endl;
-		ClapTrap atacante("Atacante");
-		ClapTrap defensor("Defensor");
-		atacante.setAttackDamage(1);
-		defensor.beRepaired(10);
-		while (!atacante.NoMorePoints())
-			attackAnother(atacante, defensor);
-		std::cout << atacante;
-		std::cout << defensor;
-	}
+	ClapTrap attacker("Atacante");
+	ClapTrap defender("Defensor");
+	attacker.setAttackDamage(1);
+	defender.beRepaired(10);
+	while (!attacker.NoMorePoints())
+		attackAnother(attacker, defender);
+	std::cout << attacker;
+	std::cout << defender;
+}
+
+void runTestFunction(void (*test)(void), int index, std::string testName)
+{
+	std::cout << YELLOW << "TEST-" << index << ": " << testName <<  RESET << std::endl;
+	test();
 	printSeparator();
 }
 
 int main( void )
 {
-	testDefaultConstructor();
-	testNamedConstructor();
-	testCopyConstructorAndAssignmentOperator();
-	testPublicFunction();
+	int const testNumbers = 4;
+	void (*testFunctions[testNumbers])(void) = {testDefaultConstructor, testNamedConstructor, testCopyConstructorAndAssignmentOperator, testPublicFunction};
+	std::string testNames[testNumbers] = {"Default Constructor", "Named Constructor", "Copy Constructor and Assignment Operator", "Public Function"};
+	for (int i = 0; i < testNumbers; i++)
+		runTestFunction(testFunctions[i], i + 1, testNames[i]);
 	return 0;
 }

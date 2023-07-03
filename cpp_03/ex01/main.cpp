@@ -6,16 +6,16 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:44:23 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/01 22:28:45 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/03 20:25:25 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScavTrap.hpp"
 
-void attackAnother(ClapTrap &atacante, ClapTrap &defensor)
+void attackAnother(ClapTrap &attacker, ClapTrap &defender)
 {
-	atacante.attack(defensor.getName());
-	defensor.takeDamage(atacante.getAttackDamage());
+	attacker.attack(defender.getName());
+	defender.takeDamage(attacker.getAttackDamage());
 }
 
 void printSeparator()
@@ -23,72 +23,63 @@ void printSeparator()
 	std::cout << std::string(100, '-') << std::endl;
 }
 
-void testConstructor()
+void testConstructors()
 {
-	{
-		std::cout << YELLOW << "Constructor Test" << RESET << std::endl;
-		ScavTrap scav;
-		std::cout << scav;
-		ClapTrap clap;
-		std::cout << clap;
-		ScavTrap scav2("ScavTrapper");
-		std::cout << scav2;
-	}
-	printSeparator();
+	ScavTrap scav;
+	std::cout << scav;
+	ClapTrap clap;
+	std::cout << clap;
+	ScavTrap scav2("ScavTrapper");
+	std::cout << scav2;
 }
 
 void testCopyConstructorAndAssignmentOperator()
 {
-	{
-		std::cout << YELLOW << "Testing Copy Constructor And Assignment Operator" <<  RESET << std::endl;
-		ScavTrap scav(name);
-		ScavTrap scav1(scav);
-		ScavTrap scav2;
-		scav2 = scav1;
-		std::cout << scav;
-		std::cout << scav1;
-		std::cout << scav2;
-	}
-	printSeparator();
+	ScavTrap scav("ScavTrapper");
+	ScavTrap scav1(scav);
+	ScavTrap scav2;
+	scav2 = scav1;
+	std::cout << scav;
+	std::cout << scav1;
+	std::cout << scav2;
 }
 
 void testParentPublicFunctions()
 {
-	std::cout << YELLOW << "Test Public function in ClapTrap Class" << RESET << std::endl;
-	{
-		ClapTrap clap("Pai");
-		ScavTrap scav("Filho");
-
-		clap.setAttackDamage(1);
-		clap.beRepaired(20);
-		attackAnother(clap, scav);
-
-		attackAnother(scav, clap);
-		scav.beRepaired(100);
-		scav.setAttackDamage(1000);
-		std::cout << clap;
-		std::cout << scav;
-	}
-	printSeparator();
+	ClapTrap clap("Parent");
+	ScavTrap scav("Child");
+	clap.setAttackDamage(1);
+	clap.beRepaired(20);
+	attackAnother(clap, scav);
+	attackAnother(scav, clap);
+	scav.beRepaired(100);
+	scav.setAttackDamage(1000);
+	std::cout << clap;
+	std::cout << scav;
 }
 
 void testChildPublicFunction()
 {
-	{
-		std::cout << YELLOW << "Test Public function in ScavTrap Class" << RESET << std::endl;
-		ScavTrap scav("ScavTrapper");
-		scav.guardGate();
-		scav.attack("Pai");
-		std::cout << scav;
-	}
+
+	ScavTrap scav("ScavTrapper");
+	scav.guardGate();
+	std::cout << scav;
+
+}
+
+void runTestFunction(void (*test)(void), int index, std::string testName)
+{
+	std::cout << YELLOW << "TEST-" << index << ": " << testName <<  RESET << std::endl;
+	test();
 	printSeparator();
 }
 
 int main( void )
 {
-	testConstructor();
-	testCopyConstructorAndAssignmentOperator();
-	testParentPublicFunctions();
-	testChildPublicFunction();
+	int const testNumbers = 4;
+	void (*testFunctions[testNumbers])(void) = {testConstructors, testCopyConstructorAndAssignmentOperator, testParentPublicFunctions, testChildPublicFunction};
+	std::string testNames[testNumbers] = {"Constructors", "Copy Constructor and Assignment Operator", "Parent Public Functions" , "Child Public Functions"};
+	for (int i = 0; i < testNumbers; i++)
+		runTestFunction(testFunctions[i], i + 1, testNames[i]);
 	return 0;
 }

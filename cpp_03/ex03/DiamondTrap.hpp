@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:29:00 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/10 16:32:05 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/03 19:41:00 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ class DiamondTrap : public ScavTrap, public FragTrap
 		DiamondTrap & operator=(DiamondTrap const & rhs);
 		void attack(const std::string &target);
 		std::string getNameAndClassName( void ) const;
-		std::string getName( void ) const;
+		std::string getCurrentName( void ) const;
+		void whoAmI( void );
 	private:
 		std::string _name;
 };

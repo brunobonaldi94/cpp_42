@@ -6,17 +6,17 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:44:23 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/02 10:55:49 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/03 20:25:55 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "DiamondTrap.hpp"
 
 
-void attackAnother(ClapTrap &atacante, ClapTrap &defensor)
+void attackAnother(ClapTrap &attacker, ClapTrap &defender, std::string name)
 {
-	atacante.attack(defensor.getName());
-	defensor.takeDamage(atacante.getAttackDamage());
+	attacker.attack(name);
+	defender.takeDamage(attacker.getAttackDamage());
 }
 
 void printSeparator()
@@ -24,88 +24,83 @@ void printSeparator()
 	std::cout << std::string(100, '-') << std::endl;
 }
 
-void testConstructor()
+void testConstructors()
 {
-	{
-		std::cout << YELLOW << "Constructor Test" << RESET << std::endl;
-		ScavTrap scav;
-		std::cout << scav;
-		ClapTrap clap;
-		std::cout << clap;
-		FragTrap frag;
-		std::cout << frag;
-		DiamondTrap diam("DiamondTrapper");
-		std::cout << diam;
-		DiamondTrap diam2("DiamondTrapper2");
-		std::cout << diam2;
-	}
-	printSeparator();
+	ScavTrap scav;
+	std::cout << scav;
+	ClapTrap clap;
+	std::cout << clap;
+	FragTrap frag;
+	std::cout << frag;
+	DiamondTrap diam("DiamondTrapper");
+	std::cout << diam;
+	DiamondTrap diam2("DiamondTrapper2");
+	std::cout << diam2;
 }
 
 void testCopyConstructorAndAssignmentOperator()
 {
-	{
-		std::cout << YELLOW << "Testing Copy Constructor And Assignment Operator" <<  RESET << std::endl;
-		DiamondTrap diam("DiamondTrapper");
-		DiamondTrap diam1(diam);
-		DiamondTrap diam2;
-		diam2 = diam1;
-		std::cout << diam;
-		std::cout << diam1;
-		std::cout << diam2;
-	}
-	printSeparator();
+	DiamondTrap diam("DiamondTrapper");
+	DiamondTrap diam1(diam);
+	DiamondTrap diam2;
+	diam2 = diam1;
+	std::cout << diam;
+	std::cout << diam1;
+	std::cout << diam2;
 }
 
 void testParentPublicFunctions()
 {
-	std::cout << YELLOW << "Test Public function in ClapTrap Class" << RESET << std::endl;
-	{
-		ClapTrap clap("Pai");
-		ScavTrap scav("FilhoScav");
-		FragTrap frag("FilhoFrag");
-		DiamondTrap diam("FilhoDiam");
+	ClapTrap clap("ClapParent");
+	ScavTrap scav("ScavChild");
+	FragTrap frag("FragChild");
+	DiamondTrap diam("DiamChild");
 
-		clap.setAttackDamage(1);
-		clap.beRepaired(20);
-		attackAnother(clap, scav);
+	clap.setAttackDamage(1);
+	clap.beRepaired(20);
+	attackAnother(clap, scav, scav.getName());
 
-		attackAnother(scav, clap);
-		scav.beRepaired(100);
-		scav.setAttackDamage(1000);
+	attackAnother(scav, clap, clap.getName());
+	scav.beRepaired(100);
+	scav.setAttackDamage(1000);
 
-		frag.beRepaired(50);
-		frag.setAttackDamage(500);
-		attackAnother(frag, scav);
+	frag.beRepaired(50);
+	frag.setAttackDamage(500);
+	attackAnother(frag, scav, scav.getName());
 
-		diam.beRepaired(50);
-		diam.setAttackDamage(5000);
-		attackAnother(diam, frag);
+	diam.beRepaired(50);
+	diam.setAttackDamage(5000);
+	attackAnother(diam, frag, frag.getName());
 
-		std::cout << clap;
-		std::cout << scav;
-		std::cout << frag;
-		std::cout << diam;
-	}
-	printSeparator();
+	attackAnother(clap, diam, diam.getCurrentName());
+
+	std::cout << clap;
+	std::cout << scav;
+	std::cout << frag;
+	std::cout << diam;
 }
 
 void testChildPublicFunction()
 {
-	{
-		std::cout << YELLOW << "Test Public function in Diamond Class" << RESET << std::endl;
-		DiamondTrap frag("DiamondTrapper");
-		frag.attack("Pai");
-		std::cout << frag;
-	}
+	DiamondTrap diam("DiamondTrapper");
+	diam.attack("Parent");
+	diam.whoAmI();
+	std::cout << diam;
+}
+
+void runTestFunction(void (*test)(void), int index, std::string testName)
+{
+	std::cout << YELLOW << "TEST-" << index << ": " << testName <<  RESET << std::endl;
+	test();
 	printSeparator();
 }
 
 int main( void )
 {
-	testConstructor();
-	testCopyConstructorAndAssignmentOperator();
-	testParentPublicFunctions();
-	testChildPublicFunction();
+	int const testNumbers = 4;
+	void (*testFunctions[testNumbers])(void) = {testConstructors, testCopyConstructorAndAssignmentOperator, testParentPublicFunctions, testChildPublicFunction};
+	std::string testNames[testNumbers] = {"Constructors", "Copy Constructor and Assignment Operator", "Parent Public Functions" , "Child Public Functions"};
+	for (int i = 0; i < testNumbers; i++)
+		runTestFunction(testFunctions[i], i + 1, testNames[i]);
 	return 0;
 }

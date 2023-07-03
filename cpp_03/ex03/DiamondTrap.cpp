@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:28:54 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/02 12:08:14 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/03 19:43:33 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ DiamondTrap & DiamondTrap::operator=(DiamondTrap const & rhs)
 	std::cout << "DiamondTrap Copy Assignment operator called" << std::endl;
 	if (this != &rhs)
 	{
-		this->_name = rhs.getName();
+		this->_name = rhs.getCurrentName();
 		this->setClassName(rhs.getClassName());
 		this->setHitPoints(rhs.getHitPoints());
 		this->setEnergyPoints(rhs.getEnergyPoints());
@@ -51,17 +51,28 @@ DiamondTrap & DiamondTrap::operator=(DiamondTrap const & rhs)
 	}
 	return *this;
 }
-std::string DiamondTrap::getNameAndClassName( void ) const
-{
-	return this->getClassName() + " " + this->getName();
-}
 
-std::string DiamondTrap::getName( void ) const
+std::string DiamondTrap::getCurrentName( void ) const
 {
 	return this->_name;
+}
+
+std::string DiamondTrap::getNameAndClassName( void ) const
+{
+	return this->getClassName() + " " + this->getCurrentName();
 }
 
 void DiamondTrap::attack(const std::string &target)
 {
 	ScavTrap::attack(target);
+}
+
+void DiamondTrap::whoAmI( void )
+{
+	std::cout 
+	<< "My name is " 
+	<< this->getCurrentName() 
+	<< " and my ClapTrap name is "
+	<< this->getName()
+	<< std::endl;
 }

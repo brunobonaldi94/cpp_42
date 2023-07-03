@@ -6,17 +6,17 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:44:23 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/01 22:35:21 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/03 20:25:47 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "FragTrap.hpp"
 #include "ScavTrap.hpp"
 
-void attackAnother(ClapTrap &atacante, ClapTrap &defensor)
+void attackAnother(ClapTrap &attacker, ClapTrap &defender)
 {
-	atacante.attack(defensor.getName());
-	defensor.takeDamage(atacante.getAttackDamage());
+	attacker.attack(defender.getName());
+	defender.takeDamage(attacker.getAttackDamage());
 }
 
 void printSeparator()
@@ -24,81 +24,76 @@ void printSeparator()
 	std::cout << std::string(100, '-') << std::endl;
 }
 
-void testConstructor()
+void testConstructors()
 {
-	{
-		std::cout << YELLOW << "Constructor Test" << RESET << std::endl;
-		ScavTrap scav;
-		std::cout << scav;
-		ClapTrap clap;
-		std::cout << clap;
-		FragTrap frag;
-		std::cout << frag;
-		FragTrap frag1("FragTrapper");
-		std::cout << frag1;
-	}
-	printSeparator();
+	ScavTrap scav;
+	std::cout << scav;
+	ClapTrap clap;
+	std::cout << clap;
+	FragTrap frag;
+	std::cout << frag;
+	FragTrap frag1("FragTrapper");
+	std::cout << frag1;
 }
 
 void testCopyConstructorAndAssignmentOperator()
 {
-	{
-		std::cout << YELLOW << "Testing Copy Constructor And Assignment Operator" <<  RESET << std::endl;
-		FragTrap frag("FragTrapper");
-		FragTrap frag1(frag);
-		FragTrap frag2;
-		frag2 = frag1;
-		std::cout << frag;
-		std::cout << frag1;
-		std::cout << frag2;
-	}
-	printSeparator();
+	FragTrap frag("FragTrapper");
+	FragTrap frag1(frag);
+	FragTrap frag2;
+	frag2 = frag1;
+	std::cout << frag;
+	std::cout << frag1;
+	std::cout << frag2;
 }
 
 void testParentPublicFunctions()
 {
-	std::cout << YELLOW << "Test Public function in ClapTrap Class" << RESET << std::endl;
-	{
-		ClapTrap clap("Pai");
-		ScavTrap scav("FilhoScav");
-		FragTrap frag("FilhoFrag");
 
-		clap.setAttackDamage(1);
-		clap.beRepaired(20);
-		attackAnother(clap, scav);
+	ClapTrap clap("Parent");
+	ScavTrap scav("ScavChild");
+	FragTrap frag("FragChild");
+	
+	clap.setAttackDamage(1);
+	clap.beRepaired(20);
 
-		attackAnother(scav, clap);
-		scav.beRepaired(100);
-		scav.setAttackDamage(1000);
+	attackAnother(clap, scav);
+	attackAnother(scav, clap);
 
-		frag.beRepaired(50);
-		frag.setAttackDamage(500);
-		attackAnother(frag, scav);
+	scav.beRepaired(100);
+	scav.setAttackDamage(1000);
 
-		std::cout << clap;
-		std::cout << scav;
-		std::cout << frag;
-	}
-	printSeparator();
+	frag.beRepaired(50);
+	frag.setAttackDamage(500);
+
+	attackAnother(frag, scav);
+
+	std::cout << clap;
+	std::cout << scav;
+	std::cout << frag;
 }
 
 void testChildPublicFunction()
 {
-	{
-		std::cout << YELLOW << "Test Public function in FragTrap Class" << RESET << std::endl;
-		FragTrap frag("FragTrapper");
-		frag.attack("Pai");
-		frag.highFivesGuys();
-		std::cout << frag;
-	}
+	FragTrap frag("FragTrapper");
+	frag.attack("Parent");
+	frag.highFivesGuys();
+	std::cout << frag;
+}
+
+void runTestFunction(void (*test)(void), int index, std::string testName)
+{
+	std::cout << YELLOW << "TEST-" << index << ": " << testName <<  RESET << std::endl;
+	test();
 	printSeparator();
 }
 
 int main( void )
 {
-	testConstructor();
-	testCopyConstructorAndAssignmentOperator();
-	testParentPublicFunctions();
-	testChildPublicFunction();
+	int const testNumbers = 4;
+	void (*testFunctions[testNumbers])(void) = {testConstructors, testCopyConstructorAndAssignmentOperator, testParentPublicFunctions, testChildPublicFunction};
+	std::string testNames[testNumbers] = {"Constructors", "Copy Constructor and Assignment Operator", "Parent Public Functions" , "Child Public Functions"};
+	for (int i = 0; i < testNumbers; i++)
+		runTestFunction(testFunctions[i], i + 1, testNames[i]);
 	return 0;
 }
