@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:44:23 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/03 20:25:55 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/03 20:28:49 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void testParentPublicFunctions()
 void testChildPublicFunction()
 {
 	DiamondTrap diam("DiamondTrapper");
-	diam.attack("Parent");
 	diam.whoAmI();
 	std::cout << diam;
 }

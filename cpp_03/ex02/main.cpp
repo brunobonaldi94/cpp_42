@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:44:23 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/03 20:25:47 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/03 20:27:59 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void testParentPublicFunctions()
 void testChildPublicFunction()
 {
 	FragTrap frag("FragTrapper");
-	frag.attack("Parent");
 	frag.highFivesGuys();
 	std::cout << frag;
 }
