@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:44:23 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/03 20:25:25 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/03 20:48:22 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,13 @@ void testChildPublicFunction()
 	ScavTrap scav("ScavTrapper");
 	scav.guardGate();
 	std::cout << scav;
+}
 
+void testVirtualDestructor()
+{
+	ScavTrap *scav = new ScavTrap("Scavver");
+	ClapTrap *clap = scav;
+	delete clap;
 }
 
 void runTestFunction(void (*test)(void), int index, std::string testName)
@@ -76,9 +82,11 @@ void runTestFunction(void (*test)(void), int index, std::string testName)
 
 int main( void )
 {
-	int const testNumbers = 4;
-	void (*testFunctions[testNumbers])(void) = {testConstructors, testCopyConstructorAndAssignmentOperator, testParentPublicFunctions, testChildPublicFunction};
-	std::string testNames[testNumbers] = {"Constructors", "Copy Constructor and Assignment Operator", "Parent Public Functions" , "Child Public Functions"};
+	int const testNumbers = 5;
+	void (*testFunctions[testNumbers])(void) = {testConstructors, testCopyConstructorAndAssignmentOperator,
+	testParentPublicFunctions, testChildPublicFunction, testVirtualDestructor};
+	std::string testNames[testNumbers] = {"Constructors", "Copy Constructor and Assignment Operator", "Parent Public Functions"
+	, "Child Public Functions", "Virtual Destructor"};
 	for (int i = 0; i < testNumbers; i++)
 		runTestFunction(testFunctions[i], i + 1, testNames[i]);
 	return 0;

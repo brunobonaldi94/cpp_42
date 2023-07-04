@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:44:23 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/03 20:23:34 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/03 20:47:58 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,12 @@ void testPublicFunction()
 	std::cout << defender;
 }
 
+void testVirtualDestructor()
+{
+	ClapTrap *clap = new ClapTrap("Clapper");
+	delete clap;
+}
+
 void runTestFunction(void (*test)(void), int index, std::string testName)
 {
 	std::cout << YELLOW << "TEST-" << index << ": " << testName <<  RESET << std::endl;
@@ -69,9 +75,11 @@ void runTestFunction(void (*test)(void), int index, std::string testName)
 
 int main( void )
 {
-	int const testNumbers = 4;
-	void (*testFunctions[testNumbers])(void) = {testDefaultConstructor, testNamedConstructor, testCopyConstructorAndAssignmentOperator, testPublicFunction};
-	std::string testNames[testNumbers] = {"Default Constructor", "Named Constructor", "Copy Constructor and Assignment Operator", "Public Function"};
+	int const testNumbers = 5;
+	void (*testFunctions[testNumbers])(void) = {testDefaultConstructor, testNamedConstructor, 
+	testCopyConstructorAndAssignmentOperator, testPublicFunction, testVirtualDestructor};
+	std::string testNames[testNumbers] = {"Default Constructor", "Named Constructor", 
+	"Copy Constructor and Assignment Operator", "Public Function", "Virtual Destructor"};
 	for (int i = 0; i < testNumbers; i++)
 		runTestFunction(testFunctions[i], i + 1, testNames[i]);
 	return 0;

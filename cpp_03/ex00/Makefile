@@ -33,7 +33,6 @@ $(NAME):			$(OBJS)
 					@echo "$(WHT)Compiling $(NAME)...$(EOC)"
 					@$(CPP) $(FLAGS) $(OBJS) -o $(NAME)
 					@echo "$(GREEN)$(NAME) build completed.$(EOC)"
-					@tput setaf 5
 
 clean:
 					@echo "$(WHT)Removing .o files...$(EOC)"
