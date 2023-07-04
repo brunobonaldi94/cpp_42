@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 13:01:43 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/03 23:25:56 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/03 23:27:35 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ const char* Bureaucrat::GradeTooHighException::what() const throw()
 
 Bureaucrat::GradeTooLowException::GradeTooLowException(std::string name, int grade) : _nameEx(name), _gradeEx(grade)
 {
-	std::cout << YELLOW << "Bureaucrat: GradeTooLowException Constructor called" << RESET << std::endl;
+	std::cout << YELLOW << "Bureaucrat GradeTooLowException Constructor called" << RESET << std::endl;
 }
 
 Bureaucrat::GradeTooLowException::~GradeTooLowException() throw()
@@ -110,4 +110,17 @@ std::ostream &operator<<(std::ostream &o, Bureaucrat const &src)
 {
 	o << src.getName() << ", bureaucrat grade " << src.getGrade() << std::endl;
 	return (o);
+}
+
+void Bureaucrat::signForm(Form &form)
+{
+	try 
+	{
+		form.beSigned(*this);
+		std::cout << GREEN << this->getName() << " signed " << form.getName() << RESET << std::endl;
+	} catch (std::exception &e)
+	{
+		std::cerr << RED << e.what() << RESET << std::endl;
+		return ;
+	}
 }
