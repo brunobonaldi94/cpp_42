@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Dog.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: bbonaldi <bbonaldi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 22:28:21 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/15 22:39:25 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/06 19:48:43 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,5 @@ Dog & Dog::operator=(Dog const &rhs)
 
 void Dog::makeSound ( void ) const
 {
-	std::cout << "Bark" << std::endl;
+	std::cout << GREEN << "Bark 🐶" << RESET << std::endl;
 }

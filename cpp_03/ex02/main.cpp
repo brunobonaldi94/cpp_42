@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: bbonaldi <bbonaldi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:44:23 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/03 20:49:07 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/06 20:58:53 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void testParentPublicFunctions()
 	ClapTrap clap("Parent");
 	ScavTrap scav("ScavChild");
 	FragTrap frag("FragChild");
-	
+
 	clap.setAttackDamage(1);
 	clap.beRepaired(20);
 
@@ -99,7 +99,7 @@ int main( void )
 	int const testNumbers = 5;
 	void (*testFunctions[testNumbers])(void) = {testConstructors, testCopyConstructorAndAssignmentOperator, testParentPublicFunctions,
 	testChildPublicFunction, testVirtualDestructor};
-	std::string testNames[testNumbers] = {"Constructors", "Copy Constructor and Assignment Operator", 
+	std::string testNames[testNumbers] = {"Constructors", "Copy Constructor and Assignment Operator",
 	"Parent Public Functions" , "Child Public Functions", "Virtual Destructor"};
 	for (int i = 0; i < testNumbers; i++)
 		runTestFunction(testFunctions[i], i + 1, testNames[i]);

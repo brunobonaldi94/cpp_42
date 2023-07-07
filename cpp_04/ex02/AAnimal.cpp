@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   AAnimal.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: bbonaldi <bbonaldi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 22:16:51 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/20 21:40:33 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/06 19:54:08 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "AAnimal.hpp"
 
-AAnimal::AAnimal(): type("AAnimal")
+AAnimal::AAnimal(): _type("AAnimal")
 {
 	std::cout << "AAnimal Default Constructor called" << std::endl;
 }
@@ -42,10 +42,10 @@ void AAnimal::makeSound(void)const
 }
 std::string AAnimal::getType(void) const
 {
-	return this->type;
+	return this->_type;
 }
 
 void AAnimal::setType(std::string type)
 {
-	this->type = type;
+	this->_type = type;
 }

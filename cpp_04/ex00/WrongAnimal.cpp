@@ -12,7 +12,7 @@
 
 #include "WrongAnimal.hpp"
 
-WrongAnimal::WrongAnimal(): type("WrongAnimal")
+WrongAnimal::WrongAnimal(): _type("WrongAnimal")
 {
 	std::cout << "WrongAnimal Default Constructor called" << std::endl;
 }
@@ -38,14 +38,14 @@ WrongAnimal &WrongAnimal::operator=(WrongAnimal const &rhs)
 
 void WrongAnimal::makeSound(void)const
 {
-	std::cout << "WrongAnimal Sound" << std::endl;
+	std::cout << GREEN << "WrongAnimal Sound 🅰️" << RESET << std::endl;
 }
 std::string WrongAnimal::getType(void) const
 {
-	return this->type;
+	return this->_type;
 }
 
 void WrongAnimal::setType(std::string type)
 {
-	this->type = type;
+	this->_type = type;
 }

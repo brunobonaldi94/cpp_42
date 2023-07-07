@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   AAnimal.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: bbonaldi <bbonaldi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:22:37 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/20 21:40:20 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/06 19:53:52 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ class AAnimal
 		std::string		getType( void ) const;
 		virtual void	makeSound( void ) const = 0;
 	private:
-		std::string type;
+		std::string _type;
 };
 
 #endif

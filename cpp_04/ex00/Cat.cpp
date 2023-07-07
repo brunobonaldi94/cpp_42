@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Cat.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: bbonaldi <bbonaldi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 22:28:21 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/15 23:08:24 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/06 19:49:40 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,5 @@ Cat & Cat::operator=(Cat const &rhs)
 
 void Cat::makeSound ( void ) const
 {
-	std::cout << "Meow" << std::endl;
+	std::cout << GREEN << "Meow 🐱" << RESET << std::endl;
 }

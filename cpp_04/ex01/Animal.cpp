@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Animal.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: bbonaldi <bbonaldi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 22:16:51 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/06/15 22:42:16 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/06 20:03:47 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Animal.hpp"
 
-Animal::Animal(): type("Animal")
+Animal::Animal(): _type("Animal")
 {
 	std::cout << "Animal Default Constructor called" << std::endl;
 }
@@ -38,14 +38,14 @@ Animal &Animal::operator=(Animal const &rhs)
 
 void Animal::makeSound(void)const
 {
-	std::cout << "Animal Sound" << std::endl;
+	std::cout << GREEN << "Animal Sound 🅰️" << RESET << std::endl;
 }
 std::string Animal::getType(void) const
 {
-	return this->type;
+	return this->_type;
 }
 
 void Animal::setType(std::string type)
 {
-	this->type = type;
+	this->_type = type;
 }
