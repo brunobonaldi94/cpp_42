@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 22:28:21 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/06 20:47:49 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/06 22:32:09 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ Cat::~Cat()
 Cat::Cat(Cat const &src) : Animal()
 {
 	std::cout << "Cat Copy constructor called" << std::endl;
+	this->brain = new Brain();
 	*this = src;
 }
 

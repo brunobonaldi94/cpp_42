@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 22:28:21 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/06 20:04:01 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/06 21:41:17 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ Dog::~Dog()
 Dog::Dog(Dog const &src) : Animal()
 {
 	std::cout << "Dog Copy constructor called" << std::endl;
+	this->brain = new Brain();
 	*this = src;
 }
 

@@ -8,7 +8,7 @@ CPP				:=	c++
 FLAGS			:=	-g3 -Wall -Werror -Wextra -std=c++98 -fsanitize=address
 MAKE			:=	make
 
-SRCS			:= 	Ice.cpp AMateria.cpp Cure.cpp main.cpp MateriaSource.cpp LinkedList.cpp Character.cpp 
+SRCS			:= 	Ice.cpp AMateria.cpp Cure.cpp main.cpp MateriaSource.cpp LinkedList.cpp Character.cpp
 OBJS			:=	$(SRCS:.cpp=.o)
 
 # ==============================================================================
@@ -48,7 +48,7 @@ fclean:		clean
 re:			fclean all
 
 run:	all
-	@./$(NAME) 
+	@./$(NAME)
 
 valgrind:
 			@valgrind -s --leak-check=full --show-leak-kinds=all \

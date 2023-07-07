@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Character.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: bbonaldi <bbonaldi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 22:53:21 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/02 12:33:01 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/06 23:33:41 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ Character::Character(std::string name): name(name),inventory_count(0)
 
 Character::Character(Character const &src)
 {
+	std::cout << "Character Copy Constructor called" << std::endl;
 	*this = src;
 }
 Character::~Character()
@@ -39,9 +40,10 @@ Character &Character::operator=(Character const &src)
 	if (this != &src)
 	{
 		this->setName(src.getName());
-		this->inventory_count = inventory_count;
+		this->inventory_count = src.inventory_count;
 		for (int i = 0; i < this->INV_SIZE; i++)
-			this->inventory[i] = src.inventory[i]->clone();
+			if (src.inventory[i])
+				this->inventory[i] = src.inventory[i]->clone();
 
 	}
 	return (*this);
@@ -71,7 +73,15 @@ void Character::unequip(int index)
 	if (index < 0 || index > this->inventory_count - 1)
 		return ;
 	this->unused_materia->add(this->inventory[index]);
-	this->inventory[index] = NULL;
+	AMateria *temp;
+	while (index != this->inventory_count - 1)
+	{
+		temp = this->inventory[index + 1];
+		this->inventory[index + 1] = this->inventory[index];
+		this->inventory[index] = temp;
+		index++;
+	}
+	this->inventory[this->inventory_count - 1] = NULL;
 	this->inventory_count--;
 }
 
@@ -81,3 +91,4 @@ void Character::use(int idx, ICharacter &target)
 		return ;
 	this->inventory[idx]->use(target);
 }
+

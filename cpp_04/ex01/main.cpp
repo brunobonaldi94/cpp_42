@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 22:15:11 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/06 20:59:38 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/06 21:53:59 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,30 +57,44 @@ void halfDogHalfCatTest()
 	}
 }
 
-
-void printCatOrDog(Animal *animal, int index, bool isCat = true)
+std::string getCatIdea(Cat &cat, int index)
 {
-	std::string idea;
-	if (!isCat)
-		idea = dynamic_cast<Dog *>(animal)->getBrain()->getIdeaByIndex(index);
-	else
-		idea = dynamic_cast<Cat *>(animal)->getBrain()->getIdeaByIndex(index);
-	animal->makeSound();
-	std::cout << BLUE << "Type: " << animal->getType() << std::endl << "Idea: " << idea << RESET << std::endl;
+	std::string idea = cat.getBrain()->getIdeaByIndex(index);
+	return idea;
+}
+
+std::string getDogIdea(Dog &dog, int index)
+{
+	std::string idea = dog.getBrain()->getIdeaByIndex(index);
+	return idea;
+}
+
+void printAnimal(Animal &animal, std::string idea)
+{
+	animal.makeSound();
+	std::cout << BLUE << "Type: " << animal.getType() << std::endl << "Idea: " << idea << RESET << std::endl;
 }
 
 void deepCopyTest()
 {
 	int index = 0;
-	Animal *cat1 = new Cat;
-	dynamic_cast<Cat *>(cat1)->getBrain()->setIdeaByIndex(index, "New Cat Idea");
-	Animal *cat2(cat1);
-	Animal *cat3;
+	Cat cat1;
+	cat1.getBrain()->setIdeaByIndex(index, "New Cat Idea");
+	Cat cat2(cat1);
+	Cat cat3;
 	cat3 = cat1;
-	printCatOrDog(cat1, index);
-	printCatOrDog(cat2, index);
-	printCatOrDog(cat3, index);
-	delete cat1;
+	printAnimal(cat1, getCatIdea(cat1, index));
+	printAnimal(cat2, getCatIdea(cat2, index));
+	printAnimal(cat3, getCatIdea(cat3, index));
+
+	Dog dog1;
+	dog1.getBrain()->setIdeaByIndex(index, "New Dog Idea");
+	Dog dog2(dog1);
+	Dog dog3;
+	dog3 = dog1;
+	printAnimal(dog1, getDogIdea(dog1, index));
+	printAnimal(dog2, getDogIdea(dog2, index));
+	printAnimal(dog3, getDogIdea(dog3, index));
 }
 
 void runTestFunction(void (*test)(void), int index, std::string testName)
