@@ -93,7 +93,8 @@ AForm::GradeTooHighException::~GradeTooHighException() throw()
 
 const char* AForm::GradeTooHighException::what() const throw()
 {
-	std::cerr << this->_nameEx << ": " << this->_nameEx << " - tried to set grade/exec for : " << this->_gradeEx << std::endl;
+	std::string gradeOrExec = this->_wasRaisedByExec ? "exec" : "grade";
+	std::cerr << this->_nameEx << ": " << this->_nameEx << " - tried to set " << gradeOrExec << " for : " << this->_gradeEx << std::endl;
 	return "AForm: GradeTooHighException: The Max Grade is 1, it cannot be higher than this";
 }
 
