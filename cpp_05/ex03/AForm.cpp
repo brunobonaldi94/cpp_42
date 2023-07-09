@@ -44,7 +44,12 @@ AForm &AForm::operator=(AForm const &rhs)
 {
 	std::cout << "AForm Assignation operator called" << std::endl;
 	if (this != &rhs)
+	{
+		const_cast<std::string &>(this->_name) = rhs.getName();
 		this->_isSigned = rhs.getIsSigned();
+		const_cast<int &>(this->_grade) = rhs.getGrade();
+		const_cast<int &>(this->_exec) = rhs.getExec();
+	}
 	return (*this);
 }
 
@@ -72,7 +77,7 @@ bool AForm::getIsSigned() const
 void AForm::beSigned(const Bureaucrat &bureaucrat)
 {
 	if (bureaucrat.getGrade() > this->getGrade())
-			throw AForm::GradeTooLowException(this->getName(), &bureaucrat, this->getGrade(), false);
+			throw AForm::GradeTooLowException(this->getName(), bureaucrat, this->getGrade(), false);
 	this->_isSigned = true;
 }
 
@@ -98,15 +103,18 @@ AForm::GradeTooLowException::GradeTooLowException(std::string name, int grade, b
 	std::cout << YELLOW << this->_nameEx << ": GradeTooLowException Constructor called" << RESET << std::endl;
 }
 
-AForm::GradeTooLowException::GradeTooLowException(std::string name, Bureaucrat const *bureaucrat, int grade, bool wasRaisedByExec) : 
-	_nameEx(name), _gradeEx(grade), _bureaucrat(bureaucrat), _wasRaisedByExec(wasRaisedByExec)
+AForm::GradeTooLowException::GradeTooLowException(std::string name, Bureaucrat const &bureaucrat, int grade, bool wasRaisedByExec) : 
+	_nameEx(name), _gradeEx(grade), _wasRaisedByExec(wasRaisedByExec)
 {
 	std::cout << YELLOW << this->_nameEx << ": GradeTooLowException Constructor called" << RESET << std::endl;
+	this->_bureaucrat = new Bureaucrat(bureaucrat.getName(), bureaucrat.getGrade());
 }
 
 AForm::GradeTooLowException::~GradeTooLowException() throw()
 {
 	std::cout << YELLOW << this->_nameEx << ": GradeTooLowException Destructor called" << std::endl;
+	if (this->_bureaucrat)
+		delete this->_bureaucrat;
 }
 
 const char* AForm::GradeTooLowException::what() const throw()
@@ -144,7 +152,7 @@ const char* AForm::FormNotSignedException::what() const throw()
 void AForm::execute(Bureaucrat const &executor) const
 {
 	if (executor.getGrade() > this->getExec())
-			throw AForm::GradeTooLowException(this->getName(), &executor, this->getExec(), true);
+			throw AForm::GradeTooLowException(this->getName(), executor, this->getExec(), true);
 	if (!this->getIsSigned())
 			throw AForm::FormNotSignedException();
 	return ;

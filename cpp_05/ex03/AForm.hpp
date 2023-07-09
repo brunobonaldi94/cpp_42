@@ -37,7 +37,7 @@ class AForm
 		{
 			public:
 				GradeTooLowException(std::string name, int grade, bool wasRaisedByExec);
-				GradeTooLowException(std::string name, Bureaucrat const *bureaucrat, int grade, bool wasRaisedByExec);
+				GradeTooLowException(std::string name, Bureaucrat const &bureaucrat, int grade, bool wasRaisedByExec);
 				virtual ~GradeTooLowException() throw();
 				virtual const char* what() const throw();
 

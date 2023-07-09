@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 22:14:38 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/03 23:24:59 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/09 19:11:39 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,11 @@ Form &Form::operator=(Form const &rhs)
 {
 	std::cout << "Form Assignation operator called" << std::endl;
 	if (this != &rhs)
+	{
+		const_cast<std::string &>(this->_name) = rhs.getName();
 		this->_isSigned = rhs.getIsSigned();
+		const_cast<int &>(this->_grade) = rhs.getGrade();
+	}
 	return (*this);
 }
 
@@ -62,7 +66,7 @@ bool Form::getIsSigned() const
 void Form::beSigned(Bureaucrat &bureaucrat)
 {
 	if (bureaucrat.getGrade() > this->getGrade())
-		throw Form::GradeTooLowException(this->getName(), &bureaucrat, this->getGrade());
+		throw Form::GradeTooLowException(this->getName(), bureaucrat, this->getGrade());
 	this->_isSigned = true;
 }
 
@@ -87,14 +91,17 @@ Form::GradeTooLowException::GradeTooLowException(std::string name, int grade) : 
 	std::cout << YELLOW << "Form: GradeTooLowException Constructor called" << RESET << std::endl;
 }
 
-Form::GradeTooLowException::GradeTooLowException(std::string name, Bureaucrat *bureaucrat, int grade) : _nameEx(name), _gradeEx(grade), _bureaucrat(bureaucrat)
+Form::GradeTooLowException::GradeTooLowException(std::string name, Bureaucrat const &bureaucrat, int grade) : _nameEx(name), _gradeEx(grade)
 {
 	std::cout << YELLOW << "Form: GradeTooLowException Constructor called" << RESET << std::endl;
+	this->_bureaucrat = new Bureaucrat(bureaucrat.getName(), bureaucrat.getGrade());
 }
 
 Form::GradeTooLowException::~GradeTooLowException() throw()
 {
 	std::cout << YELLOW << "Form: GradeTooLowException Destructor called" << std::endl;
+	if (this->_bureaucrat)
+		delete this->_bureaucrat;
 }
 
 const char* Form::GradeTooLowException::what() const throw()

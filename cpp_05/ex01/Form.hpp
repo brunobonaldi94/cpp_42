@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 21:25:22 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/03 22:53:57 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/09 19:11:39 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ class Form
 				std::string const	_nameEx;
 				int			const	_gradeEx;
 		};
-		class GradeTooLowException : public std::exception
+	class GradeTooLowException : public std::exception
 		{
 			public:
 				GradeTooLowException(std::string name, int grade);
-				GradeTooLowException(std::string name, Bureaucrat *bureaucrat, int grade);
+				GradeTooLowException(std::string name, Bureaucrat const &bureaucrat, int grade);
 				virtual ~GradeTooLowException() throw();
 				virtual const char* what() const throw();
 

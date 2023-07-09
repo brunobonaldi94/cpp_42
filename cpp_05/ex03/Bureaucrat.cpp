@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 13:01:43 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/05 22:21:40 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/09 18:38:28 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,13 @@ Bureaucrat &Bureaucrat::operator=(Bureaucrat const &rhs)
 {
 	std::cout << "Bureaucrat Assignation operator called" << std::endl;
 	if (this == &rhs)
-		this->_grade = rhs._grade;
+	{
+		const_cast<std::string &>(this->_name) = rhs.getName();
+		this->_grade = rhs.getGrade();
+	}
 	return (*this);
 }
+
 std::string Bureaucrat::getName() const
 {
 	return (this->_name);
