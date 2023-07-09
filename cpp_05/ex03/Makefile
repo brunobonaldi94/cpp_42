@@ -9,7 +9,7 @@ FLAGS			:=	-g3 -Wall -Werror -Wextra -std=c++98 -fsanitize=address
 MAKE			:=	make
 
 SRCS			:=	Bureaucrat.cpp AForm.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp \
-					PresidentialPardonForm.cpp main.cpp
+					PresidentialPardonForm.cpp Intern.cpp main.cpp
 OBJS			:=	$(SRCS:.cpp=.o)
 
 # ==============================================================================

@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 13:18:35 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/05 23:14:18 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/08 23:40:16 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,101 +45,75 @@ void testNoException()
 {
 	try
 	{
-		ShrubberyCreationForm f0 = ShrubberyCreationForm("form0");
-		Bureaucrat b0("b0", 1);
+		int const formQty = 3;
 
-		tryToSignAndExecuteForm(f0, b0);
-		RobotomyRequestForm f1 = RobotomyRequestForm("form1");
-		tryToSignAndExecuteForm(f1, b0);
-		PresidentialPardonForm f2 = PresidentialPardonForm("form1");
-		tryToSignAndExecuteForm(f2, b0);
+		ShrubberyCreationForm *f0 = new ShrubberyCreationForm("form0");
+		RobotomyRequestForm *f1 = new RobotomyRequestForm("form1");
+		PresidentialPardonForm *f2 = new PresidentialPardonForm("form2");
+
+		AForm *forms[formQty] = { f0, f1, f2 };
+		for (int i = 0; i < formQty; i++)
+		{
+			Bureaucrat b("b", forms[i]->getExec());
+			tryToSignAndExecuteForm(*(forms[i]), b);
+			delete forms[i];
+		}
+
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << e.what() << std::endl;
+		std::cerr << RED << e.what() << RESET << std::endl;
 	}
 }
 
-// void testGradeTooHighExceptionByConstructor()
-// {
-// 	try
-// 	{
-// 		Form f2("form2", 0);
-// 		std::cout << f2;
-// 	}
-// 	catch(const std::exception& e)
-// 	{
-// 		std::cerr << RED << e.what() << RESET << std::endl;
-// 	}
-// }
+void testFormBeSignedException()
+{
+	try
+	{
+		int const formQty = 3;
+		int const lowGrade = 150;
 
-// void testFormBeSignedNoException()
-// {
-// 	try
-// 	{
-// 		Form f3("form3", 10);
-// 		Bureaucrat b1("b1", 1);
-// 		f3.beSigned(b1);
-// 		std::cout << f3;
-		
-// 		Form f4("form4", 10);
-// 		Bureaucrat b2("b2", 10);
-// 		f4.beSigned(b2);
-// 		std::cout << f4;
-// 	}
-// 	catch(const std::exception& e)
-// 	{
-// 		std::cerr << RED << e.what() << RESET << std::endl;
-// 	}
-// }
+		ShrubberyCreationForm *f0 = new ShrubberyCreationForm("form0");
+		RobotomyRequestForm *f1 = new RobotomyRequestForm("form1");
+		PresidentialPardonForm *f2 = new PresidentialPardonForm("form2");
 
-// void testFormGradeTooLowExceptionByConstructor()
-// {
-// 	try
-// 	{
-// 		Form f5("form5", 151);
-// 		std::cout << f5;
-// 	}
-// 	catch(const std::exception& e)
-// 	{
-// 		std::cerr << RED << e.what() << RESET << std::endl;
-// 	}
-// }
+		AForm *forms[formQty] = { f0, f1, f2 };
+		for (int i = 0; i < formQty; i++)
+		{
+			Bureaucrat b("b", lowGrade);
+			tryToSignAndExecuteForm(*(forms[i]), b);
+			delete forms[i];
+		}
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << RED << e.what() << RESET << std::endl;
+	}
+}
 
-// void testGradeTooLowExceptionByBeSigned()
-// {
-// 	try
-// 	{
-// 		Form f6("form6", 10);
-// 		Bureaucrat b4("b4", 11);
-// 		f6.beSigned(b4);
-// 		std::cout << f6;
-// 	}
-// 	catch(const std::exception& e)
-// 	{
-// 		std::cerr << RED << e.what() << RESET << std::endl;
-// 	}
-// }
+void testFormBeExecutedException()
+{
+	try
+	{
+		int const formQty = 3;
 
-// void testSigForm()
-// {
-// 	try
-// 	{
-// 		Bureaucrat b6("b6", 141);
-// 		Form f7("form7", 142);
-// 		b6.signForm(f7);
-// 		std::cout << f7;
+		ShrubberyCreationForm *f0 = new ShrubberyCreationForm("form0");
+		RobotomyRequestForm *f1 = new RobotomyRequestForm("form1");
+		PresidentialPardonForm *f2 = new PresidentialPardonForm("form2");
 
-// 		Bureaucrat b7("b7", 140);
-// 		Form f8("form8", 1);
-// 		b7.signForm(f8);
-// 		std::cout << f8;
-// 	}
-// 	catch(const std::exception& e)
-// 	{
-// 		std::cerr << RED << e.what() << RESET << std::endl;
-// 	}
-// }
+		AForm *forms[formQty] = { f0, f1, f2 };
+		for (int i = 0; i < formQty; i++)
+		{
+			Bureaucrat b("b", forms[i]->getGrade());
+			tryToSignAndExecuteForm(*(forms[i]), b);
+			delete forms[i];
+		}
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << RED << e.what() << RESET << std::endl;
+	}
+}
 
 void runTestFunction(void (*test)(void), int index, std::string testName)
 {
@@ -150,22 +124,16 @@ void runTestFunction(void (*test)(void), int index, std::string testName)
 
 int	main(void)
 {
-	int const testNumbers = 1;
+	int const testNumbers = 3;
 	void (*testFunctions[testNumbers])(void) = {
-		testNoException
-		// ,
-		// testGradeTooHighExceptionByConstructor,
-		// testFormBeSignedNoException,
-		// testFormGradeTooLowExceptionByConstructor,
-		// testGradeTooLowExceptionByBeSigned,
-		// testSigForm,
+		testNoException,
+		testFormBeSignedException,
+		testFormBeExecutedException
 	};
 	std::string testNames[testNumbers] = {
 		"No Exception", 
-		// "Grade Too High Exception by Constructor", 
-		// "Form BeSigned No Exception", 
-		// "Grade Too Low Exception by Constructor", 
-		// "Sign Form"
+		"Form BeSigned Exception",
+		"Form BeExecuted Exception"
 	};
 	for (int i = 0; i < testNumbers; i++)
 		runTestFunction(testFunctions[i], i + 1, testNames[i]);
