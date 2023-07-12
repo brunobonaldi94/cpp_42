@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 13:18:35 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/09 18:47:06 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/11 23:19:12 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void testNoException()
 {
 	try
 	{
-		Form f0("form0", 2);
+		Form f0("form0", 2, 2);
 		std::cout << f0;
-		Form f1("form1", 149);
+		Form f1("form1", 149, 149);
 		std::cout << f1;
 		Form f2(f1);
 		std::cout << "f2: "<< f2;
@@ -41,8 +41,18 @@ void testGradeTooHighExceptionByConstructor()
 {
 	try
 	{
-		Form f2("form2", 0);
+		Form f2("form2", 0, 1);
 		std::cout << f2;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << RED << e.what() << RESET << std::endl;
+	}
+	printSeparator();
+	try
+	{
+		Form f2b("form2b", 1, 0);
+		std::cout << f2b;
 	}
 	catch(const std::exception& e)
 	{
@@ -54,12 +64,12 @@ void testFormBeSignedNoException()
 {
 	try
 	{
-		Form f3("form3", 10);
+		Form f3("form3", 10, 10);
 		Bureaucrat b1("b1", 1);
 		f3.beSigned(b1);
 		std::cout << f3;
 		
-		Form f4("form4", 10);
+		Form f4("form4", 10, 10);
 		Bureaucrat b2("b2", 10);
 		f4.beSigned(b2);
 		std::cout << f4;
@@ -74,8 +84,18 @@ void testFormGradeTooLowExceptionByConstructor()
 {
 	try
 	{
-		Form f5("form5", 151);
+		Form f5("form5", 151, 1);
 		std::cout << f5;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << RED << e.what() << RESET << std::endl;
+	}
+	printSeparator();
+	try
+	{
+		Form f5b("form5b", 1, 151);
+		std::cout << f5b;
 	}
 	catch(const std::exception& e)
 	{
@@ -87,7 +107,7 @@ void testGradeTooLowExceptionByBeSigned()
 {
 	try
 	{
-		Form f6("form6", 10);
+		Form f6("form6", 10, 140);
 		Bureaucrat b4("b4", 11);
 		f6.beSigned(b4);
 		std::cout << f6;
@@ -103,12 +123,12 @@ void testSigForm()
 	try
 	{
 		Bureaucrat b6("b6", 141);
-		Form f7("form7", 142);
+		Form f7("form7", 142, 10);
 		b6.signForm(f7);
 		std::cout << f7;
 
 		Bureaucrat b7("b7", 140);
-		Form f8("form8", 1);
+		Form f8("form8", 1, 40);
 		b7.signForm(f8);
 		std::cout << f8;
 	}

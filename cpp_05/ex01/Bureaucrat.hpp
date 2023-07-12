@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 12:55:59 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/03 22:51:43 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/11 23:22:50 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 # define YELLOW "\033[0;33m"
 
 class Form;
-
 class Bureaucrat
 {
 	public:
