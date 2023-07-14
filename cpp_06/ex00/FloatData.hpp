@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 17:54:13 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/11 18:06:55 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/13 21:28:24 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,19 @@
 
 #include "AData.hpp"
 
-class FLoatData: public AData<float>
+class FloatData: public AData<float, double>
 {
 	public:
-		FLoatData();
-		FLoatData(std::string param);
-		~FLoatData();
-		FLoatData(FLoatData const &src);
-		FLoatData & operator=(const FLoatData &rhs);
+		FloatData();
+		FloatData(std::string param);
+		~FloatData();
+		FloatData(FloatData const &data);
+		FloatData & operator=(FloatData const &data);
 
-		char TryToCovert();
+		float tryToConvert();
 		void printConverted();
+		bool checkLimits();
+		double handleResultOverUnderFlow(std::string param);
 };
 
 #endif

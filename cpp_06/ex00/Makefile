@@ -8,7 +8,7 @@ CPP				:=	c++
 FLAGS			:=	-g3 -Wall -Werror -Wextra -std=c++98 -fsanitize=address
 MAKE			:=	make
 
-SRCS			:=	AData.cpp CharData.cpp ScalarConverter.cpp main.cpp
+SRCS			:=	CharData.cpp IntData.cpp FloatData.cpp ScalarConverter.cpp debug.cpp main.cpp
 OBJS			:=	$(SRCS:.cpp=.o)
 
 # ==============================================================================

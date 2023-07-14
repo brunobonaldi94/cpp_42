@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 21:25:18 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/08 23:40:35 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/13 00:39:18 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,15 @@ AForm * Intern::makeForm(std::string formName, std::string target)
 
 	int const formQty = 3;
 	std::string formNames[formQty] = { 
-		"shrubbery creation" , 
-		"presidential pardon", 
-		"robotomy request" 
+		"shrubbery creation",
+		"robotomy request",
+		"presidential pardon"
 	};
 
 	AForm *(Intern::*formCreation[formQty])(std::string target) = { 
 		&Intern::createShrubbery, 
 		&Intern::createRobotomyRequest, 
-		&Intern::createPresidentialPardon 
+		&Intern::createPresidentialPardon,
 	};
 	for (int i = 0; i < formQty; i++)
 	{

@@ -3,7 +3,7 @@
 
 #include "AData.hpp"
 
-class CharData: public AData<char>
+class CharData: public AData<char, int>
 {
 	public:
 		CharData();
@@ -14,6 +14,8 @@ class CharData: public AData<char>
 
 		char tryToConvert();
 		void printConverted();
+		bool checkLimits();
+		int handleResultOverUnderFlow(std::string param);
 };
 
 #endif

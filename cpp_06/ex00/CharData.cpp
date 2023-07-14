@@ -6,59 +6,78 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 23:51:56 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/11 22:17:01 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/13 21:23:57 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "CharData.hpp"
 
-CharData::CharData() : AData<char>()
+CharData::CharData() : AData<char, int>()
 {
-	std::cout << "CharData default constructor called" << std::endl;	
+	debug("CharData default constructor called", GREEN);
 }
 
-CharData::CharData(std::string param) : AData<char>(param)
+CharData::CharData(std::string param) : AData<char, int>(param)
 {
-	std::cout << "CharData parametric constructor called" << std::endl;	
+	debug("CharData parametric constructor called", GREEN);
 }
 
 CharData::~CharData()
 {
-	std::cout << "CharData destructor called" << std::endl;	
+	debug("CharData destructor called", RED);
 }
 
-CharData::CharData(CharData const &src): AData<char>(src.getParam())
+CharData::CharData(CharData const &src): AData<char, int>(src._param)
 {
-	std::cout << "CharData copy constructor called" << std::endl;	
+	debug("CharData copy constructor called", GREEN);
 	*this = src;
 }
 
 CharData & CharData::operator=(CharData const &rhs)
 {
-	std::cout << "CharData assignation operator called" << std::endl;	
+	debug("CharData assignation operator called", GREEN);
 	if (this != &rhs)
-		this->setParam(rhs.getParam());
+		this->_param = rhs._param;
 	return (*this);
+}
+
+int CharData::handleResultOverUnderFlow(std::string param)
+{
+	this->_resultOverUnderFlow = std::atoi(param.c_str());
+	return (this->_resultOverUnderFlow);
+}
+
+bool CharData::checkLimits()
+{
+	if (this->_resultOverUnderFlow < 0 || this->_resultOverUnderFlow > 127)
+		return (false);
+	return (true);
 }
 
 char CharData::tryToConvert()
 {
-	std::string _param = this->getParam();
+	std::string param = this->_param;
 
-	int countOfDots = this->count_chars(_param, '.');
-	if (countOfDots > 1)
+	int countOfDots = this->count_chars(param, '.');
+	std::string pseudoLiteral = this->getPseudoLiterals(param);
+	if (countOfDots > 1 || pseudoLiteral.length() > 0)
 		throw CharData::BadCast("impossible");
 	if (countOfDots == 1)
-		_param = _param.substr(0, _param.find("."));
-	if (_param.at(_param.length() - 1) != 'f')
-		_param.erase(_param.length() - 1);
-	bool isAllDigit = this->isAll(std::isdigit, _param);
-	if (!isAllDigit || _param.length() >= 4)
+		param = param.substr(0, param.find("."));
+	if (param.at(param.length() - 1) == 'f')
+		param.erase(param.length() - 1);
+
+
+	bool isAllDigit = this->isAll(std::isdigit, param);
+	if (!isAllDigit)
 		throw CharData::BadCast("impossible");
-	int _paramInt = std::atoi(_param.c_str());
-	bool isPrintable = std::isprint(_paramInt);
-	if ((isAllDigit || _param.length() == 1 ) && isPrintable)
-		return static_cast<char>(_paramInt);
+
+	int paramInt = this->handleResultOverUnderFlow(param);
+	if (!this->checkLimits())
+		throw CharData::BadCast("impossible");
+	bool isPrintable = std::isprint(paramInt);
+	if ((isAllDigit || param.length() == 1 ) && isPrintable)
+		return static_cast<char>(paramInt);
 	else if (isAllDigit && !isPrintable)
 		throw CharData::BadCast("Non displayable");
 	throw CharData::BadCast("impossible");
@@ -68,9 +87,8 @@ void CharData::printConverted()
 {
 	try
 	{
-		char converted = this->tryToConvert();
-		std::cout << "char: " << converted << std::endl;
-
+		this->_result = this->tryToConvert();
+		std::cout << "char: " << this->_result << std::endl;
 	}
 	catch(CharData::BadCast &e)
 	{

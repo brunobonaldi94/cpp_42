@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 13:18:35 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/08 23:40:18 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/12 18:56:32 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,13 @@ void testNoException()
 	try
 	{
 		int const formQty = 3;
+		Intern intern;
+
 		std::string formNames[formQty] = {
 			"shrubbery creation",
 			"robotomy request",
 			"presidential pardon"
 		};
-		Intern intern;
 		for (int i = 0; i < formQty; i++)
 		{
 			AForm *form = intern.makeForm(formNames[i], "target_" + Intern::castIntToString(i + 1));

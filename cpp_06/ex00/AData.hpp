@@ -5,8 +5,11 @@
 #include <exception>
 #include "colors.hpp"
 #include <cstdlib>
+#include "defines.hpp"
+#include <limits>
+#include <typeinfo>
 
-template <typename T>
+template <typename T, typename R>
 class AData
 {
 	public:
@@ -30,11 +33,25 @@ class AData
 		std::string getParam() const;
 		bool isAll(int (*f)(int), std::string param) const;
 		int  count_chars(std::string param, char c) const;
+		std::string getPseudoLiterals(std::string param);
+		bool checkConversion(R paramConverted) const;
 		
 		virtual T tryToConvert() = 0;
+		virtual bool checkLimits() = 0;
+		virtual R handleResultOverUnderFlow(std::string param) = 0;
 		virtual void printConverted() = 0;
-	private:
+
+	protected:
 		std::string _param;
-		std::string _result;
+		bool _isPsuedoLiteral;
+		T _result;
+		R _resultOverUnderFlow;
 };
+
+void debug(std::string param, std::string color);
+
+#include "AData.tpp"
+
+
 #endif
+

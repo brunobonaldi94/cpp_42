@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 13:18:35 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/08 23:40:16 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/12 18:56:04 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ void testNoException()
 		ShrubberyCreationForm *f0 = new ShrubberyCreationForm("form0");
 		RobotomyRequestForm *f1 = new RobotomyRequestForm("form1");
 		PresidentialPardonForm *f2 = new PresidentialPardonForm("form2");
-
+		
 		AForm *forms[formQty] = { f0, f1, f2 };
+
 		for (int i = 0; i < formQty; i++)
 		{
 			Bureaucrat b("b", forms[i]->getExec());

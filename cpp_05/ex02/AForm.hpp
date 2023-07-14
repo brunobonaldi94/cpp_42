@@ -58,7 +58,7 @@ class AForm
 		AForm();
 		AForm(std::string name, int grade, int exec);
 		AForm(AForm const &src);
-		virtual ~AForm();
+		virtual ~AForm() = 0;
 		AForm & operator=(AForm const &rhs);
 
 		std::string getName() const;
@@ -67,7 +67,7 @@ class AForm
 		int 		getExec() const;
 	
 		void beSigned(const Bureaucrat &bureaucrat);
-		virtual void execute(Bureaucrat const &executor) const;
+		virtual void execute(Bureaucrat const &executor) const = 0;
 
 	private:
 		std::string	const	_name;

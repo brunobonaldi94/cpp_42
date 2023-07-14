@@ -75,10 +75,6 @@ class Form
 		int const			_exec;
 		static const int 	_maxGrade = 1;
 		static const int 	_minGrade = 150;
-
-	protected:	
-		std::string			_target;
-
 };
 
 std::ostream &operator<<(std::ostream &o, Form const &AForm);
