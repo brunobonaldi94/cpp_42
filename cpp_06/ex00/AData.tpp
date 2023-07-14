@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 23:32:01 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/13 23:37:35 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/14 16:49:52 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 template <typename T, typename R>
 
-AData<T, R>::AData() : _param(""), _isPsuedoLiteral(false)
+AData<T, R>::AData() : _param(""), _isPseudoLiteral(false)
 {
 	debug("AData default constructor called", BLUE);
 }
 
 template <typename T, typename R>
 
-AData<T, R>::AData(std::string param) : _param(param), _isPsuedoLiteral(false)
+AData<T, R>::AData(std::string param) : _param(param), _isPseudoLiteral(false)
 {
 	debug("AData parametric constructor called", BLUE);
 }
@@ -97,7 +97,7 @@ std::string AData<T, R>::getPseudoLiterals(std::string param)
 				this->_resultOverUnderFlow = std::numeric_limits<T>::quiet_NaN();
 			else if (isFloatingPoint)
 				this->_resultOverUnderFlow =  std::numeric_limits<T>::infinity();
-			this->_isPsuedoLiteral = true;
+			this->_isPseudoLiteral = true;
 			return pseudoLiterals[i];
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 20:06:46 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/13 23:11:22 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/14 17:11:11 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,22 @@ void FloatData::printConverted()
 {
 	try
 	{
+		std::string floatAdder = "f";
 		this->_result = this->tryToConvert();
-		if (this->_param.at(this->_param.length() - 1) == 'f')
+	
+		if (this->_isPseudoLiteral)
+		{
+			if (this->_param == "nanf" || this->_param.find("inff") != std::string::npos)
+				std::cout << "float: " << this->_param << std::endl;
+			else
+				std::cout << "float: " << this->_param  << floatAdder << std::endl;
+			return ;
+		}
+
+		if (this->_param.at(this->_param.length() - 1) == 'f' && !this->_isPseudoLiteral)
 			this->_param.erase(this->_param.length() - 1);
 		size_t pos = this->_param.find(".");
-		std::string floatAdder = "f";
-		if (pos == std::string::npos && !this->_isPsuedoLiteral)
+		if (pos == std::string::npos && !this->_isPseudoLiteral)
 			floatAdder = ".0f";
 		else if (pos !=  std::string::npos)
 			floatAdder = this->_param.substr(pos, this->_param.length() - pos) + "f";

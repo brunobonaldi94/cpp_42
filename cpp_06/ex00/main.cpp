@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 13:18:35 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/13 23:41:33 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/14 16:48:17 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ void testNoException()
 		ScalarConverter::converter("nan");
 		std::cout << "---nanf---" << std::endl;
 		ScalarConverter::converter("nanf");
-		std::cout << "---inff---" << std::endl;
+		std::cout << "-- -inff ---" << std::endl;
 		ScalarConverter::converter("-inff");
 		std::cout << "---+inf---" << std::endl;
 		ScalarConverter::converter("+inf");
-		std::cout << "---INT_MAX +2147483647+ ---" << std::endl;
+		std::cout << "---INT_MIN -2147483648+ ---" << std::endl;
 		ScalarConverter::converter("-2147483648");
 	}
 	catch(const std::exception& e)

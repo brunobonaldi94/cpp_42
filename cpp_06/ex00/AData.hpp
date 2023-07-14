@@ -43,7 +43,7 @@ class AData
 
 	protected:
 		std::string _param;
-		bool _isPsuedoLiteral;
+		bool _isPseudoLiteral;
 		T _result;
 		R _resultOverUnderFlow;
 };
