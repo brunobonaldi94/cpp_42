@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 17:53:19 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/13 21:25:54 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/15 10:13:09 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "CharData.hpp"
 #include "IntData.hpp"
 #include "FloatData.hpp"
+#include "DoubleData.hpp"
 
 class ScalarConverter
 {

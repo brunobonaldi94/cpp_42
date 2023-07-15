@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 18:05:03 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/13 21:28:41 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/15 10:13:05 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,6 @@ void ScalarConverter::converter(std::string param)
 	data2.printConverted();
 	FloatData data3(param);
 	data3.printConverted();
+	DoubleData data4(param);
+	data4.printConverted();
 }

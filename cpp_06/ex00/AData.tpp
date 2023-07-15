@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 23:32:01 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/14 16:49:52 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/15 11:28:05 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ bool AData<T, R>::isAll(int (*f)(int), std::string param) const
 }
 
 template<typename T, typename R>
-int AData<T, R>::count_chars(std::string param, char c) const
+size_t AData<T, R>::count_chars(std::string param, char c) const
 {
-	int count = 0;
+	size_t count = 0;
 
 	for (size_t i = 0; i < param.length(); i++)
 	{
@@ -75,6 +75,15 @@ int AData<T, R>::count_chars(std::string param, char c) const
 			count++;
 	}
 	return count;
+}
+
+template<typename T, typename R>
+std::string AData<T, R>::eraseParamFromChar(std::string param, char c) const
+{
+	size_t pos = param.find(c);
+	if (pos != std::string::npos)
+		param.erase(pos, 1);
+	return param;
 }
 
 template<typename T, typename R>
@@ -142,7 +151,6 @@ const char * AData<T, R>::BadCast::what() const throw()
 {
 	return (this->_result.c_str());
 }
-
 
 template<typename T, typename R>
 std::string AData<T, R>::BadCast::getResult() const

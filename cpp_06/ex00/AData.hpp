@@ -32,9 +32,10 @@ class AData
 		void setParam(std::string param);
 		std::string getParam() const;
 		bool isAll(int (*f)(int), std::string param) const;
-		int  count_chars(std::string param, char c) const;
+		size_t  count_chars(std::string param, char c) const;
 		std::string getPseudoLiterals(std::string param);
 		bool checkConversion(R paramConverted) const;
+		std::string eraseParamFromChar(std::string param, char c) const;
 		
 		virtual T tryToConvert() = 0;
 		virtual bool checkLimits() = 0;

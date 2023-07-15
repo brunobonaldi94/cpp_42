@@ -65,8 +65,8 @@ int IntData::tryToConvert()
 		throw IntData::BadCast("impossible");
 	if (countOfDots == 1)
 		param = param.substr(0, param.find("."));
-	if (param.at(param.length() - 1) == 'f')
-		param.erase(param.length() - 1);
+	
+	param = this->eraseParamFromChar(param, 'f');
 
 	long int paramLongInt = this->handleResultOverUnderFlow(param);
 	if (param.at(0) == '+' || param.at(0) == '-')

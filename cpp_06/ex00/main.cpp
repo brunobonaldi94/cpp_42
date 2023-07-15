@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 13:18:35 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/14 16:48:17 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/15 12:10:58 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,36 @@
 
 void printSeparator()
 {
-	std::cout << std::string(50, '-') << std::endl;
+	std::cout << std::string(100, '-') << std::endl;
+}
+
+void runAllTests(std::string *params, size_t length)
+{
+	for (size_t i = 0; i < length; i++)
+	{
+		std::cout << GREEN << "===" << params[i] << "===" << RESET << std::endl;
+		ScalarConverter::converter(params[i]);
+	}
 }
 
 void testNoException()
 {
 	try
 	{
-		std::cout << "---O---" << std::endl;
-		ScalarConverter::converter("0");
-		std::cout << "---122---" << std::endl;
-		ScalarConverter::converter("122");
-		std::cout << "---42.00f---" << std::endl;
-		ScalarConverter::converter("42.00f");
-		std::cout << "---42.00---" << std::endl;
-		ScalarConverter::converter("42.00");
-		std::cout << "---nan---" << std::endl;
-		ScalarConverter::converter("nan");
-		std::cout << "---nanf---" << std::endl;
-		ScalarConverter::converter("nanf");
-		std::cout << "-- -inff ---" << std::endl;
-		ScalarConverter::converter("-inff");
-		std::cout << "---+inf---" << std::endl;
-		ScalarConverter::converter("+inf");
-		std::cout << "---INT_MIN -2147483648+ ---" << std::endl;
-		ScalarConverter::converter("-2147483648");
+		std::string params[] = {
+			"0",
+			"42",
+			"42.0f",
+			"42.0",
+			"42.1",
+			"nan",
+			"nanf",
+			"-inff",
+			"+inf",
+			"-2147483648",
+			"2147483647"
+		};
+		runAllTests(params, sizeof(params) / sizeof(params[0]));
 	}
 	catch(const std::exception& e)
 	{

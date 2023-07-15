@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 23:51:56 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/13 21:23:57 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/15 12:22:44 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,8 @@ int CharData::handleResultOverUnderFlow(std::string param)
 
 bool CharData::checkLimits()
 {
-	if (this->_resultOverUnderFlow < 0 || this->_resultOverUnderFlow > 127)
-		return (false);
-	return (true);
+	bool conversionSucceed = AData<char, int>::checkConversion(this->_resultOverUnderFlow);
+	return (conversionSucceed);
 }
 
 char CharData::tryToConvert()
@@ -59,14 +58,12 @@ char CharData::tryToConvert()
 	std::string param = this->_param;
 
 	int countOfDots = this->count_chars(param, '.');
-	std::string pseudoLiteral = this->getPseudoLiterals(param);
-	if (countOfDots > 1 || pseudoLiteral.length() > 0)
+	if (countOfDots > 1 || this->getPseudoLiterals(param).length() > 0)
 		throw CharData::BadCast("impossible");
 	if (countOfDots == 1)
 		param = param.substr(0, param.find("."));
-	if (param.at(param.length() - 1) == 'f')
-		param.erase(param.length() - 1);
-
+	
+	param = this->eraseParamFromChar(param, 'f');
 
 	bool isAllDigit = this->isAll(std::isdigit, param);
 	if (!isAllDigit)
@@ -76,11 +73,11 @@ char CharData::tryToConvert()
 	if (!this->checkLimits())
 		throw CharData::BadCast("impossible");
 	bool isPrintable = std::isprint(paramInt);
-	if ((isAllDigit || param.length() == 1 ) && isPrintable)
-		return static_cast<char>(paramInt);
+	if (!isAllDigit)
+		throw CharData::BadCast("impossible");
 	else if (isAllDigit && !isPrintable)
 		throw CharData::BadCast("Non displayable");
-	throw CharData::BadCast("impossible");
+	return static_cast<char>(paramInt);
 }
 
 void CharData::printConverted()
