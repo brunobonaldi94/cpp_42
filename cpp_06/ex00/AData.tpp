@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 23:32:01 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/15 11:28:05 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/15 13:42:08 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ size_t AData<T, R>::count_chars(std::string param, char c) const
 }
 
 template<typename T, typename R>
-std::string AData<T, R>::eraseParamFromChar(std::string param, char c) const
+std::string AData<T, R>::eraseCharFromParam(std::string param, char c) const
 {
 	size_t pos = param.find(c);
 	if (pos != std::string::npos)
@@ -141,6 +141,14 @@ bool AData<T, R>::checkConversion(R paramConverted) const
 		}
 		return true;
 	}
+}
+
+template<typename T, typename R>
+std::string AData<T, R>::removeSign(std::string param) const
+{
+	while (param[0] == '-' || param[0] == '+')
+		param.erase(0, 1);
+	return param;
 }
 
 template<typename T, typename R>

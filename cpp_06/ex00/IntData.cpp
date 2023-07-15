@@ -23,9 +23,8 @@ IntData::IntData(std::string param) : AData<int, long int>(param)
 }
 
 IntData::~IntData()
-{
-	if (DEBUG)
-		std::cout << "IntData destructor called" << std::endl;	
+{	
+	debug("IntData destructor called", BLUE);
 }
 
 IntData::IntData(IntData const &src): AData<int, long int>(src._param)
@@ -59,21 +58,22 @@ int IntData::tryToConvert()
 	std::string param = this->_param;
 
 	int countOfDots = this->count_chars(param, '.');
-	std::string pseudoLiteral = this->getPseudoLiterals(param);
 
-	if (countOfDots > 1 || pseudoLiteral.length() > 0)
+	if (countOfDots > 1 || this->getPseudoLiterals(param).length() > 0)
 		throw IntData::BadCast("impossible");
 	if (countOfDots == 1)
 		param = param.substr(0, param.find("."));
 	
-	param = this->eraseParamFromChar(param, 'f');
+	param = this->eraseCharFromParam(param, 'f');
 
-	long int paramLongInt = this->handleResultOverUnderFlow(param);
-	if (param.at(0) == '+' || param.at(0) == '-')
-		param.erase(0, 1);
-	bool isAllDigit = this->isAll(std::isdigit, param);
-	if (!isAllDigit || !this->checkLimits())
+	bool isAllDigit = this->isAll(std::isdigit, this->removeSign(param));
+	if (!isAllDigit)
 		throw IntData::BadCast("impossible");
+	
+	long int paramLongInt = this->handleResultOverUnderFlow(param);
+	if (!this->checkLimits())
+		throw IntData::BadCast("impossible");
+	
 	return static_cast<int>(paramLongInt);
 }
 

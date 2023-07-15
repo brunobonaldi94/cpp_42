@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 20:06:46 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/15 12:09:07 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/15 13:42:08 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,18 @@ float FloatData::tryToConvert()
 	if (this->getPseudoLiterals(param).length() > 0)
 		return static_cast<float>(this->_resultOverUnderFlow);
 
-	param = this->eraseParamFromChar(param, 'f');
+	param = this->eraseCharFromParam(param, 'f');
+
+	std::string paramNoDotOrSign = this->removeSign(
+		this->eraseCharFromParam(param, '.')
+	);
+	
+	bool isAllDigit = this->isAll(std::isdigit, paramNoDotOrSign);
+	if (!isAllDigit)
+		throw FloatData::BadCast("impossible");
 
 	double paramDouble = this->handleResultOverUnderFlow(param);
-	if (param.at(0) == '+' || param.at(0) == '-')
-		param.erase(0, 1);
-	bool isAllDigit = this->isAll(std::isdigit, this->eraseParamFromChar(param, '.'));
-	if (!isAllDigit || !this->checkLimits())
+	if (!this->checkLimits())
 		throw FloatData::BadCast("impossible");
 	return static_cast<float>(paramDouble);
 }
@@ -97,7 +102,7 @@ bool FloatData::dealFloatingPoint()
 	bool isFloatingPoint = pos != std::string::npos;
 	if (!isFloatingPoint)
 		return false;
-	this->_param = this->eraseParamFromChar(this->_param, 'f');
+	this->_param = this->eraseCharFromParam(this->_param, 'f');
 	std::string decimalPlace = this->_param.substr(pos + 1);
 	bool isAllZero = this->count_chars(decimalPlace, '0') == decimalPlace.length();
 	std::string decimalPlaceAdder = isAllZero ? ("." + decimalPlace ) : "";

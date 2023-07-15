@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 09:59:42 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/15 11:44:04 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/15 13:42:08 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,18 +64,21 @@ double DoubleData::tryToConvert()
 	int countOfDots = this->count_chars(param, '.');
 	if (countOfDots > 1)
 		throw DoubleData::BadCast("impossible");
-	std::string pseudoLiteral = this->getPseudoLiterals(param);
-	if (pseudoLiteral.length() > 0)
+
+	if (this->getPseudoLiterals(param).length() > 0)
 		return static_cast<double>(this->_resultOverUnderFlow);
 
-	if (param.at(param.length() - 1) == 'f')
-		param.erase(param.length() - 1);
+	param = this->eraseCharFromParam(param, 'f');
+
+	std::string paramNoDotOrSign = this->removeSign(
+		this->eraseCharFromParam(param, '.')
+	);
+	bool isAllDigit = this->isAll(std::isdigit, paramNoDotOrSign);
+	if (!isAllDigit)
+		throw DoubleData::BadCast("impossible");
 
 	long double paramLongDouble = this->handleResultOverUnderFlow(param);
-	if (param.at(0) == '+' || param.at(0) == '-')
-		param.erase(0, 1);
-	bool isAllDigit = this->isAll(std::isdigit, param.substr(0, param.find('.')));
-	if (!isAllDigit || !this->checkLimits())
+	if (!this->checkLimits())
 		throw DoubleData::BadCast("impossible");
 	return static_cast<double>(paramLongDouble);
 }
@@ -97,7 +100,7 @@ bool DoubleData::dealFloatingPoint()
 	bool isFloatingPoint = pos != std::string::npos;
 	if (!isFloatingPoint)
 		return false;
-	this->_param = this->eraseParamFromChar(this->_param, 'f');
+	this->_param = this->eraseCharFromParam(this->_param, 'f');
 	std::string decimalPlace = this->_param.substr(pos + 1);
 	bool isAllZero = this->count_chars(decimalPlace, '0') == decimalPlace.length();
 	std::string decimalPlaceAdder = isAllZero ? ("." + decimalPlace ) : "";

@@ -35,7 +35,8 @@ class AData
 		size_t  count_chars(std::string param, char c) const;
 		std::string getPseudoLiterals(std::string param);
 		bool checkConversion(R paramConverted) const;
-		std::string eraseParamFromChar(std::string param, char c) const;
+		std::string eraseCharFromParam(std::string param, char c) const;
+		std::string removeSign(std::string param) const;
 		
 		virtual T tryToConvert() = 0;
 		virtual bool checkLimits() = 0;

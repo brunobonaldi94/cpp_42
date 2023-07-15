@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 23:51:56 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/15 12:22:44 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/15 13:42:08 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,16 @@ char CharData::tryToConvert()
 	if (countOfDots == 1)
 		param = param.substr(0, param.find("."));
 	
-	param = this->eraseParamFromChar(param, 'f');
+	param = this->eraseCharFromParam(param, 'f');
 
-	bool isAllDigit = this->isAll(std::isdigit, param);
+	bool isAllDigit = this->isAll(std::isdigit, this->removeSign(param));
 	if (!isAllDigit)
 		throw CharData::BadCast("impossible");
 
 	int paramInt = this->handleResultOverUnderFlow(param);
 	if (!this->checkLimits())
 		throw CharData::BadCast("impossible");
+	
 	bool isPrintable = std::isprint(paramInt);
 	if (!isAllDigit)
 		throw CharData::BadCast("impossible");
