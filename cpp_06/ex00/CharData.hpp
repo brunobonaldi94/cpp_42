@@ -14,7 +14,7 @@ class CharData: public AData<char, int>
 
 		char tryToConvert();
 		void printConverted();
-		bool checkLimits();
+		bool checkLimits(int paramConverted);
 		int handleResultOverUnderFlow(std::string param);
 };
 

@@ -37,9 +37,10 @@ class AData
 		bool checkConversion(R paramConverted) const;
 		std::string eraseCharFromParam(std::string param, char c) const;
 		std::string removeSign(std::string param) const;
+		R	 handleOverUnderFlow(std::string param);
 		
 		virtual T tryToConvert() = 0;
-		virtual bool checkLimits() = 0;
+		virtual bool checkLimits(R paramConverted) = 0;
 		virtual R handleResultOverUnderFlow(std::string param) = 0;
 		virtual void printConverted() = 0;
 
@@ -48,6 +49,8 @@ class AData
 		bool _isPseudoLiteral;
 		T _result;
 		R _resultOverUnderFlow;
+		std::string prepareWholeIntParam();
+		std::string prepareFloatingPointParam();
 };
 
 void debug(std::string param, std::string color);

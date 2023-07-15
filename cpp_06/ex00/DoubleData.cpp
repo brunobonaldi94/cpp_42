@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 09:59:42 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/15 13:42:08 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/15 16:50:31 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ DoubleData & DoubleData::operator=(DoubleData const &rhs)
 }
 
 
-bool DoubleData::checkLimits()
+bool DoubleData::checkLimits(long double paramConverted)
 {
-	bool conversionSucceed = AData<double, long double>::checkConversion(this->_resultOverUnderFlow);
+	bool conversionSucceed = AData<double, long double>::checkConversion(paramConverted);
 	return (conversionSucceed);
 }
 
@@ -59,27 +59,13 @@ long double DoubleData::handleResultOverUnderFlow(std::string param)
 
 double DoubleData::tryToConvert()
 {
-	std::string param = this->_param;
+	std::string param = this->prepareFloatingPointParam();
 
-	int countOfDots = this->count_chars(param, '.');
-	if (countOfDots > 1)
-		throw DoubleData::BadCast("impossible");
-
-	if (this->getPseudoLiterals(param).length() > 0)
+	if (this->_isPseudoLiteral)
 		return static_cast<double>(this->_resultOverUnderFlow);
 
-	param = this->eraseCharFromParam(param, 'f');
+	long double paramLongDouble = this->handleOverUnderFlow(param);
 
-	std::string paramNoDotOrSign = this->removeSign(
-		this->eraseCharFromParam(param, '.')
-	);
-	bool isAllDigit = this->isAll(std::isdigit, paramNoDotOrSign);
-	if (!isAllDigit)
-		throw DoubleData::BadCast("impossible");
-
-	long double paramLongDouble = this->handleResultOverUnderFlow(param);
-	if (!this->checkLimits())
-		throw DoubleData::BadCast("impossible");
 	return static_cast<double>(paramLongDouble);
 }
 
@@ -87,10 +73,10 @@ bool DoubleData::dealPseudoLiterals()
 {
 	if (!this->_isPseudoLiteral)
 		return (false);
-	if (this->_param == "nanf" || this->_param.find("inff") != std::string::npos)
-		std::cout << "double: " << this->_param.erase(this->_param.length() -1) << std::endl;
-	else
-		std::cout << "double: " << this->_param  << std::endl;
+	std::string plusOrMinusSign = "";
+	if (this->_param[0] == '-' || this->_param[0] == '+')
+		plusOrMinusSign = this->_param[0];
+	std::cout << "double: " << plusOrMinusSign << this->_result << std::endl;
 	return true;
 }
 
@@ -113,16 +99,17 @@ void DoubleData::printConverted()
 	try
 	{
 		this->_result = this->tryToConvert();
-			
+		std::cout << GREEN;
 		if (this->dealPseudoLiterals() || this->dealFloatingPoint())
 			return ;
 
 		std::string doubleAdder = ".0";
 		std::cout << "double: " << this->_result << doubleAdder << std::endl;
+		std::cout << RESET;
 	}
 	catch(DoubleData::BadCast &e)
 	{
-		std::cout << "double: " << e.getResult() << std::endl;
+		std::cout << RED << "double: " << e.getResult() << RESET << std::endl;
 	}
 	catch(std::exception &e)
 	{

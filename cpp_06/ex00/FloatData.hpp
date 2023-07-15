@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 17:54:13 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/15 11:41:36 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/15 15:34:10 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ class FloatData: public AData<float, double>
 
 		float tryToConvert();
 		void printConverted();
-		bool checkLimits();
+		bool checkLimits(double paramConverted);
 		double handleResultOverUnderFlow(std::string param);
 	private:
 		bool dealPseudoLiterals();

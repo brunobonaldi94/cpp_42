@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 23:51:56 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/15 13:42:08 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/15 16:49:24 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,36 +47,20 @@ int CharData::handleResultOverUnderFlow(std::string param)
 	return (this->_resultOverUnderFlow);
 }
 
-bool CharData::checkLimits()
+bool CharData::checkLimits(int paramConverted)
 {
-	bool conversionSucceed = AData<char, int>::checkConversion(this->_resultOverUnderFlow);
+	bool conversionSucceed = AData<char, int>::checkConversion(paramConverted);
 	return (conversionSucceed);
 }
 
 char CharData::tryToConvert()
 {
-	std::string param = this->_param;
+	std::string param = this->prepareWholeIntParam();
 
-	int countOfDots = this->count_chars(param, '.');
-	if (countOfDots > 1 || this->getPseudoLiterals(param).length() > 0)
-		throw CharData::BadCast("impossible");
-	if (countOfDots == 1)
-		param = param.substr(0, param.find("."));
-	
-	param = this->eraseCharFromParam(param, 'f');
-
-	bool isAllDigit = this->isAll(std::isdigit, this->removeSign(param));
-	if (!isAllDigit)
-		throw CharData::BadCast("impossible");
-
-	int paramInt = this->handleResultOverUnderFlow(param);
-	if (!this->checkLimits())
-		throw CharData::BadCast("impossible");
+	int paramInt = this->handleOverUnderFlow(param);
 	
 	bool isPrintable = std::isprint(paramInt);
-	if (!isAllDigit)
-		throw CharData::BadCast("impossible");
-	else if (isAllDigit && !isPrintable)
+	if (!isPrintable)
 		throw CharData::BadCast("Non displayable");
 	return static_cast<char>(paramInt);
 }
@@ -86,11 +70,11 @@ void CharData::printConverted()
 	try
 	{
 		this->_result = this->tryToConvert();
-		std::cout << "char: " << this->_result << std::endl;
+		std::cout << GREEN << "char: " << this->_result << RESET << std::endl;
 	}
 	catch(CharData::BadCast &e)
 	{
-		std::cout << "char: " << e.getResult() << std::endl;
+		std::cout << RED << "char: " << e.getResult() << RESET << std::endl;
 	}
 	catch(std::exception &e)
 	{

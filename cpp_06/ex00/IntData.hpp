@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 17:54:04 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/12 23:05:17 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/15 15:33:07 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ class IntData: public AData<int, long int>
 
 		int tryToConvert();
 		void printConverted();
-		bool checkLimits();
+		bool checkLimits(long int paramConverted);
 		long int handleResultOverUnderFlow(std::string param);
 
 	private:

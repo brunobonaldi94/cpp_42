@@ -41,9 +41,9 @@ IntData & IntData::operator=(IntData const &rhs)
 	return (*this);
 }
 
-bool IntData::checkLimits()
+bool IntData::checkLimits(long int paramConverted)
 {
-	bool conversionSucceed = AData<int, long int>::checkConversion(this->_resultOverUnderFlow);
+	bool conversionSucceed = AData<int, long int>::checkConversion(paramConverted);
 	return (conversionSucceed);
 }
 
@@ -55,24 +55,10 @@ long int IntData::handleResultOverUnderFlow(std::string param)
 
 int IntData::tryToConvert()
 {
-	std::string param = this->_param;
 
-	int countOfDots = this->count_chars(param, '.');
+	std::string param = this->prepareWholeIntParam();
 
-	if (countOfDots > 1 || this->getPseudoLiterals(param).length() > 0)
-		throw IntData::BadCast("impossible");
-	if (countOfDots == 1)
-		param = param.substr(0, param.find("."));
-	
-	param = this->eraseCharFromParam(param, 'f');
-
-	bool isAllDigit = this->isAll(std::isdigit, this->removeSign(param));
-	if (!isAllDigit)
-		throw IntData::BadCast("impossible");
-	
-	long int paramLongInt = this->handleResultOverUnderFlow(param);
-	if (!this->checkLimits())
-		throw IntData::BadCast("impossible");
+	long int paramLongInt = this->handleOverUnderFlow(param);
 	
 	return static_cast<int>(paramLongInt);
 }
@@ -82,12 +68,12 @@ void IntData::printConverted()
 	try
 	{
 		this->_result = this->tryToConvert();
-		std::cout << "int: " << this->_result << std::endl;
+		std::cout << GREEN << "int: " << this->_result << RESET << std::endl;
 
 	}
 	catch(IntData::BadCast &e)
 	{
-		std::cout << "int: " << e.getResult() << std::endl;
+		std::cout << RED << "int: " << e.getResult() << RESET << std::endl;
 	}
 	catch(std::exception &e)
 	{

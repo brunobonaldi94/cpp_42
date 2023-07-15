@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 23:32:01 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/15 13:42:08 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/15 16:01:53 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,59 @@ std::string AData<T, R>::removeSign(std::string param) const
 {
 	while (param[0] == '-' || param[0] == '+')
 		param.erase(0, 1);
+	return param;
+}
+
+template<typename T, typename R>
+R AData<T, R>::handleOverUnderFlow(std::string param)
+{
+	R paramR = this->handleResultOverUnderFlow(param);
+	if (!this->checkLimits(paramR))
+		throw AData<T, R>::BadCast("impossible");
+	return paramR;
+}
+
+template<typename T, typename R>
+std::string AData<T, R>::prepareWholeIntParam()
+{
+	std::string param = this->_param;
+
+	int countOfDots = this->count_chars(param, '.');
+	if (countOfDots > 1 || this->getPseudoLiterals(param).length() > 0)
+		throw AData<T, R>::BadCast("impossible");
+	if (countOfDots == 1)
+		param = param.substr(0, param.find("."));
+	
+	param = this->eraseCharFromParam(param, 'f');
+
+	bool isAllDigit = this->isAll(std::isdigit, this->removeSign(param));
+	if (!isAllDigit)
+		throw AData<T, R>::BadCast("impossible");
+	
+	return param;
+}
+
+template<typename T, typename R>
+std::string AData<T, R>::prepareFloatingPointParam()
+{
+	std::string param = this->_param;
+
+	int countOfDots = this->count_chars(param, '.');
+	if (countOfDots > 1)
+		throw AData<T, R>::BadCast("impossible");
+
+	if (this->getPseudoLiterals(param).length() > 0)
+		return param;
+
+	param = this->eraseCharFromParam(param, 'f');
+
+	std::string paramNoDotOrSign = this->removeSign(
+		this->eraseCharFromParam(param, '.')
+	);
+	bool isAllDigit = this->isAll(std::isdigit, paramNoDotOrSign);
+	if (!isAllDigit)
+		throw AData<T, R>::BadCast("impossible");
+	
 	return param;
 }
 

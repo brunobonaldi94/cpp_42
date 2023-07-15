@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 20:06:46 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/15 13:42:08 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/15 16:50:10 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ FloatData & FloatData::operator=(FloatData const &rhs)
 }
 
 
-bool FloatData::checkLimits()
+bool FloatData::checkLimits(double paramConverted)
 {
-	bool conversionSucceed = AData<float, double>::checkConversion(this->_resultOverUnderFlow);
+	bool conversionSucceed = AData<float, double>::checkConversion(paramConverted);
 	return (conversionSucceed);
 }
 
@@ -59,28 +59,13 @@ double FloatData::handleResultOverUnderFlow(std::string param)
 
 float FloatData::tryToConvert()
 {
-	std::string param = this->_param;
+	std::string param = this->prepareFloatingPointParam();
 
-	int countOfDots = this->count_chars(param, '.');
-	if (countOfDots > 1)
-		throw FloatData::BadCast("impossible");
-
-	if (this->getPseudoLiterals(param).length() > 0)
+	if (this->_isPseudoLiteral)
 		return static_cast<float>(this->_resultOverUnderFlow);
 
-	param = this->eraseCharFromParam(param, 'f');
+	double paramDouble = this->handleOverUnderFlow(param);
 
-	std::string paramNoDotOrSign = this->removeSign(
-		this->eraseCharFromParam(param, '.')
-	);
-	
-	bool isAllDigit = this->isAll(std::isdigit, paramNoDotOrSign);
-	if (!isAllDigit)
-		throw FloatData::BadCast("impossible");
-
-	double paramDouble = this->handleResultOverUnderFlow(param);
-	if (!this->checkLimits())
-		throw FloatData::BadCast("impossible");
 	return static_cast<float>(paramDouble);
 }
 
@@ -89,10 +74,10 @@ bool FloatData::dealPseudoLiterals()
 	if (!this->_isPseudoLiteral)
 		return false;
 	
-	if (this->_param == "nanf" || this->_param.find("inff") != std::string::npos)
-		std::cout << "float: " << this->_param << std::endl;
-	else
-		std::cout << "float: " << this->_param  << "f" << std::endl;
+	std::string plusOrMinusSign = "";
+	if (this->_param[0] == '-' || this->_param[0] == '+')
+		plusOrMinusSign = this->_param[0];
+	std::cout << "float: " << plusOrMinusSign << this->_result << "f" << std::endl;
 	return true;
 }
 
@@ -106,7 +91,7 @@ bool FloatData::dealFloatingPoint()
 	std::string decimalPlace = this->_param.substr(pos + 1);
 	bool isAllZero = this->count_chars(decimalPlace, '0') == decimalPlace.length();
 	std::string decimalPlaceAdder = isAllZero ? ("." + decimalPlace ) : "";
-	std::cout << "double: " << this->_result << decimalPlaceAdder << "f" << std::endl;
+	std::cout << "float: " << this->_result << decimalPlaceAdder << "f" << std::endl;
 	return true;		
 }
 
@@ -115,15 +100,17 @@ void FloatData::printConverted()
 	try
 	{
 		this->_result = this->tryToConvert();
-	
+
+		std::cout << GREEN;
 		if (this->dealPseudoLiterals() || this->dealFloatingPoint())
 			return ;
 		std::string floatAdder = ".0f";
 		std::cout << "float: " << this->_result << floatAdder << std::endl;
+		std::cout << RESET;
 	}
 	catch(FloatData::BadCast &e)
 	{
-		std::cout << "float: " << e.getResult() << std::endl;
+		std::cout << RED << "float: " << e.getResult() << RESET << std::endl;
 	}
 	catch(std::exception &e)
 	{
