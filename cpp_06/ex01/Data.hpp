@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 18:02:12 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/16 18:39:00 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/16 18:57:47 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ struct Data
 
 };
 
-std::ostream &operator<<(std::ostream &o, const Data &rhs);
+std::ostream &operator<<(std::ostream &o, Data const &src);
 void debug(std::string param, std::string color);
 
 #endif
