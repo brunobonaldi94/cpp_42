@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 19:26:33 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/17 19:53:27 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/17 22:14:35 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,8 @@ void identify(Base &p)
 	catch(const std::exception& e){}
 }
 
-int		main(void)
+int	main(void)
 {
-	
 	Base *base = generate();
 	identify(base);
 	identify(*base);
