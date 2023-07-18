@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 20:06:46 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/15 16:50:10 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/17 21:49:38 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ bool FloatData::dealPseudoLiterals()
 	std::string plusOrMinusSign = "";
 	if (this->_param[0] == '-' || this->_param[0] == '+')
 		plusOrMinusSign = this->_param[0];
-	std::cout << "float: " << plusOrMinusSign << this->_result << "f" << std::endl;
+	std::cout << GREEN << "float: " << plusOrMinusSign << this->_result << "f" << RESET << std::endl;
 	return true;
 }
 
@@ -91,7 +91,7 @@ bool FloatData::dealFloatingPoint()
 	std::string decimalPlace = this->_param.substr(pos + 1);
 	bool isAllZero = this->count_chars(decimalPlace, '0') == decimalPlace.length();
 	std::string decimalPlaceAdder = isAllZero ? ("." + decimalPlace ) : "";
-	std::cout << "float: " << this->_result << decimalPlaceAdder << "f" << std::endl;
+	std::cout << GREEN << "float: " << this->_result << decimalPlaceAdder << "f"  << RESET << std::endl;
 	return true;		
 }
 
@@ -101,12 +101,10 @@ void FloatData::printConverted()
 	{
 		this->_result = this->tryToConvert();
 
-		std::cout << GREEN;
 		if (this->dealPseudoLiterals() || this->dealFloatingPoint())
 			return ;
 		std::string floatAdder = ".0f";
-		std::cout << "float: " << this->_result << floatAdder << std::endl;
-		std::cout << RESET;
+		std::cout << GREEN << "float: " << this->_result << floatAdder << RESET << std::endl;
 	}
 	catch(FloatData::BadCast &e)
 	{

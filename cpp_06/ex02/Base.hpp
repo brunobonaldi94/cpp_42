@@ -1,34 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ScalarConverter.hpp                                :+:      :+:    :+:   */
+/*   Base.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/11 17:53:19 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/17 21:28:59 by bbonaldi         ###   ########.fr       */
+/*   Created: 2023/07/17 19:26:36 by bbonaldi          #+#    #+#             */
+/*   Updated: 2023/07/17 19:37:39 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#ifndef SCALAR_CONVERTER_HPP
-# define SCALAR_CONVERTER_HPP
+#ifndef BASE_HPP
+# define BASE_HPP
 
 #include <iostream>
-#include "CharData.hpp"
-#include "IntData.hpp"
-#include "FloatData.hpp"
-#include "DoubleData.hpp"
+#include "colors.hpp"
 
-class ScalarConverter
+class Base
 {
 	public:
-		static void converter(std::string param);
-	private:
-		ScalarConverter();
-		ScalarConverter(ScalarConverter const &obj);
-		ScalarConverter &operator=(ScalarConverter const &obj);
-		~ScalarConverter();
+		virtual ~Base(void);
 };
 
 #endif

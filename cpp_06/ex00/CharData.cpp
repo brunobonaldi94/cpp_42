@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 23:51:56 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/15 16:49:24 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/17 20:29:39 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,10 @@ char CharData::tryToConvert()
 {
 	std::string param = this->prepareWholeIntParam();
 
+	bool isAllAlpha = this->isAll(std::isalpha, this->removeSign(param));
 	int paramInt = this->handleOverUnderFlow(param);
-	
+	if (isAllAlpha && param.length() == 1)
+		paramInt = static_cast<int>(param[0]);
 	bool isPrintable = std::isprint(paramInt);
 	if (!isPrintable)
 		throw CharData::BadCast("Non displayable");

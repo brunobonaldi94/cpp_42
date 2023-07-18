@@ -58,6 +58,10 @@ int IntData::tryToConvert()
 
 	std::string param = this->prepareWholeIntParam();
 
+	bool isAllDigit = this->isAll(std::isdigit, this->removeSign(param));
+	if (!isAllDigit)
+		throw IntData::BadCast("impossible");
+
 	long int paramLongInt = this->handleOverUnderFlow(param);
 	
 	return static_cast<int>(paramLongInt);

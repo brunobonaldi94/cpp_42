@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 18:05:03 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/15 15:40:24 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/17 21:58:22 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,25 @@ void ScalarConverter::converter(std::string param)
 	dataInt.printConverted();
 	dataFloat.printConverted();
 	dataDouble.printConverted();
+}
+
+ScalarConverter::ScalarConverter()
+{
+}
+
+ScalarConverter::ScalarConverter(ScalarConverter const &obj)
+{
+	*this = obj;
+}
+
+ScalarConverter &ScalarConverter::operator=(ScalarConverter const &obj)
+{
+	if (this != &obj)
+	{
+	}
+	return (*this);
+}
+
+ScalarConverter::~ScalarConverter()
+{
 }

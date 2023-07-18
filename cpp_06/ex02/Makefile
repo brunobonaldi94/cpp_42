@@ -1,15 +1,14 @@
 # ==============================================================================
 # VARIABLES
 # ==============================================================================
-NAME			:=	convert
+NAME			:=	main
 RESULT_LOG_FILE	:=	result.log
 INPUT_LOG_FILE  :=	input.log
 CPP				:=	c++
 FLAGS			:=	-g3 -Wall -Werror -Wextra -std=c++98 -fsanitize=address
 MAKE			:=	make
 
-SRCS			:=	CharData.cpp IntData.cpp FloatData.cpp ScalarConverter.cpp \
-					DoubleData.cpp debug.cpp main.cpp
+SRCS			:=  Base.cpp main.cpp
 OBJS			:=	$(SRCS:.cpp=.o)
 
 # ==============================================================================
@@ -48,31 +47,7 @@ fclean:		clean
 re:			fclean all
 
 run:	all
-	./$(NAME) c
-	./$(NAME) a
-	./$(NAME) 0
-	./$(NAME) -42
-	./$(NAME) 42
-	./$(NAME) 0.0f
-	./$(NAME) -4.2f
-	./$(NAME) 4.2f
-	./$(NAME) 42.0
-	./$(NAME) 42.1
-	./$(NAME) f
-	./$(NAME) nan
-	./$(NAME) nanf
-	./$(NAME) -inff
-	./$(NAME) +inf
-	./$(NAME) -inf
-	./$(NAME) -inff
-	./$(NAME) inf
-	./$(NAME) inff
-	./$(NAME) 0.0
-	./$(NAME) -4.2
-	./$(NAME) 4.2
-	./$(NAME) -2147483648
-	./$(NAME) 2147483647
-	./$(NAME) 2147483648
+	@./$(NAME) 
 
 valgrind:
 			@valgrind -s --leak-check=full --show-leak-kinds=all \

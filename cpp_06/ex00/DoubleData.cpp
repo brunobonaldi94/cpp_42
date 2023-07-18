@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 09:59:42 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/15 16:50:31 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/17 21:49:54 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ bool DoubleData::dealPseudoLiterals()
 	std::string plusOrMinusSign = "";
 	if (this->_param[0] == '-' || this->_param[0] == '+')
 		plusOrMinusSign = this->_param[0];
-	std::cout << "double: " << plusOrMinusSign << this->_result << std::endl;
+	std::cout << GREEN << "double: " << plusOrMinusSign << this->_result << RESET << std::endl;
 	return true;
 }
 
@@ -90,7 +90,7 @@ bool DoubleData::dealFloatingPoint()
 	std::string decimalPlace = this->_param.substr(pos + 1);
 	bool isAllZero = this->count_chars(decimalPlace, '0') == decimalPlace.length();
 	std::string decimalPlaceAdder = isAllZero ? ("." + decimalPlace ) : "";
-	std::cout << "double: " << this->_result << decimalPlaceAdder << std::endl;
+	std::cout << GREEN << "double: " << this->_result << decimalPlaceAdder << RESET << std::endl;
 	return true;		
 }
 
@@ -99,13 +99,11 @@ void DoubleData::printConverted()
 	try
 	{
 		this->_result = this->tryToConvert();
-		std::cout << GREEN;
+
 		if (this->dealPseudoLiterals() || this->dealFloatingPoint())
 			return ;
-
 		std::string doubleAdder = ".0";
-		std::cout << "double: " << this->_result << doubleAdder << std::endl;
-		std::cout << RESET;
+		std::cout << GREEN << "double: " << this->_result << doubleAdder << RESET << std::endl;
 	}
 	catch(DoubleData::BadCast &e)
 	{
