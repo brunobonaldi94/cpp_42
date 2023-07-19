@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 22:02:48 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/18 22:11:37 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/18 22:22:05 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void printSeparator()
 {
 	std::cout << std::string(50, '-') << std::endl;
 }
-
 
 template< typename T >
 void print( T const & x )
