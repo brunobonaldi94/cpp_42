@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:30:42 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/19 21:56:41 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/20 19:22:49 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ Array<T>::Array(): _n(0), _array(NULL)
 {
 	debug("Default constructor called", YELLOW);
 	this->_array = NULL;
-	this->_size = 0;
 }
 
 template <typename T>
@@ -64,17 +63,17 @@ Array<T>& Array<T>::operator=(Array<T> const &rhs)
 }
 
 template <typename T>
-T& Array<T>::operator[](unsigned int index)
+T& Array<T>::operator[](long int index)
 {
-	if (index >= this->size())
+	if (index >= this->size() || index < 0 || index > std::numeric_limits<unsigned int>::max())
 		throw Array::OutOfBoundsException(index, this->size());
 	return (this->_array[index]);
 }
 
 template <typename T>
-const T&  Array<T>::operator[](unsigned int index) const
+const T&  Array<T>::operator[](long int index) const
 {
-	if (index >= this->size())
+	if (index >= this->size() || index < 0 || index > std::numeric_limits<unsigned int>::max())
 		throw Array::OutOfBoundsException(index, this->size());
 	return (this->_array[index]);
 }
@@ -107,7 +106,7 @@ std::ostream &operator<<(std::ostream &os,  Array<T> const &src)
 }
 
 template <typename T>
-Array<T>::OutOfBoundsException::OutOfBoundsException(unsigned int index, unsigned int n) : _index(index), _n(n)
+Array<T>::OutOfBoundsException::OutOfBoundsException(long int index, unsigned int n) : _index(index), _n(n)
 {
 	debug("OutOfBoundsException constructor called", RED);
 }

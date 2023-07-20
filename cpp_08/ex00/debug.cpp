@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   iter.hpp                                           :+:      :+:    :+:   */
+/*   debug.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/18 22:00:44 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/20 19:26:38 by bbonaldi         ###   ########.fr       */
+/*   Created: 2023/07/13 20:21:07 by bbonaldi          #+#    #+#             */
+/*   Updated: 2023/07/13 20:24:03 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ITER_HPP
-# define ITER_HPP
-
-# include <iostream>
+#include <iostream>
 #include "colors.hpp"
+#include "defines.hpp"
 
-template <typename T>
-void	iter(T *array, size_t size, void (*fn)(T const &value))
+void debug(std::string param, std::string color)
 {
-	for (size_t i = 0; i < size; i++)
-		fn(array[i]);
+	if (DEBUG)
+		std::cout << color << param << RESET << std::endl;
 }
-
-#endif

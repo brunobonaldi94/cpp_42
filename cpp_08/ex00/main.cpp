@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   iter.hpp                                           :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/18 22:00:44 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/20 19:26:38 by bbonaldi         ###   ########.fr       */
+/*   Created: 2023/07/20 18:48:22 by bbonaldi          #+#    #+#             */
+/*   Updated: 2023/07/20 19:34:24 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ITER_HPP
-# define ITER_HPP
+#include "easyfind.hpp"
 
-# include <iostream>
-#include "colors.hpp"
-
-template <typename T>
-void	iter(T *array, size_t size, void (*fn)(T const &value))
+int main(void)
 {
-	for (size_t i = 0; i < size; i++)
-		fn(array[i]);
+	try 
+	{
+		int arr[] = {1, 2, 3, 4, 5};
+		std::vector<int> v(arr, arr + sizeof(arr) / sizeof(int));
+		int i = 6;
+		int &t = easyfind(v, i);
+		std::cout << t << std::endl;
+	} catch (std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+	return (0);
 }
-
-#endif

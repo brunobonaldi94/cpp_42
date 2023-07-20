@@ -6,14 +6,14 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:32:26 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/19 22:02:21 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/20 19:24:48 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include "Array.hpp"
 
-#define MAX_VAL 750
+#define MAX_VAL 10
 
 void printSeparator()
 {
@@ -22,7 +22,7 @@ void printSeparator()
 
 void testPdf()
 {
-	 Array<int> numbers(MAX_VAL);
+	Array<int> numbers(MAX_VAL);
 	int* mirror = new int[MAX_VAL];
 	srand(time(NULL));
 	for (int i = 0; i < MAX_VAL; i++)
@@ -90,6 +90,12 @@ void testString()
 		std::cout << "str2[0] == str[0]: " << str[0] << std::endl;
 }
 
+void testEmptyArray()
+{
+	Array<int> empty;
+	std::cout << empty;
+}
+
 void runTestFunction(void (*test)(void), int index, std::string testName)
 {
 	std::cout << YELLOW << "TEST-" << index << ": " << testName <<  RESET << std::endl;
@@ -99,14 +105,16 @@ void runTestFunction(void (*test)(void), int index, std::string testName)
 
 int	main(void)
 {
-	int const testNumbers = 2;
+	int const testNumbers = 3;
 	void (*testFunctions[testNumbers])(void) = {
 		testPdf,
-		testString
+		testString,
+		testEmptyArray
 	};
 	std::string testNames[testNumbers] = {
 		"PDF",
-		"Test String"
+		"Test String",
+		"Test Empty Array"
 	};
 	for (int i = 0; i < testNumbers; i++)
 		runTestFunction(testFunctions[i], i + 1, testNames[i]);

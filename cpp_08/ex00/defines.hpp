@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   iter.hpp                                           :+:      :+:    :+:   */
+/*   defines.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/18 22:00:44 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/20 19:26:38 by bbonaldi         ###   ########.fr       */
+/*   Created: 2023/07/12 16:59:53 by bbonaldi          #+#    #+#             */
+/*   Updated: 2023/07/19 21:33:14 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ITER_HPP
-# define ITER_HPP
+#ifndef DEFINES_HPP
+# define DEFINES_HPP
 
-# include <iostream>
-#include "colors.hpp"
-
-template <typename T>
-void	iter(T *array, size_t size, void (*fn)(T const &value))
-{
-	for (size_t i = 0; i < size; i++)
-		fn(array[i]);
-}
+#define DEBUG false
 
 #endif

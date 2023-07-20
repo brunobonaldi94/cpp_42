@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:24:24 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/19 21:37:32 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/20 19:23:23 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "defines.hpp"
 # include <time.h>
 # include <stdlib.h>
+#include <limits>
 
 template <typename T>
 class Array
@@ -28,17 +29,17 @@ class Array
 		Array(const Array &src);
 		~Array();
 		Array &operator=(const Array &rhs);
-		T &operator[](unsigned int index);
-	    const T& operator[](unsigned int index) const; // Add const version
+		T &operator[](long int index);
+	    const T& operator[](long int index) const; // Add const version
 		unsigned int size() const;
 		bool isEmpty() const;
 		class OutOfBoundsException : public std::exception
 		{
 			public:
-				OutOfBoundsException(unsigned int index, unsigned int n);
+				OutOfBoundsException(long int index, unsigned int n);
 				virtual const char* what() const throw();
 			private:
-				unsigned int _index;
+				long int _index;
 				unsigned int _n;
 		};
 
