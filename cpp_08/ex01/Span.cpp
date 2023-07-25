@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:10:38 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/24 22:23:31 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/24 22:39:44 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,12 @@ unsigned int Span::shortestSpan(void)
 	--end;
 	while(it != end)
 	{
-		if (*it2 - *it < min && *it2 - *it > 0)
+		if (*it2 - *it < min)
 		{
 			min = *it2 - *it;
 			this->_shortestSpans[0] = *it;
 			this->_shortestSpans[1] = *it2;
 		}
-		if (min == 1)
-			break ;
 		it++;
 		it2++;
 	}
