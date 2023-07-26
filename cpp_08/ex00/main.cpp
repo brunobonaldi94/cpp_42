@@ -6,11 +6,13 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:48:22 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/21 17:09:09 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/25 22:18:12 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "easyfind.hpp"
+
+typedef void (*tFunction)(void);
 
 void printSeparator()
 {
@@ -18,34 +20,55 @@ void printSeparator()
 }
 
 template<class TContainer>
+void printContainer(TContainer &cont)
+{
+	std::cout << GREEN << "[ ";
+	for (typename TContainer::iterator it = cont.begin(); it != cont.end(); it++)
+	{
+		std::cout << *it;
+		if (it != --cont.end())
+			std::cout << ", ";
+	}
+	std::cout << " ]" << RESET << std::endl;
+}
+
+template<class TContainer>
 void testFound()
 {
-	int arr[] = {1, 2, 3, 4, 5};
+	std::srand(time(NULL));
+	int i = std::rand() % 6;
+	int arr[] = {0, 1, 2, 3, 4, 5};
 	TContainer container(arr, arr + sizeof(arr) / sizeof(int));
-	int i = 2;
+	printContainer(container);
+	std::cout << "value to find : " << i << std::endl;
 	typename TContainer::iterator it = easyfind(container, i);
-	std::cout << "value : " << *it << std::endl;
+	std::cout << "value found: " << *it << std::endl;
 	container.push_back(6);
 	it = easyfind(container, 6);
-	std::cout << "value : " << *it << std::endl;
+	std::cout << "value found: " << *it << std::endl;
 }
 
 template<class TContainer>
 void testNotFound()
 {
-	int arr[] = {1, 2, 3, 4, 5};
-	TContainer vec(arr, arr + sizeof(arr) / sizeof(int));
-	int i = 6;
-	typename TContainer::iterator it = easyfind(vec, i);
+	std::srand(time(NULL));
+	int i = (std::rand() % 10) + 6;
+	int arr[] = {0, 1, 2, 3, 4, 5};
+
+	TContainer container(arr, arr + sizeof(arr) / sizeof(int));
+	printContainer(container);
+
+	std::cout << "value to find : " << i << std::endl;
+	typename TContainer::iterator it = easyfind(container, i);
 	std::cout << "value : " << *it << std::endl;
 }
 
-void runTestFunction(void (*test)(void), int index, std::string testName)
+void runTestFunction(std::pair<std::string, tFunction> testFunAndNames, int index)
 {
-	std::cout << YELLOW << "TEST-" << index << ": " << testName <<  RESET << std::endl;
+	std::cout << YELLOW << "TEST-" << index << ": " << testFunAndNames.first <<  RESET << std::endl;
 	try 
 	{
-		test();
+		testFunAndNames.second();
 	} catch (std::exception &e)
 	{
 		std::cerr << RED << e.what() << RESET << std::endl;
@@ -55,25 +78,18 @@ void runTestFunction(void (*test)(void), int index, std::string testName)
 
 int	main(void)
 {
-	int const testNumbers = 6;
-	void (*testFunctions[testNumbers])(void) = {
-		testFound<std::vector<int> >,
-		testFound<std::deque<int> >,
-		testFound<std::list<int> >,
-		testNotFound<std::vector<int> >,
-		testNotFound<std::deque<int> >,
-		testNotFound<std::list<int> >
-	};
-	std::string testNames[testNumbers] = {
-		"Test Found - Vector",
-		"Test Found - Deque",
-		"Test Found - List",
-		"Test Found - Vector",
-		"Test Not Found - Deque",
-		"Test Not Found - List"
-	};
-	for (int i = 0; i < testNumbers; i++)
-		runTestFunction(testFunctions[i], i + 1, testNames[i]);
+	std::map<std::string, tFunction> testFunctionAndNames;
+	testFunctionAndNames["Test Found - Vector"] = testFound<std::vector<int> >;
+	testFunctionAndNames["Test Found - Deque"] = testFound<std::deque<int> >;
+	testFunctionAndNames["Test Found - List"] = testFound<std::list<int> >;
+	testFunctionAndNames["Test Not Found - Vector"] = testNotFound<std::vector<int> >;
+	testFunctionAndNames["Test Not Found - Deque"] = testNotFound<std::deque<int> >;
+	testFunctionAndNames["Test Not Found - List"] = testNotFound<std::list<int> >;
+	
+	std::map<std::string, tFunction>::iterator tF;
+	int i;
+	for (i = 1, tF = testFunctionAndNames.begin(); tF != testFunctionAndNames.end(); i++, tF++)
+		runTestFunction(*tF, i);
 	return 0;
 }
 

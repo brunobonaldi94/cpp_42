@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 22:42:41 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/24 23:13:08 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/25 21:52:05 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,13 @@
 # define MUTANTSTACK_HPP
 
 #include <iostream>
+#include "colors.hpp"
 #include <stack>
-
+#include <list>
+#include <map>
+#include <deque>
+#include <vector>
+#include <typeinfo>
 template <typename T>
 class MutantStack : public std::stack<T>
 {
@@ -36,11 +41,8 @@ class MutantStack : public std::stack<T>
 		const_iterator end(void) const;
 		reverse_iterator rbegin();
 		const_reverse_iterator rbegin() const;
-		const_iterator cbegin() const noexcept;
-		const_iterator cend() const noexcept;
-		const_reverse_iterator crbegin() const noexcept;
-		const_reverse_iterator crend() const noexcept;
-
 };
+
+#include "MutantStack.tpp"
 
 #endif

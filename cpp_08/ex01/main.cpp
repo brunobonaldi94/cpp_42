@@ -6,41 +6,23 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:09:17 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/24 22:31:48 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/25 21:52:33 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Span.hpp"
 #include <list>
+#include <map>
 
 void printSeparator();
 void printSpanFunctions(Span &sp);
 void testPDF(void);
 void testAddMultiple(void);
-void runTestFunction(void (*test)(void), int index, std::string testName);
 void AddSeveralNumbers(int n);
 void testWithSeveralSequencialNumbers(void);
 void testAddMoreThanN(void);
-
-int	main(void)
-{
-	int const testNumbers = 4;
-	void (*testFunctions[testNumbers])(void) = {
-		testPDF,
-		testAddMultiple,
-		testWithSeveralSequencialNumbers,
-		testAddMoreThanN
-	};
-	std::string testNames[testNumbers] = {
-		"Test PDF",
-		"Test Add Multiple",
-		"Test With Several Numbers",
-		"Test Add More Than N"
-	};
-	for (int i = 0; i < testNumbers; i++)
-		runTestFunction(testFunctions[i], i + 1, testNames[i]);
-	return 0;
-}
+typedef void (*tFunction)(void);
+void runTestFunction(std::pair<std::string, tFunction> testFunAndNames, int index);
 
 void printSeparator()
 {
@@ -103,15 +85,30 @@ void testAddMoreThanN(void)
 	sp.addNumber(6);
 }
 
-void runTestFunction(void (*test)(void), int index, std::string testName)
+void runTestFunction(std::pair<std::string, tFunction> testFunAndNames, int index)
 {
-	std::cout << YELLOW << "TEST-" << index << ": " << testName <<  RESET << std::endl;
+	std::cout << YELLOW << "TEST-" << index << ": " << testFunAndNames.first <<  RESET << std::endl;
 	try 
 	{
-		test();
+		testFunAndNames.second();
 	} catch (std::exception &e)
 	{
 		std::cerr << RED << e.what() << RESET << std::endl;
 	}
 	printSeparator();
+}
+
+int	main(void)
+{
+	std::map<std::string, tFunction> testFunctionAndNames;
+	testFunctionAndNames["Test A PDF"] = testPDF;
+	testFunctionAndNames["Test Add Multiple"] = testAddMultiple;
+	testFunctionAndNames["Test With Several Numbers"] = testWithSeveralSequencialNumbers;
+	testFunctionAndNames["Test Add More Than N"] = testAddMoreThanN;
+	
+	std::map<std::string, tFunction>::iterator tF;
+	int i;
+	for (i = 1, tF = testFunctionAndNames.begin(); tF != testFunctionAndNames.end(); i++, tF++)
+		runTestFunction(*tF, i);
+	return 0;
 }

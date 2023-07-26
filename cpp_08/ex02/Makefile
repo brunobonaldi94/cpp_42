@@ -6,7 +6,7 @@ CPP				:=	c++
 FLAGS			:=	-g3 -Wall -Werror -Wextra -std=c++98
 MAKE			:=	make
 
-SRCS			:=	debug.cpp Span.cpp main.cpp
+SRCS			:=	debug.cpp main.cpp
 OBJS			:=	$(SRCS:.cpp=.o)
 
 # ==============================================================================

@@ -6,112 +6,96 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:09:17 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/24 22:21:36 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/25 21:52:18 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Span.hpp"
-#include <list>
+#include "MutantStack.hpp"
+#include "Container.hpp"
+
 
 void printSeparator();
-void printSpanFunctions(Span &sp);
 void testPDF(void);
-void testAddMultiple(void);
-void runTestFunction(void (*test)(void), int index, std::string testName);
-void AddSeveralNumbers(int n);
-void testWithSeveralSequencialNumbers(void);
-void testAddMoreThanN(void);
-
-int	main(void)
-{
-	int const testNumbers = 4;
-	void (*testFunctions[testNumbers])(void) = {
-		testPDF,
-		testAddMultiple,
-		testWithSeveralSequencialNumbers,
-		testAddMoreThanN
-	};
-	std::string testNames[testNumbers] = {
-		"Test PDF",
-		"Test Add Multiple",
-		"Test With Several Numbers",
-		"Test Add More Than N"
-	};
-	for (int i = 0; i < testNumbers; i++)
-		runTestFunction(testFunctions[i], i + 1, testNames[i]);
-	return 0;
-}
-
+typedef void (*tFunction)(void);
+void runTestFunction(std::pair<std::string, tFunction> testFunAndNames, int index);
 void printSeparator()
 {
 	std::cout << std::string(100, '-') << std::endl;
 }
 
-void printSpanFunctions(Span &sp)
+void runTestFunction(std::pair<std::string, tFunction> testFunAndNames, int index)
 {
-	sp.printShortestSpan();
-	sp.printLongestSpan();
-}
-
-void testPDF(void)
-{
-	Span sp = Span(5);
-	sp.addNumber(6);
-	sp.addNumber(3);
-	sp.addNumber(17);
-	sp.addNumber(9);
-	sp.addNumber(11);
-	printSpanFunctions(sp);
-}
-
-void testAddMultiple(void)
-{
-	int const size = 5;
-	int arr[size] = {1, 2, 3, 4, 5};
-	std::vector<int> vec(arr, arr + size);
-	Span sp = Span(size);
-	sp.addRange(vec.begin(), vec.end());
-	printSpanFunctions(sp);
-}
-
-void AddSeveralNumbers(int n)
-{
-	int const size = n;
-	int arr[size];
-	for (int i = 0; i < size; i++)
-		arr[i] = i;
-	std::vector<int> vec(arr, arr + size);
-	Span sp = Span(size);
-	sp.addRange(vec.begin(), vec.end());
-	printSpanFunctions(sp);
-}
-
-void testWithSeveralSequencialNumbers(void)
-{
-	AddSeveralNumbers(10000);
-	AddSeveralNumbers(500000);
-	AddSeveralNumbers(1000000);
-}
-
-void testAddMoreThanN(void)
-{
-	int const size = 5;
-	int arr[size] = {1, 2, 3, 4, 5};
-	std::vector<int> vec(arr, arr + size);
-	Span sp = Span(size);
-	sp.addRange(vec.begin(), vec.end());
-	sp.addNumber(6);
-}
-
-void runTestFunction(void (*test)(void), int index, std::string testName)
-{
-	std::cout << YELLOW << "TEST-" << index << ": " << testName <<  RESET << std::endl;
+	std::cout << YELLOW << "TEST-" << index << ": " << testFunAndNames.first <<  RESET << std::endl;
 	try 
 	{
-		test();
+		testFunAndNames.second();
 	} catch (std::exception &e)
 	{
 		std::cerr << RED << e.what() << RESET << std::endl;
 	}
 	printSeparator();
+}
+
+void testPDF(void)
+{
+	MutantStack<int> mstack;
+	mstack.push(5);
+	mstack.push(17);
+	std::cout << mstack.top() << std::endl;
+	mstack.pop();
+	std::cout << mstack.size() << std::endl;
+	mstack.push(3);
+	mstack.push(5);
+	mstack.push(737);
+	mstack.push(0);
+	MutantStack<int>::iterator it = mstack.begin();
+	MutantStack<int>::iterator ite = mstack.end();
+	++it;
+	--it;
+	while (it != ite)
+	{
+		std::cout << *it << std::endl;
+		++it;
+	}
+}
+
+
+template <typename T, class TContainer>
+void testOtherContainers(void)
+{
+	std::cout << typeid(TContainer).name() << std::endl;
+	Container<T, TContainer> container;
+	container.push(5);
+	container.push(17);
+	std::cout << container.top() << std::endl;
+	container.pop();
+	std::cout << container.size() << std::endl;
+	container.push(3);
+	container.push(5);
+	container.push(737);
+	container.push(0);
+	typename Container<T, TContainer>::iterator it = container.begin();
+	typename Container<T, TContainer>::iterator ite = container.end();
+	++it;
+	--it;
+	while (it != ite)
+	{
+		std::cout << *it << std::endl;
+		++it;
+	}
+}
+
+int	main(void)
+{
+	std::map<std::string, tFunction> testFunctionAndNames;
+	testFunctionAndNames["Test A PDF"] = testPDF;
+	testFunctionAndNames["Test Other Containers - List"] = testOtherContainers<int, std::list<int> >;
+	testFunctionAndNames["Test Other Containers - Deque"] = testOtherContainers<int, std::deque<int> >;
+	testFunctionAndNames["Test Other Containers - Vector"] = testOtherContainers<int, std::vector<int> >;
+	
+	std::map<std::string, tFunction>::iterator tF;
+	int i;
+	for (i = 1, tF = testFunctionAndNames.begin(); tF != testFunctionAndNames.end(); i++, tF++)
+		runTestFunction(*tF, i);
+	return 0;
 }
