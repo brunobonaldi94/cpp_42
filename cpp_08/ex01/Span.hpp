@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:13:52 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/24 22:21:59 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/26 17:54:29 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 #include "defines.hpp"
 #include <limits>
 #include <vector>
+#include <list>
+#include <map>
 class Span
 {
 	public:

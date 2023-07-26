@@ -6,18 +6,15 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:09:17 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/25 21:52:18 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/26 17:54:04 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MutantStack.hpp"
 #include "Container.hpp"
 
-
-void printSeparator();
-void testPDF(void);
 typedef void (*tFunction)(void);
-void runTestFunction(std::pair<std::string, tFunction> testFunAndNames, int index);
+
 void printSeparator()
 {
 	std::cout << std::string(100, '-') << std::endl;

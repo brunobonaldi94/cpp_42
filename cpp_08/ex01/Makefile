@@ -3,7 +3,7 @@
 # ==============================================================================
 NAME			:=	main
 CPP				:=	c++
-FLAGS			:=	-g3 -Wall -Werror -Wextra -std=c++98
+FLAGS			:=	-g3 -Wall -Werror -Wextra -std=c++98 -fsanitize=address
 MAKE			:=	make
 
 SRCS			:=	debug.cpp Span.cpp main.cpp

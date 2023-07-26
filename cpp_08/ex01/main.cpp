@@ -6,23 +6,13 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:09:17 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/25 21:52:33 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/26 17:54:32 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Span.hpp"
-#include <list>
-#include <map>
 
-void printSeparator();
-void printSpanFunctions(Span &sp);
-void testPDF(void);
-void testAddMultiple(void);
-void AddSeveralNumbers(int n);
-void testWithSeveralSequencialNumbers(void);
-void testAddMoreThanN(void);
 typedef void (*tFunction)(void);
-void runTestFunction(std::pair<std::string, tFunction> testFunAndNames, int index);
 
 void printSeparator()
 {
@@ -75,7 +65,7 @@ void testWithSeveralSequencialNumbers(void)
 	AddSeveralNumbers(1000000);
 }
 
-void testAddMoreThanN(void)
+void testAddMoreThanNByAddNumber(void)
 {
 	int const size = 5;
 	int arr[size] = {1, 2, 3, 4, 5};
@@ -83,6 +73,18 @@ void testAddMoreThanN(void)
 	Span sp = Span(size);
 	sp.addRange(vec.begin(), vec.end());
 	sp.addNumber(6);
+}
+
+void testAddMoreThanNByAddRange(void)
+{
+	int const size = 5;
+	int arr[size] = {1, 2, 3, 4, 5};
+	std::vector<int> vec(arr, arr + size);
+	Span sp = Span(size);
+	sp.addRange(vec.begin(), vec.end());
+	int arr2[size] = {6, 7, 8, 9, 10};
+	std::vector<int> vec1(arr2, arr2+ size);
+	sp.addRange(vec1.begin(), vec1.end());
 }
 
 void runTestFunction(std::pair<std::string, tFunction> testFunAndNames, int index)
@@ -102,9 +104,10 @@ int	main(void)
 {
 	std::map<std::string, tFunction> testFunctionAndNames;
 	testFunctionAndNames["Test A PDF"] = testPDF;
+	testFunctionAndNames["Test Add More Than N by Add Number"] = testAddMoreThanNByAddNumber;
+	testFunctionAndNames["Test Add More Than N by Add Range"] = testAddMoreThanNByAddRange;
 	testFunctionAndNames["Test Add Multiple"] = testAddMultiple;
 	testFunctionAndNames["Test With Several Numbers"] = testWithSeveralSequencialNumbers;
-	testFunctionAndNames["Test Add More Than N"] = testAddMoreThanN;
 	
 	std::map<std::string, tFunction>::iterator tF;
 	int i;
