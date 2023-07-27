@@ -1,12 +1,12 @@
 # ==============================================================================
 # VARIABLES
 # ==============================================================================
-NAME			:=	main
+NAME			:=	btc
 CPP				:=	c++
-FLAGS			:=	-g3 -Wall -Werror -Wextra -std=c++98 
+FLAGS			:=	-g3 -Wall -Werror -Wextra -std=c++98
 MAKE			:=	make
 
-SRCS			:=	debug.cpp Span.cpp main.cpp
+SRCS			:=	debug.cpp BitcoinExchange.cpp main.cpp
 OBJS			:=	$(SRCS:.cpp=.o)
 
 # ==============================================================================
@@ -50,6 +50,6 @@ run:	all
 
 valgrind:
 			@valgrind -s --leak-check=full --show-leak-kinds=all \
-			--track-origins=yes --log-fd=9 ./$(NAME) 9>memcheck.log
+			--track-origins=yes --log-fd=9 ./$(NAME) input.txt 9>memcheck.log
 
 .PHONY:		all clean fclean re run
