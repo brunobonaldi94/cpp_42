@@ -6,13 +6,13 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 18:27:13 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/26 22:22:17 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/28 19:17:41 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
 
-BitcoinExchange::BitcoinExchange(std::string filename): _filename(filename), _file(NULL)
+BitcoinExchange::BitcoinExchange(std::string filename): _filename(filename), _fileInput(NULL), _fileData(NULL)
 {
 	debug("BitcoinExchange constructor called", YELLOW);
 }
@@ -26,11 +26,10 @@ BitcoinExchange::BitcoinExchange(BitcoinExchange const &src)
 BitcoinExchange::~BitcoinExchange(void)
 {
 	debug("BitcoinExchange destructor called", YELLOW);
-	if (this->_file)
-	{
-		this->_file->close();
-		delete this->_file;
-	}
+	if (this->_fileInput)
+		delete this->_fileInput;
+	if (this->_fileData)
+		delete this->_fileData;
 }
 
 BitcoinExchange &BitcoinExchange::operator=(BitcoinExchange const &rhs)
@@ -48,11 +47,8 @@ bool BitcoinExchange::CheckDatePart(std::string datePart, size_t len, int min, i
 
 bool BitcoinExchange::IsValidDate(std::string date)
 {
-	std::stringstream ss(date);
-	std::string currentString;
-	std::list<std::string> dateList;
-	while(std::getline(ss, currentString, '-'))
-		dateList.push_back(currentString);
+
+	std::list<std::string> dateList = this->split(date, '-');
 	if (dateList.size() != 3)
 		throw BitcoinExchange::BadDateException(date);
 	
@@ -66,64 +62,109 @@ bool BitcoinExchange::IsValidDate(std::string date)
 	return (isValidYear && isValidMonth && isValidDay);
 }
 
-bool BitcoinExchange::IsValidPrice(std::string price)
+bool BitcoinExchange::IsValidPrice(std::string price, size_t max)
 {
-	long long priceNumber = std::atoll(price.c_str());
-	if (priceNumber == 0 && price != "0")
+	char *endPtr;
+
+	long double priceNumber = std::strtold(price.c_str(), &endPtr);
+	if (endPtr[0] != '\0')
 		throw BitcoinExchange::BadPriceException("Error: not a number.");
 	if (priceNumber < 0)
 		throw BitcoinExchange::BadPriceException("Error: not a positive number.");
-	if (priceNumber > 1000)
+	if (priceNumber > max)
 		throw BitcoinExchange::BadPriceException("Error: too large number.");
 	return true;
 }
 
 void BitcoinExchange::openFile(std::string filename)
 {
-	this->_file = new std::ifstream();
-	this->_file->open(filename.c_str());
-	if (!this->_file->is_open())
+	this->_fileInput = new std::ifstream();
+	this->_fileInput->open(filename.c_str());
+	if (!this->_fileInput->is_open())
 		throw BitcoinExchange::FileErrorException("Error: could not open file.");
+}
+
+std::list<std::string> BitcoinExchange::split(std::string str, char delimiter)
+{
+	std::stringstream ss(str);
+	std::string currentString;
+	std::list<std::string> strSplit;
+	while(std::getline(ss, currentString, delimiter))
+		strSplit.push_back(currentString);
+	return strSplit;
+}
+
+std::string BitcoinExchange::trim(std::string str)
+{
+	std::string::iterator it = str.begin();
+	while (it != str.end() && std::isspace(*it))
+		it++;
+	std::string::iterator it2 = str.end();
+	do
+	{
+		it2--;
+	} while (std::distance(it, it2) > 0 && std::isspace(*it2));
+	return std::string(it, it2 + 1);
 }
 
 void BitcoinExchange::getDataFromFile(void)
 {
 	std::string line;
 	size_t line_number = 0;
-	std::ifstream file("./data.csv");
-	if (!file.is_open())
+	this->_fileData = new std::ifstream();
+	this->_fileData->open("data.csv");
+
+	if (!this->_fileData->is_open())
 		throw BitcoinExchange::FileErrorException("Error: could not open file.");
-	while (std::getline(file, line))
+	while (std::getline(*this->_fileData, line))
 	{
 		if (line_number == 0)
 		{
 			line_number++;
 			continue;
 		}
-		line_number++;
-
-		std::stringstream ss(line);
-		std::string currentString;
-		std::list<std::string> dataList;
-		while(std::getline(ss, currentString, ','))
-			dataList.push_back(currentString);
-		if (dataList.size() != 2)
+		std::list<std::string> data = this->split(line, ',');
+		if (data.size() != 2)
 			throw BitcoinExchange::FileErrorException("Error: bad data file.");
-		if (this->IsValidDate(dataList.front()) && this->IsValidPrice(dataList.back()))
-			this->_data[dataList.front()] = std::atoi(dataList.back().c_str());
+		std::string date = this->trim(data.front());
+		std::string exchangeRate = this->trim(data.back());
+		if (!this->IsValidDate(date) || !this->IsValidPrice(exchangeRate, INT_MAX))
+			throw BitcoinExchange::FileErrorException("Error: bad data file.");
+		this->_data[date] = std::atof(exchangeRate.c_str());
 	}
-	file.close();
 }
 
-void BitcoinExchange::ReadInputFile(void)
+void BitcoinExchange::DoExchange(void)
 {
 	try
 	{	
 		std::string line;
-		if (!this->_file)
-			this->openFile(this->_filename);
-		std::getline(*this->_file, line);
-		std::cout << line << std::endl;
+		bool isEOF = false;
+		size_t line_number = 0;
+
+		this->getDataFromFile();
+		this->openFile(this->_filename);
+
+		while (true)
+		{
+			line = this->ReadLineInputFile(isEOF);
+			if (isEOF)
+				break;
+			if (line_number == 0)
+			{
+				line_number++;
+				continue;
+			}
+			std::list<std::string> data = this->split(line, '|');
+			if (data.size() != 2)
+				throw BitcoinExchange::FileErrorException("Error: bad file input.");
+			std::string date = this->trim(data.front());
+			std::string price = this->trim(data.back());
+			if (!this->IsValidDate(date) || !this->IsValidPrice(price, 1000))
+				return ;
+			std::cout << date << " => " << this->_data[date] * std::atof(price.c_str()) << std::endl;
+		}
+		
 	}catch (BitcoinExchange::BadDateException &e)
 	{
 		std::cerr << e.what() << std::endl;
@@ -140,6 +181,30 @@ void BitcoinExchange::ReadInputFile(void)
 	}
 }
 
+
+std::string BitcoinExchange::ReadLineInputFile(bool & isEOF)
+{
+	try
+	{	
+		std::string line;
+
+		if (!this->_fileInput)
+			this->openFile(this->_filename);
+		if (!std::getline(*this->_fileInput, line))
+			isEOF = true;
+		return line;
+	}
+	catch (BitcoinExchange::FileErrorException &e)
+	{
+		std::cerr << e.what() << std::endl;
+		return "";
+	} 
+	catch (std::exception &e)
+	{
+		std::cerr << e.what() << std::endl;
+		return "";
+	}
+}
 
 BitcoinExchange::BadDateException::BadDateException(std::string date): _errorMessage("Error: bad input => " + date)
 {

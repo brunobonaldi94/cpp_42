@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 18:12:12 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/26 22:16:52 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/28 19:14:34 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "defines.hpp"
 #include <list>
 #include <map>
+#include <climits>
 #include <fstream>
 #include <sstream>
 #include <stdlib.h>
@@ -26,20 +27,26 @@ class BitcoinExchange
 {
 	private:
 		std::string _filename;
-		std::ifstream *_file;
-		std::map<std::string, std::string> _data;
-		bool IsValidPrice(std::string price);
+		std::ifstream *_fileInput;
+		std::ifstream *_fileData;
+		std::map<std::string, float> _data;
+		bool IsValidPrice(std::string price, size_t max);
 		bool IsValidDate(std::string date);
 		bool CheckDatePart(std::string datePart, size_t len,int min, int max);
+		std::list<std::string> split(std::string str, char delimeter);
+		std::string trim(std::string str);
+		std::string ReadLineInputFile(bool & isEOF);
+		void openFile(std::string filename);
+		void parseLine(std::string line);
+		void getDataFromFile(void);
+
 
 	public:
 		BitcoinExchange(std::string filename);
 		BitcoinExchange(BitcoinExchange const &src);
 		~BitcoinExchange(void);
 		BitcoinExchange &operator=(BitcoinExchange const &rhs);
-		void ReadInputFile(void);
-		void openFile(std::string filename);
-		void getDataFromFile(void);
+		void DoExchange(void);
 		class BadDateException : public std::exception
 		{
 			public:

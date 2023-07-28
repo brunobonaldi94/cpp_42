@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 18:09:57 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/26 22:17:06 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/28 18:32:07 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 	BitcoinExchange btc(filename);
 	try
 	{
-		btc.getDataFromFile();
+		btc.DoExchange();
 	}
 	catch(const std::exception& e)
 	{
