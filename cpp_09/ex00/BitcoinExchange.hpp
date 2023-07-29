@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 18:12:12 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/28 19:14:34 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/28 23:57:02 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,16 @@
 #include "colors.hpp"
 #include "defines.hpp"
 #include <list>
+#include <algorithm>
 #include <map>
 #include <climits>
 #include <fstream>
 #include <sstream>
 #include <stdlib.h>
 
+struct CompareKeys {
+    bool operator()(const std::pair<const std::string, float>& lhs, const std::string& rhs) const;
+};
 class BitcoinExchange
 {
 	private:
@@ -37,7 +41,8 @@ class BitcoinExchange
 		std::string trim(std::string str);
 		std::string ReadLineInputFile(bool & isEOF);
 		void openFile(std::string filename);
-		void parseLine(std::string line);
+		void DoExchangeEachLine(std::string line);
+		float getExchangeRate(std::string date);
 		void getDataFromFile(void);
 
 

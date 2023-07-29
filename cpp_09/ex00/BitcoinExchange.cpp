@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 18:27:13 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/28 19:17:41 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/07/28 23:53:50 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,49 +40,8 @@ BitcoinExchange &BitcoinExchange::operator=(BitcoinExchange const &rhs)
 	return (*this);
 }
 
-bool BitcoinExchange::CheckDatePart(std::string datePart, size_t len, int min, int max)
-{
-	return datePart.size() == len && std::atoi(datePart.c_str()) >= min && std::atoi(datePart.c_str()) <= max;
-}
 
-bool BitcoinExchange::IsValidDate(std::string date)
-{
-
-	std::list<std::string> dateList = this->split(date, '-');
-	if (dateList.size() != 3)
-		throw BitcoinExchange::BadDateException(date);
-	
-	std::list<std::string>::iterator it = dateList.begin();
-
-	bool isValidYear = this->CheckDatePart(*it, 4, 2009, 2022);
-	bool isValidMonth = this->CheckDatePart(*(++it), 2, 1, 12);
-	bool isValidDay = this->CheckDatePart(*(++it), 2, 1, 31);
-	if (!isValidYear || !isValidMonth || !isValidDay)
-		throw BitcoinExchange::BadDateException(date);
-	return (isValidYear && isValidMonth && isValidDay);
-}
-
-bool BitcoinExchange::IsValidPrice(std::string price, size_t max)
-{
-	char *endPtr;
-
-	long double priceNumber = std::strtold(price.c_str(), &endPtr);
-	if (endPtr[0] != '\0')
-		throw BitcoinExchange::BadPriceException("Error: not a number.");
-	if (priceNumber < 0)
-		throw BitcoinExchange::BadPriceException("Error: not a positive number.");
-	if (priceNumber > max)
-		throw BitcoinExchange::BadPriceException("Error: too large number.");
-	return true;
-}
-
-void BitcoinExchange::openFile(std::string filename)
-{
-	this->_fileInput = new std::ifstream();
-	this->_fileInput->open(filename.c_str());
-	if (!this->_fileInput->is_open())
-		throw BitcoinExchange::FileErrorException("Error: could not open file.");
-}
+// Validate Date and Price
 
 std::list<std::string> BitcoinExchange::split(std::string str, char delimiter)
 {
@@ -105,6 +64,91 @@ std::string BitcoinExchange::trim(std::string str)
 		it2--;
 	} while (std::distance(it, it2) > 0 && std::isspace(*it2));
 	return std::string(it, it2 + 1);
+}
+
+bool BitcoinExchange::CheckDatePart(std::string datePart, size_t len, int min, int max)
+{
+	return datePart.size() == len && std::atoi(datePart.c_str()) >= min && std::atoi(datePart.c_str()) <= max;
+}
+
+bool BitcoinExchange::IsValidDate(std::string date)
+{
+	try 
+	{
+		std::list<std::string> dateList = this->split(date, '-');
+		if (dateList.size() != 3)
+			throw BitcoinExchange::BadDateException(date);
+		
+		std::list<std::string>::iterator it = dateList.begin();
+
+		bool isValidYear = this->CheckDatePart(*it, 4, 2009, 2022);
+		bool isValidMonth = this->CheckDatePart(*(++it), 2, 1, 12);
+		bool isValidDay = this->CheckDatePart(*(++it), 2, 1, 31);
+		if (!isValidYear || !isValidMonth || !isValidDay)
+			throw BitcoinExchange::BadDateException(date);
+		return (isValidYear && isValidMonth && isValidDay);
+	}
+	catch (BitcoinExchange::BadDateException &e)
+	{
+		std::cerr << e.what() << std::endl;
+		return false;
+	}
+}
+
+bool BitcoinExchange::IsValidPrice(std::string price, size_t max)
+{
+	try 
+	{
+		char *endPtr;
+
+		long double priceNumber = std::strtold(price.c_str(), &endPtr);
+		if (endPtr[0] != '\0')
+			throw BitcoinExchange::BadPriceException("Error: not a number.");
+		if (priceNumber < 0)
+			throw BitcoinExchange::BadPriceException("Error: not a positive number.");
+		if (priceNumber > max)
+			throw BitcoinExchange::BadPriceException("Error: too large number.");
+		return true;
+	}
+	catch (BitcoinExchange::BadPriceException &e)
+	{
+		std::cerr << e.what() << std::endl;
+		return false;
+	}
+}
+
+// File Handling
+
+void BitcoinExchange::openFile(std::string filename)
+{
+	this->_fileInput = new std::ifstream();
+	this->_fileInput->open(filename.c_str());
+	if (!this->_fileInput->is_open())
+		throw BitcoinExchange::FileErrorException("Error: could not open file.");
+}
+
+std::string BitcoinExchange::ReadLineInputFile(bool & isEOF)
+{
+	try
+	{	
+		std::string line;
+
+		if (!this->_fileInput)
+			this->openFile(this->_filename);
+		if (!std::getline(*this->_fileInput, line))
+			isEOF = true;
+		return line;
+	}
+	catch (BitcoinExchange::FileErrorException &e)
+	{
+		std::cerr << e.what() << std::endl;
+		return "";
+	} 
+	catch (std::exception &e)
+	{
+		std::cerr << e.what() << std::endl;
+		return "";
+	}
 }
 
 void BitcoinExchange::getDataFromFile(void)
@@ -134,6 +178,61 @@ void BitcoinExchange::getDataFromFile(void)
 	}
 }
 
+// Do Exchange Rate Calculation
+
+bool CompareKeys::operator()(const std::pair<const std::string, float>& lhs, const std::string& rhs) const
+{
+	return lhs.first < rhs;
+}
+
+float BitcoinExchange::getExchangeRate(std::string date)
+{
+	try 
+	{
+		std::map<std::string, float>::iterator it = this->_data.find(date);
+		if (it == this->_data.end())
+		{
+			CompareKeys compare;
+			it = std::lower_bound(this->_data.begin(), this->_data.end(), date, compare);
+			if (it == this->_data.end())
+				throw BitcoinExchange::FileErrorException("Error: bad data file.");
+			if (it == this->_data.begin() && it->first != date)
+				throw BitcoinExchange::FileErrorException("The lowest date is " + this->_data.begin()->first + " and date provided was: " + date);
+			--it;
+			return it->second;
+		}
+		
+		return it->second;
+	}
+	catch (BitcoinExchange::FileErrorException &e)
+	{
+		std::cerr << e.what() << std::endl;
+		return -1;
+	}
+}
+
+void BitcoinExchange::DoExchangeEachLine(std::string line)
+{
+	try
+	{
+		std::list<std::string> data = this->split(line, '|');
+		if (data.size() != 2)
+			throw BitcoinExchange::FileErrorException("Error: bad file input => " + line);
+		std::string date = this->trim(data.front());
+		std::string price = this->trim(data.back());
+		if (!this->IsValidDate(date) || !this->IsValidPrice(price, 1000))
+				return ;
+		float exchangeRate = this->getExchangeRate(date);
+		if (exchangeRate == -1)
+			return ;
+		std::cout << date << " => " << exchangeRate * std::atof(price.c_str()) << std::endl;
+	}
+	catch (BitcoinExchange::FileErrorException &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+}
+
 void BitcoinExchange::DoExchange(void)
 {
 	try
@@ -155,56 +254,16 @@ void BitcoinExchange::DoExchange(void)
 				line_number++;
 				continue;
 			}
-			std::list<std::string> data = this->split(line, '|');
-			if (data.size() != 2)
-				throw BitcoinExchange::FileErrorException("Error: bad file input.");
-			std::string date = this->trim(data.front());
-			std::string price = this->trim(data.back());
-			if (!this->IsValidDate(date) || !this->IsValidPrice(price, 1000))
-				return ;
-			std::cout << date << " => " << this->_data[date] * std::atof(price.c_str()) << std::endl;
+			this->DoExchangeEachLine(line);
 		}
-		
-	}catch (BitcoinExchange::BadDateException &e)
-	{
-		std::cerr << e.what() << std::endl;
-	} catch (BitcoinExchange::BadPriceException &e)
-	{
-		std::cerr << e.what() << std::endl;
-	} catch (BitcoinExchange::FileErrorException &e)
-	{
-		std::cerr << e.what() << std::endl;
-	} 
+	}		
 	catch (std::exception &e)
 	{
 		std::cerr << e.what() << std::endl;
 	}
 }
 
-
-std::string BitcoinExchange::ReadLineInputFile(bool & isEOF)
-{
-	try
-	{	
-		std::string line;
-
-		if (!this->_fileInput)
-			this->openFile(this->_filename);
-		if (!std::getline(*this->_fileInput, line))
-			isEOF = true;
-		return line;
-	}
-	catch (BitcoinExchange::FileErrorException &e)
-	{
-		std::cerr << e.what() << std::endl;
-		return "";
-	} 
-	catch (std::exception &e)
-	{
-		std::cerr << e.what() << std::endl;
-		return "";
-	}
-}
+// Exceptions
 
 BitcoinExchange::BadDateException::BadDateException(std::string date): _errorMessage("Error: bad input => " + date)
 {
