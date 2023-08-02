@@ -6,17 +6,27 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 18:41:23 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/08/01 22:15:29 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/08/02 17:48:48 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
+
+bool isOnlyDigit(std::string str)
+{
+	for (size_t i = 0; i < str.length(); i++)
+		if (!std::isdigit(str[i]))
+			return (false);
+	return (true);
+}
 
 PmergeMe::PmergeMe(int argc, char *argv[])
 {
 	debug("PmergeMe Constructor called", GREEN);
 	for (int i = 1; i < argc; i++)
 	{
+		if (!isOnlyDigit(argv[i]))
+			throw std::invalid_argument("It must be numeric arguments");
 		int num = atoi(argv[i]);
 		if (num < 0)
 			throw std::invalid_argument("Negative numbers are not allowed");
@@ -170,25 +180,22 @@ void PmergeMe::Sort(void)
 	this->_time_vector = end_time - start_time;
 }
 
+void PmergeMe::PrintElements(bool isBefore)
+{
+	std::cout << (isBefore ? "Before: " : "After: ");
+	int const MAX_SIZE = 5;
+	for (size_t i = 0; i < this->_vector.size() && i < MAX_SIZE; i++)
+		std::cout << this->_vector[i] << " ";
+	if (this->_vector.size() > MAX_SIZE)
+		std::cout << "[...]";
+	std::cout << std::endl;
+}
+
 void PmergeMe::Print(void)
 {
-	std::cout << "Before: ";
-	if (this->_vector.size() < 5)
-		for (std::vector<int>::iterator it = this->_vector.begin(); it != this->_vector.end(); it++)
-			std::cout << *it << " ";
-	else
-		for (std::vector<int>::iterator it = this->_vector.begin(); it != this->_vector.begin() + 4; it++)
-			std::cout << *it << " ";
-	std::cout << "[...]" << std::endl;
+	this->PrintElements(true);
 	this->Sort();
-	std::cout << "After: ";
-	if (this->_vector.size() < 5)
-		for (std::vector<int>::iterator it = this->_vector.begin(); it != this->_vector.end(); it++)
-			std::cout << *it << " ";
-	else
-		for (std::vector<int>::iterator it = this->_vector.begin(); it != this->_vector.begin() + 4; it++)
-			std::cout << *it << " ";
-	std::cout << "[...]" << std::endl;
+	this->PrintElements(false);
 	std::cout << "Time to process a range of: " << this->_vector.size() << " elements with std::vector : " << std::fixed << std::setprecision(6) << this->_time_vector  << " us" << std::endl;
 	std::cout << "Time to process a range of: " << this->_deque.size() << " elements with std::deque : " << std::fixed << std::setprecision(6) << this->_time_deque << " us" << std::endl;
 }

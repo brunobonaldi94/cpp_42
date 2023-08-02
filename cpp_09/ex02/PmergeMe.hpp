@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 18:22:05 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/08/01 22:13:39 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/08/02 17:15:30 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ class PmergeMe
 		void SortVector(std::vector<int> & vector, int l, int r);
 		void Sort(void);
 		long long GetTime(void);
+		void PrintElements(bool isBefore);
 		void Print(void);
 	private:
 		std::deque <int> _deque;
