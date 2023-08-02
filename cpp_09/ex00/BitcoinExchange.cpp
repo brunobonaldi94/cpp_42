@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 18:27:13 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/07/28 23:53:50 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/08/02 18:06:26 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,7 @@ void BitcoinExchange::DoExchangeEachLine(std::string line)
 		float exchangeRate = this->getExchangeRate(date);
 		if (exchangeRate == -1)
 			return ;
-		std::cout << date << " => " << exchangeRate * std::atof(price.c_str()) << std::endl;
+		std::cout << date << " => " << price << " = " << exchangeRate * std::atof(price.c_str()) << std::endl;
 	}
 	catch (BitcoinExchange::FileErrorException &e)
 	{
