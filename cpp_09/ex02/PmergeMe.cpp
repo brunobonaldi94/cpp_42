@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 18:41:23 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/08/02 21:38:17 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/08/02 22:07:24 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,7 @@ void PmergeMe::MergeVector(std::vector<int> & vector, int left, int mid, int rig
 
 void PmergeMe::SortVector(std::vector<int> & vector, int left, int right)
 {
-	 if (right - left <= this->INSERTION_SORT_THRESHOLD) {  // Threshold for switching to insertion sort
+	 if (right - left <= this->INSERTION_SORT_THRESHOLD) {
         this->InsertionSortVector(vector, left, right);
     } else {
         if (left < right) {
@@ -218,10 +218,8 @@ void PmergeMe::PrintElements(bool isBefore)
 {
 	std::cout << (isBefore ? "Before: " : "After: ");
 	size_t const MAX_SIZE = this->_vector.size();
-	for (size_t i = 0; i < this->_vector.size() && i < MAX_SIZE; i++)
+	for (size_t i = 0; i < MAX_SIZE; i++)
 		std::cout << this->_vector[i] << " ";
-	if (this->_vector.size() > MAX_SIZE)
-		std::cout << "[...]";
 	std::cout << std::endl;
 }
 
