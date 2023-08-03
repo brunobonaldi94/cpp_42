@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 18:41:23 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/08/02 17:48:48 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/08/02 21:38:17 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,106 +58,140 @@ PmergeMe	&PmergeMe::operator = (const PmergeMe &obj)
 	return (*this);
 }
 
-void PmergeMe::InsertionSortDeque(std::deque<int> & deque,  int l,  int r)
-{
-	for (int i = l; i < r; i++) {
-		int tempVal = deque[i + 1];
-		int j = i + 1;
-		while (j > l && deque[j - 1] > tempVal) {
-			deque[j] = deque[j - 1];
-			j--;
-		}
-		deque[j] = tempVal;
-	}
+void PmergeMe::InsertionSortDeque(std::deque<int> & deque, int left, int right) {
+    for (int i = left + 1; i <= right; ++i) {
+        int key = deque[i];
+        int j = i - 1;
+
+        while (j >= left && deque[j] > key) {
+            deque[j + 1] = deque[j];
+            j--;
+        }
+        deque[j + 1] = key;
+    }
 }
 
-void PmergeMe::MergeDeque(std::deque<int> & deque,  int l,  int m,  int r)
+void PmergeMe::MergeDeque(std::deque<int> & deque, int left, int mid, int right)
 {
-	int n1 = m - l + 1;
-	int n2 = r - m;
-	std::deque< int> LA(deque.begin() + l, deque.begin() + m + 1);
-	std::deque< int> RA(deque.begin() + m + 1, deque.begin() + r + 1);
-	int RIDX = 0;
-	int LIDX = 0;
-	for (int i = l; i < r - l + 1; i++) {
-		if (RIDX == n2) {
-			deque[i] = LA[LIDX];
-			LIDX++;
-		} else if (LIDX == n1) {
-			deque[i] = RA[RIDX];
-			RIDX++;
-		} else if (RA[RIDX] > LA[LIDX]) {
-			deque[i] = LA[LIDX];
-			LIDX++;
-		} else {
-			deque[i] = RA[RIDX];
-			RIDX++;
-		}
-	}
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+	std::deque<int> L(n1);
+    std::deque<int> R(n2);
+	for (int i = 0; i < n1; i++) {
+        L[i] = deque[left + i];
+    }
+    for (int j = 0; j < n2; j++) {
+        R[j] = deque[mid + 1 + j];
+    }
+
+	int i = 0;
+    int j = 0;
+    int k = left;
+
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            deque[k] = L[i];
+            i++;
+        } else {
+            deque[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1) {
+        deque[k] = L[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2) {
+        deque[k] = R[j];
+        j++;
+        k++;
+    }
 }
 
-void PmergeMe::SortDeque(std::deque<int> & deque, int l, int r)
+void PmergeMe::SortDeque(std::deque<int> & deque, int left, int right)
 {
-	if (r - l > this->INSERTION_SORT_THRESHOLD) {
-		int q = (l + r) / 2;
-		this->SortDeque(deque, l, q);
-		this->SortDeque(deque, q + 1, r);
-		this->MergeDeque(deque, l, q, r);
-	} else {
-		this->InsertionSortDeque(deque, l, r);
-	}
+	 if (right - left <= this->INSERTION_SORT_THRESHOLD) {
+        this->InsertionSortDeque(deque, left, right);
+    } else {
+        if (left < right) {
+            int mid = left + (right - left) / 2;
+            this->SortDeque(deque, left, mid);
+            this->SortDeque(deque, mid + 1, right);
+            this->MergeDeque(deque, left, mid, right);
+        }
+    }
 }
 
+void PmergeMe::InsertionSortVector(std::vector<int> & vector, int left, int right) {
+    for (int i = left + 1; i <= right; ++i) {
+        int key = vector[i];
+        int j = i - 1;
 
-
-void PmergeMe::InsertionSortVector(std::vector<int> & vector,  int l,  int r)
-{
-	for (int i = l; i < r; i++) {
-		int tempVal = vector[i + 1];
-		int j = i + 1;
-		while (j > l && vector[j - 1] > tempVal) {
-			vector[j] = vector[j - 1];
-			j--;
-		}
-		vector[j] = tempVal;
-	}
+        while (j >= left && vector[j] > key) {
+            vector[j + 1] = vector[j];
+            j--;
+        }
+        vector[j + 1] = key;
+    }
 }
 
-void PmergeMe::MergeVector(std::vector<int> & vector,  int l,  int m,  int r)
+void PmergeMe::MergeVector(std::vector<int> & vector, int left, int mid, int right)
 {
-	int n1 = m - l + 1;
-	int n2 = r - m;
-	std::vector< int> LA(vector.begin() + l, vector.begin() + m + 1);
-	std::vector< int> RA(vector.begin() + m + 1, vector.begin() + r + 1);
-	int RIDX = 0;
-	int LIDX = 0;
-	for (int i = l; i < r - l + 1; i++) {
-		if (RIDX == n2) {
-			vector[i] = LA[LIDX];
-			LIDX++;
-		} else if (LIDX == n1) {
-			vector[i] = RA[RIDX];
-			RIDX++;
-		} else if (RA[RIDX] > LA[LIDX]) {
-			vector[i] = LA[LIDX];
-			LIDX++;
-		} else {
-			vector[i] = RA[RIDX];
-			RIDX++;
-		}
-	}
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+	std::vector<int> L(n1);
+    std::vector<int> R(n2);
+	for (int i = 0; i < n1; i++) {
+        L[i] = vector[left + i];
+    }
+    for (int j = 0; j < n2; j++) {
+        R[j] = vector[mid + 1 + j];
+    }
+
+	int i = 0;
+    int j = 0;
+    int k = left;
+
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            vector[k] = L[i];
+            i++;
+        } else {
+            vector[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1) {
+        vector[k] = L[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2) {
+        vector[k] = R[j];
+        j++;
+        k++;
+    }
 }
 
-void PmergeMe::SortVector(std::vector<int> & vector, int l, int r)
+void PmergeMe::SortVector(std::vector<int> & vector, int left, int right)
 {
-	if (r - l > this->INSERTION_SORT_THRESHOLD) {
-		int q = (l + r) / 2;
-		this->SortVector(vector, l, q);
-		this->SortVector(vector, q + 1, r);
-		this->MergeVector(vector, l, q, r);
-	} else {
-		this->InsertionSortVector(vector, l, r);
-	}
+	 if (right - left <= this->INSERTION_SORT_THRESHOLD) {  // Threshold for switching to insertion sort
+        this->InsertionSortVector(vector, left, right);
+    } else {
+        if (left < right) {
+            int mid = left + (right - left) / 2;
+            this->SortVector(vector, left, mid);
+            this->SortVector(vector, mid + 1, right);
+            this->MergeVector(vector, left, mid, right);
+        }
+    }
 }
 
 long long PmergeMe::GetTime(void)
@@ -183,7 +217,7 @@ void PmergeMe::Sort(void)
 void PmergeMe::PrintElements(bool isBefore)
 {
 	std::cout << (isBefore ? "Before: " : "After: ");
-	int const MAX_SIZE = 5;
+	size_t const MAX_SIZE = this->_vector.size();
 	for (size_t i = 0; i < this->_vector.size() && i < MAX_SIZE; i++)
 		std::cout << this->_vector[i] << " ";
 	if (this->_vector.size() > MAX_SIZE)
