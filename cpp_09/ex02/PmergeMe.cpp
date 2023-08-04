@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 18:41:23 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/08/03 22:53:25 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/08/04 20:11:40 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,7 @@ void PmergeMe::CreatePositionsDeque(void)
 			lastPos = val;
 		}
 		size_t size = this->_pendingElementsDeque.size();
-		for (; val <= size; val++)
+		while (val++ < size)
 			this->_positionsDeque.push_back(val);
 	}
 }
@@ -395,8 +395,8 @@ void PmergeMe::CreatePositionsVector(void)
 				this->_positionsVector.push_back(pos);
 			lastPos = val;
 		}
-		size_t size = this->_pendingElementsVector.size();
-		for (; val <= size; val++)
+		size_t size = this->_pendingElementsDeque.size();
+		while (val++ < size)
 			this->_positionsVector.push_back(val);
 	}
 }
