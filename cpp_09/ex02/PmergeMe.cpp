@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 18:41:23 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/08/04 20:11:40 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/08/05 11:27:46 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ PmergeMe::PmergeMe(int argc, char *argv[])
 	debug("PmergeMe Constructor called", GREEN);
 	for (int i = 1; i < argc; i++)
 	{
-		if (!isOnlyDigit(argv[i]))
+		if (argc < 2 || !isOnlyDigit(argv[i]))
 			throw std::invalid_argument("It must be numeric arguments");
 		int num = atoi(argv[i]);
 		if (num < 0)
@@ -68,6 +68,7 @@ long long PmergeMe::GetTime(void)
 void PmergeMe::PrintElementsBefore()
 {
 	size_t const MAX_SIZE = this->_vector.size();
+	std::cout << "Before: ";
 	for (size_t i = 0; i < MAX_SIZE; i++)
 		std::cout << this->_vector[i] << " ";
 	std::cout << std::endl;
@@ -75,6 +76,7 @@ void PmergeMe::PrintElementsBefore()
 
 void PmergeMe::PrintElementsAfter()
 {
+	std::cout << "After: ";
 	size_t const MAX_SIZE = this->_mainChainVector.size();
 	for (size_t i = 0; i < MAX_SIZE; i++)
 		std::cout << this->_mainChainVector[i] << " ";
@@ -235,6 +237,7 @@ void PmergeMe::insertIntoMainDequeChain()
 	size_t endPos;
 	size_t addedCount;
 	size_t pos;
+	bool isOdd = this->_deque.size() % 2 != 0;
 
 	this->CreatePositionsDeque();
 	addedCount = 0;
@@ -248,7 +251,7 @@ void PmergeMe::insertIntoMainDequeChain()
 		this->_mainChainDeque.insert(this->_mainChainDeque.begin() + pos, target);
 		addedCount++;
 	}
-	if (this->_deque.size() % 2 != 0)
+	if (isOdd)
 	{
 		target = this->_deque.at(this->_deque.size() - 1);
 		pos = this->BinarySearchDeque(this->_mainChainDeque, target, 0, this->_mainChainDeque.size() - 1);
@@ -429,6 +432,7 @@ void PmergeMe::insertIntoMainVectorChain()
 	size_t endPos;
 	size_t addedCount;
 	size_t pos;
+	bool isOdd = this->_deque.size() % 2 != 0;
 
 	this->CreatePositionsVector();
 	addedCount = 0;
@@ -442,7 +446,7 @@ void PmergeMe::insertIntoMainVectorChain()
 		this->_mainChainVector.insert(this->_mainChainVector.begin() + pos, target);
 		addedCount++;
 	}
-	if (this->_vector.size() % 2 != 0)
+	if (isOdd)
 	{
 		target = this->_vector.at(this->_vector.size() - 1);
 		pos = this->BinarySearchVector(this->_mainChainVector, target, 0, this->_mainChainVector.size() - 1);
@@ -476,6 +480,11 @@ void PmergeMe::Sort(void)
 
 void PmergeMe::Print(void)
 {
+	if (this->_vector.size() == 0)
+	{
+		std::cout << "No elements to print" << std::endl;
+		return;
+	}
 	this->PrintElementsBefore();
 	this->Sort();
 	this->PrintElementsAfter();
