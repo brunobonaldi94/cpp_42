@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 18:41:23 by bbonaldi          #+#    #+#             */
-/*   Updated: 2023/08/05 11:27:46 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2023/08/05 14:19:48 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,7 +262,10 @@ void PmergeMe::insertIntoMainDequeChain()
 void PmergeMe::FordJohnsonAlgorithmDeque(void)
 {
 	if (this->_deque.size() == 1)
+	{
+		this->_mainChainDeque.push_back(this->_deque.at(0));
 		return;
+	}
 	this->CreateDequePairs();
 	this->SortDequePairs();
 	this->MergeSortDequePairs(this->_dequePairs, 0, this->_dequePairs.size() - 1);
@@ -457,7 +460,10 @@ void PmergeMe::insertIntoMainVectorChain()
 void PmergeMe::FordJohnsonAlgorithmVector(void)
 {
 	if (this->_vector.size() == 1)
+	{
+		this->_mainChainVector.push_back(this->_vector.at(0));
 		return;
+	}
 	this->CreateVectorPairs();
 	this->SortVectorPairs();
 	this->MergeSortVectorPairs(this->_vectorPairs, 0, this->_vectorPairs.size() - 1);
